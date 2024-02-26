@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Program
+    internal class _GameManager
     {
-        static _GameManager gameManager = new _GameManager();
+        public Map map = new Map();
 
-        static void Main(string[] args)
+        public void Gameplay()
         {
-            gameManager.Gameplay();
+            map.Init();
+            map.Draw();
+            Console.ReadKey();
         }
     }
 }
