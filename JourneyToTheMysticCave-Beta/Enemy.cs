@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Enemy : GameEntity
+    internal abstract class Enemy : GameEntity
     {
         public Player player;
-        public char character;
-        public string name;
         public Gamelog gamelog;
+        public Map map;
+
         Random randomMovement = new Random();
 
         public int dx;
@@ -19,9 +19,16 @@ namespace JourneyToTheMysticCave_Beta
         public int newDx;
         public int newDy;
 
-        public void Init(Player player) //used for all enemies
+        public virtual void Init(Player player, Gamelog gamelog, Map map) //used for all enemies
         {
             this.player = player;
+            this.gamelog = gamelog;
+            this.map = map;
+        }
+
+        public virtual void Update()
+        {
+
         }
 
         public int PlayerDistance() //calculates distance to player
