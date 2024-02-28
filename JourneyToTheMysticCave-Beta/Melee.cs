@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Player : GameEntity
+    internal class Melee : Enemy
     {
     }
 }
