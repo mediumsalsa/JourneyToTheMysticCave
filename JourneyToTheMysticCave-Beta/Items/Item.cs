@@ -12,5 +12,6 @@ namespace JourneyToTheMysticCave_Beta
         public bool pickedUp = false;
         public char character;
         public string name;
+        public int count;
     }
 }

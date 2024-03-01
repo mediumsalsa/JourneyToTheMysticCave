@@ -19,15 +19,14 @@ namespace JourneyToTheMysticCave_Beta
 
         char[,] currentMap;
 
-        public void Init()
+        public void Init(LevelManager levelManager)
         {
-            
+            this.levelManager = levelManager;
         }
 
         public void Update()
         {
             currentMap = GetCurrentMapContent();
-
         }
 
         public void Draw()
@@ -36,9 +35,9 @@ namespace JourneyToTheMysticCave_Beta
             {
                 for (int j = 0; j < currentMap.GetLength(1); j++)
                 {
-                    char characterToDraw = GetCharacterToDraw(i, j);
+                    Console.Write(currentMap[i, j]);
                     //legendColours.MapColor(characterToDraw);
-                    Console.Write(characterToDraw);
+                    //Console.Write(characterToDraw);
                     //Console.ResetColor();
                 }
                 Console.WriteLine();
@@ -54,8 +53,7 @@ namespace JourneyToTheMysticCave_Beta
         public bool CheckBoundaries(int x, int y)
         {
             return x >= 0 && x < currentMap.GetLength(1) && y >= 0 && y < currentMap.GetLength(0) &&
-                currentMap[x,y] != '#' && currentMap[x,y] != '^';
+                currentMap[x, y] != '#' && currentMap[x, y] != '^';
         }
-
     }
 }

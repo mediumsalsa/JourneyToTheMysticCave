@@ -8,6 +8,13 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal abstract class EnemyManager : GameEntity
     {
+        public enum State
+        {
+            Attacking,
+            Chasing,
+            Patroling
+        }
+
         public Player player;
         Ranged ranger;
         Mage mage;

@@ -11,7 +11,7 @@ namespace JourneyToTheMysticCave_Beta
     {
         public int mapLevel = 0;
         public int previousLevel = 0;
-        private string[] mapTextFiles = new string[] { "Map0.txt", "Map1.txt", "Map2.txt" };
+        private string[] mapTextFiles = new string[] { "Level\\Map0.txt", "Level\\Map1.txt", "Level\\Map2.txt" };
         private char[][,] mapContents = new char[3][,];
 
         public Player _player;
@@ -36,9 +36,7 @@ namespace JourneyToTheMysticCave_Beta
                     }
                 }
             }
-        }
-
-        
+        }  
 
         public void Update() // are we changing the level or not
         {
