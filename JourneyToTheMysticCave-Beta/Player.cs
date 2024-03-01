@@ -8,5 +8,22 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Player : GameEntity
     {
+
+
+        public void Init()
+        {
+
+        }
+
+        public void Update()
+        {
+
+        }
+
+        public void Draw()
+        {
+            Console.SetCursorPosition(pos.x, pos.y);
+            Console.Write(character);
+        }
     }
 }

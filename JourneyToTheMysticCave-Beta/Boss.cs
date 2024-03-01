@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Boss : Enemy
+    internal class Boss : EnemyManager
     {
     }
 }

@@ -8,8 +8,8 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class _GameManager
     {
-        public Map map = new Map();
-        public Player player = new Player();
+        Map map = new Map();
+        Player player = new Player();
      
 
         public void Gameplay()

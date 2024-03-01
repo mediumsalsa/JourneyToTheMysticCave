@@ -8,5 +8,9 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal abstract class Item
     {
+        public bool collected = false;
+        public bool pickedUp = false;
+        public char character;
+        public string name;
     }
 }

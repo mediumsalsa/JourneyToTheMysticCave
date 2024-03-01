@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Mage : Enemy
+    internal class Mage : EnemyManager
     {
     }
 }
