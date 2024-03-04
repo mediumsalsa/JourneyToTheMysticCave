@@ -11,20 +11,20 @@ namespace JourneyToTheMysticCave_Beta
     {
         public _GameStats gameStats;
         public Player player;
-        public Ranged ranged;
+        public Ranger ranged;
         public Mage mage;
-        public Melee slime;
+        public Melee melee;
         public Potion potion;
         public Money money;
         public Trap trap;
 
 
-        public void Init(Player player, Ranged ranged, Mage mage, Melee slime, Boss boss, Potion potion, Money money, Trap trap, _GameStats gamestats)
+        public void Init(Player player, Ranger ranged, Mage mage, Melee melee, Boss boss, Potion potion, Money money, Trap trap, _GameStats gamestats)
         {
             this.player = player;
             this.ranged = ranged;
             this.mage = mage;
-            this.slime = slime;
+            this.melee = melee;
             this.potion = potion;
             this.money = money;
             this.trap = trap;
@@ -47,7 +47,7 @@ namespace JourneyToTheMysticCave_Beta
             Console.WriteLine();
             DisplaySymbolsInColumns(ranged.character, ranged.name);
             DisplaySymbolsInColumns(mage.character, mage.name);
-            DisplaySymbolsInColumns(slime.character, slime.name);
+            DisplaySymbolsInColumns(melee.character, melee.name);
             Console.WriteLine();
             DisplaySymbolsInColumns(money.character, money.name);
             DisplaySymbolsInColumns(potion.character, potion.name);

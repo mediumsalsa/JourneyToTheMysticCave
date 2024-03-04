@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Ranged : EnemyManager
+    internal class Sword : Item
     {
+
     }
 }

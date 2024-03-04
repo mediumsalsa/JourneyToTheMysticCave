@@ -13,5 +13,20 @@ namespace JourneyToTheMysticCave_Beta
         public char character;
         public string name;
         public int count;
+
+        public virtual void Init()
+        {
+
+        }
+
+        public virtual void Update()
+        {
+
+        }
+
+        public virtual void Draw()
+        {
+
+        }
     }
 }

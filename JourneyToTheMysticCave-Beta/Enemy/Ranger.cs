@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Mage : Enemy
+    internal class Ranger : Enemy
     {
         Random random = new Random();
 
-        public Mage()
+        public Ranger()
         {
             healthSystem = new HealthSystem();
             randomHealth = random.Next(minHp, maxHp);
             healthSystem.health = randomHealth;
         }
+
     }
 }

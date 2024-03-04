@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Boss : EnemyManager
+    internal class Boss : Enemy
     {
+        Random random = new Random();
+
+        public Boss()
+        {
+            healthSystem = new HealthSystem();
+            randomHealth = random.Next(minHp, maxHp);
+            healthSystem.health = randomHealth;
+        }
     }
 }

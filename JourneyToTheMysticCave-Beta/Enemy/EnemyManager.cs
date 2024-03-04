@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal abstract class EnemyManager : GameEntity
+    internal class EnemyManager 
     {
-        public enum State
+        private List<Enemy> enemies;
+        
+
+        public EnemyManager()
         {
-            Attacking,
-            Chasing,
-            Patroling
+            enemies = new List<Enemy>();
         }
 
         public Player player;
-        Ranged ranger;
+        Ranger ranger;
         Mage mage;
-        Melee slime;
+        Melee melee;
         Boss boss;
 
         public Gamelog gamelog;
@@ -33,38 +34,45 @@ namespace JourneyToTheMysticCave_Beta
         public int newDx;
         public int newDy;
 
-        List<EnemyManager> enemies = new List<EnemyManager>();
+        
 
-        public virtual void Init(Player player, Gamelog gamelog, Map map) //used for all enemies
+
+        public void Init(Player player, Map map, Ranger ranger, Mage mage, Melee melee, Boss boss) //used for all enemies
         {
             this.player = player;
-            this.gamelog = gamelog;
+            //this.gamelog = gamelog;
             this.map = map;
+            this.ranger = ranger;
+            this.mage = mage;
+            this.melee = melee;
+            this.boss = boss;
 
             for (int i = 0; i < ranger.count; i++)
-                enemies.Add(new Ranged());
+                enemies.Add(new Ranger());
             for (int i = 0;i < mage.count; i++)
                 enemies.Add(new Mage());
-            for(int i = 0;i < slime.count; i++)
+            for(int i = 0; i < this.melee.count; i++)
                 enemies.Add(new Melee());
             for(int i = 0;i < boss.count ; i++)
                 enemies.Add(new Boss());
         }
 
-        public virtual void Update()
+        public void Update()
         {
-
+            foreach(Enemy enemy in enemies)
+                enemy.Update();
         }
 
-        public virtual void Draw()
+        public void Draw()
         {
-
+            foreach (Enemy enemy in enemies)
+                enemy.Draw();
         }
 
-        public int PlayerDistance() //calculates distance to player
-        {
-            return Math.Abs(pos.x - player.pos.x) + Math.Abs(pos.y - player.pos.y);
-        }
+        //public int PlayerDistance() //calculates distance to player
+        //{
+        //    return Math.Abs(pos.x - player.pos.x) + Math.Abs(pos.y - player.pos.y);
+        //}
 
         // public bool CheckValidPlacement() <-- needs to be set up properly for this project
     }

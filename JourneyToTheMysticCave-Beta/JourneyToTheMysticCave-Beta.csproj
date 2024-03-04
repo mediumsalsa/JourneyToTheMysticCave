@@ -44,11 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enemy\Boss.cs" />
+    <Compile Include="Enemy\Enemy.cs" />
     <Compile Include="Enemy\EnemyManager.cs" />
     <Compile Include="GameEntity.cs" />
     <Compile Include="Gamelog.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="HealthSystem.cs" />
     <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemManager.cs" />
+    <Compile Include="Items\Sword.cs" />
     <Compile Include="Level\LegendColors.cs" />
     <Compile Include="Level\LevelManager.cs" />
     <Compile Include="Enemy\Mage.cs" />
@@ -58,7 +62,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Items\Potion.cs" />
-    <Compile Include="Enemy\Ranged.cs" />
+    <Compile Include="Enemy\Ranger.cs" />
     <Compile Include="Items\Trap.cs" />
     <Compile Include="_GameStats.cs" />
     <Compile Include="_GameManager.cs" />

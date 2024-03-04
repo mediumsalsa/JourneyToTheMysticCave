@@ -11,13 +11,14 @@ namespace JourneyToTheMysticCave_Beta
         Player player;
         EnemyManager[] enemyManager;
         Item[] allItems;
-        Ranged ranger;
+        Ranger ranger;
         Melee melee;
         Mage mage;
         Boss boss;
         Money money;
         Potion potion;
         Trap trap;
+        Sword sword;
 
         public char PlayerCharacter { get; set; }
         public char RangedCharacter {  get; set; }
@@ -27,16 +28,22 @@ namespace JourneyToTheMysticCave_Beta
         public char MoneyCharacter { get; set; }
         public char PotionCharacter { get; set; }
         public char TrapCharacter { get; set; }
+        public char SwordCharacter { get; set; }
 
 
-
-        public void Init(Player player, EnemyManager[] enemies, Item[] items)
+        public void Init(Player player, Ranger ranger, Melee melee, Mage mage, Boss boss, Money money, Potion potion, Trap trap, Sword sword)
         {
             this.player = player;
-
+            this.ranger = ranger;
+            this.melee = melee;
+            this.mage = mage;
+            this.boss = boss;
+            this.money = money;
+            this.potion = potion;
+            this.trap = trap;
+            this.sword = sword;
 
             GameConfig();
-            
         }
 
         public void GameConfig()
@@ -45,6 +52,7 @@ namespace JourneyToTheMysticCave_Beta
             player.character = 'H';
             PlayerCharacter = player.character;
             player.name = "Hero";
+            player.health = 100;
             player.damageAmount = 10;
             player.pos = new Point2D { x = 2, y = 5 };
             
@@ -54,7 +62,8 @@ namespace JourneyToTheMysticCave_Beta
             RangedCharacter = ranger.character;
             ranger.name = "Ranger";
             ranger.damageAmount = 3;
-            
+            ranger.maxHp = 60;
+            ranger.minHp = 35;
 
             // Mage Configs/Stats
             mage.count = 3;
@@ -62,6 +71,8 @@ namespace JourneyToTheMysticCave_Beta
             MageCharacter = mage.character;
             mage.name = "Mage";
             mage.damageAmount = 3;
+            mage.maxHp = 65;
+            mage.minHp = 40;
 
             // Slime Configs/Stats
             melee.count = 30;
@@ -69,6 +80,8 @@ namespace JourneyToTheMysticCave_Beta
             MeleeCharacter = melee.character;
             melee.name = "Slime";
             melee.damageAmount = 1;
+            melee.maxHp = 50;
+            melee.minHp = 25;
 
             // Boss Configs/Stats
             boss.count = 1;
@@ -76,6 +89,8 @@ namespace JourneyToTheMysticCave_Beta
             BossCharacter = boss.character;
             boss.name = "Boss";
             boss.damageAmount = 6;
+            boss.maxHp = 120;
+            boss.minHp = 80;
 
             // Money Configs
             money.count = 4;
@@ -92,6 +107,10 @@ namespace JourneyToTheMysticCave_Beta
             trap.character = 'T';
             TrapCharacter = trap.character;
 
+            // Sword Configs
+            sword.count = 3;
+            sword.character = 't';
+            SwordCharacter = sword.character;
         }
     }
 }
