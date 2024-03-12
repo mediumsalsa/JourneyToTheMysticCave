@@ -16,6 +16,5 @@ namespace JourneyToTheMysticCave_Beta
             randomHealth = random.Next(minHp, maxHp);
             healthSystem.health = randomHealth;
         }
-
     }
 }

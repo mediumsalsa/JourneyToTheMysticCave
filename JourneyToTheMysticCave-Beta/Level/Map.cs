@@ -9,19 +9,16 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Map
     {
-        //Used to build map / display map
-        //private string[] mapTextFiles = new string[] { "Map0.txt", "Map1.txt", "Map2.txt" };
-        //private char[][,] mapContents = new char[3][,];
-
         //game entities
-        //public Player player;
         public LevelManager levelManager;
+        public LegendColors legendColors;
 
         char[,] currentMap;
 
-        public void Init(LevelManager levelManager)
+        public void Init(LevelManager levelManager, LegendColors legendColors)
         {
             this.levelManager = levelManager;
+            this.legendColors = legendColors;
         }
 
         public void Update()
@@ -36,15 +33,24 @@ namespace JourneyToTheMysticCave_Beta
             {
                 for (int j = 0; j < currentMap.GetLength(1); j++)
                 {
+                    char characterToDraw = currentMap[i, j];
+
+                    legendColors.MapColor(characterToDraw);
                     Console.Write(currentMap[i, j]);
-                    //legendColours.MapColor(characterToDraw);
-                    //Console.Write(characterToDraw);
-                    //Console.ResetColor();
+                    Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
+        public int GetMapRowCount()
+        {
+            return currentMap.GetLength(0);
+        }
 
+        public int GetMapColumnCount()
+        {
+            return currentMap.GetLength(1);
+        }
 
         private char[,] GetCurrentMapContent()
         {
@@ -53,8 +59,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public bool CheckBoundaries(int x, int y)
         {
-            return x >= 0 && x < currentMap.GetLength(1) && y >= 0 && y < currentMap.GetLength(0) &&
-                currentMap[x, y] != '#' && currentMap[x, y] != '^';
+            return currentMap[y, x] != '#' && currentMap[y, x] != '^';
         }
     }
 }

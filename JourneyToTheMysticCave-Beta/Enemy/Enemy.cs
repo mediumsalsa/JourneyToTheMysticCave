@@ -50,7 +50,9 @@ namespace JourneyToTheMysticCave_Beta
 
         public virtual void Draw()
         {
-            
+            Console.SetCursorPosition(pos.x, pos.y);
+            Console.Write(character);
+            Console.CursorVisible = false;
         }
 
         public void RandomHealthAmount()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace JourneyToTheMysticCave_Beta
 {
@@ -14,15 +15,17 @@ namespace JourneyToTheMysticCave_Beta
         private string[] mapTextFiles = new string[] { "Level\\Map0.txt", "Level\\Map1.txt", "Level\\Map2.txt" };
         private char[][,] mapContents = new char[3][,];
 
-        public Player _player;
+        public Player player;
 
         public char[][,] AllMapContents
         {
             get { return mapContents; }
         }
 
-        public void Init() // Initialize level maps.
+        public void Init(Player player) // Initialize level maps.
         {
+            this.player = player;
+
             for (int i = 0; i < mapTextFiles.Length; i++)
             {
                 string[] lines = File.ReadAllLines(mapTextFiles[i]);
@@ -48,32 +51,51 @@ namespace JourneyToTheMysticCave_Beta
             switch (mapLevel)
             {
                 case 0:
-                    if (_player.pos.x == 40 && _player.pos.y == 7)
+                    if (player.pos.x == 40 && player.pos.y == 7)
                     {
                         mapLevel = 1;
-                        _player.pos = new Point2D { x = 1, y = 7 };
+                        player.pos = new Point2D { x = 1, y = 7 };
                     }
                     break;
                 case 1:
-                    if (_player.pos.x == 0 && _player.pos.y == 7)
+                    if (player.pos.x == 0 && player.pos.y == 7)
                     {
                         mapLevel = 0;
-                        _player.pos = new Point2D { x = 39, y = 7 };
+                        player.pos = new Point2D { x = 39, y = 7 };
                     }
-                    if (_player.pos.x == 37 && _player.pos.y == 3)
+                    if (player.pos.x == 37 && player.pos.y == 3)
                     {
                         mapLevel = 2;
-                        _player.pos = new Point2D {x = 37, y = 14 };
+                        player.pos = new Point2D {x = 37, y = 16 };
                     }
                     break;
                 case 2:
-                    if (_player.pos.x == 37 && _player.pos.y == 15)
+                    if (player.pos.x == 37 && player.pos.y == 17)
                     {
                         mapLevel = 1;
-                        _player.pos = new Point2D { x = 37, y = 4 };
+                        player.pos = new Point2D { x = 37, y = 4 };
                     }
                     break;
             }
+            if(mapLevel != previousLevel)
+            {
+                Console.Clear();
+                previousLevel = mapLevel;
+            }
+        }
+
+        private char[,] GetMapContent(int mapLevel)
+        {
+            if (mapLevel >= 0 && mapLevel < AllMapContents.Length)
+                return AllMapContents[mapLevel];
+            else
+                throw new IndexOutOfRangeException("Index is out of range.");
+        }
+
+        public bool InitialBoundaries(int x, int y, int levelNumber)
+        {
+            return x >= 0 && x < GetMapContent(levelNumber).GetLength(1) && y >= 0 && y < GetMapContent(levelNumber).GetLength(0) &&
+                GetMapContent(levelNumber)[y, x] != '#' && GetMapContent(levelNumber)[y, x] != '~' && GetMapContent(levelNumber)[y, x] != '^';
         }
     }
 }

@@ -17,22 +17,37 @@ namespace JourneyToTheMysticCave_Beta
         public Potion potion;
         public Money money;
         public Trap trap;
+        public Sword sword;
+        public Boss boss;
+        public Map map;
+        public LevelManager levelManager;
 
+        int columnCount;
+        int rowCount = 0;
+        int level;
 
-        public void Init(Player player, Ranger ranged, Mage mage, Melee melee, Boss boss, Potion potion, Money money, Trap trap, _GameStats gamestats)
+        public void Init(Player player, Ranger ranged, Mage mage, Melee melee, Boss boss, Potion potion, Money money, Trap trap, Sword sword, _GameStats gamestats, Map map, LevelManager levelManager)
         {
             this.player = player;
             this.ranged = ranged;
             this.mage = mage;
             this.melee = melee;
+            this.boss = boss;
             this.potion = potion;
             this.money = money;
             this.trap = trap;
+            this.sword = sword;
             this.gameStats = gamestats;
-
-
+            this.map = map;
+            this.levelManager = levelManager;
         }
 
+        public void Update()
+        {
+            columnCount = map.GetMapColumnCount() + 2;
+            level = levelManager.mapLevel;
+            rowCount = 0;
+        }
 
         public void Draw()
         {
@@ -41,39 +56,69 @@ namespace JourneyToTheMysticCave_Beta
 
         private void Legend() // displays legend on the bottom of the map.
         {
-            Console.WriteLine("+-----------------------------------------------------------+");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            Console.WriteLine("+-------------------------------+");
+            Console.SetCursorPosition(columnCount, rowCount++);
             Console.WriteLine("Map Legend:");
-            DisplaySymbolsInColumns(player.character, player.name);
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayChar(player.character, player.name);
+            Console.SetCursorPosition(columnCount, rowCount++);
+            if (level == 0)
+                DisplayChar(ranged.character, ranged.name);
+            if (level == 1)
+                DisplayChar(mage.character, mage.name);
+            if (level == 2)
+            {
+                DisplayInColumns(melee.character, melee.name);
+                DisplayChar(boss.character, boss.name);
+            }
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayInColumns(money.character, money.name);
+            DisplayInColumns(potion.character, potion.name);
+
             Console.WriteLine();
-            DisplaySymbolsInColumns(ranged.character, ranged.name);
-            DisplaySymbolsInColumns(mage.character, mage.name);
-            DisplaySymbolsInColumns(melee.character, melee.name);
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayInColumns(trap.character, trap.name);
+            DisplayInColumns(sword.character, sword.name);
+
             Console.WriteLine();
-            DisplaySymbolsInColumns(money.character, money.name);
-            DisplaySymbolsInColumns(potion.character, potion.name);
-            DisplaySymbolsInColumns(trap.character, trap.name);
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayInColumns('*', "Next Area");
+            DisplayInColumns('~', "Deep Water");
+
             Console.WriteLine();
-            DisplaySymbolsInColumns('*', "Next Area");
-            DisplaySymbolsInColumns('~', "Deep Water");
-            DisplaySymbolsInColumns('P', "Poison Spill");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayInColumns('P', "Poison Spill");
+            DisplayInColumns('^', "Mountains");
+
             Console.WriteLine();
-            DisplaySymbolsInColumns('^', "Mountains");
-            DisplaySymbolsInColumns('#', "Walls");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayInColumns('#', "Walls");
+
             Console.WriteLine();
-            Console.WriteLine("+-----------------------------------------------------------+");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            Console.WriteLine("+-------------------------------+");
         }
 
-        private void DisplaySymbolsInColumns(char symbol, string description)
+        private void DisplayChar(char symbol, string description)
+        {
+            MapColor(symbol);
+            Console.Write(symbol);
+            Console.ResetColor();
+            Console.Write($" = {description}\n");
+            Console.WriteLine();
+        }
+
+        private void DisplayInColumns(char symbol, string description)
         {
             MapColor(symbol);
             Console.Write(symbol);
             Console.ResetColor();
             Console.Write($" = {description}");
 
-            int spacesCount = 20 - description.Length; // Adjust this number based on your desired column width
+            int spacesCount = 15 - description.Length; // Adjust this number based on desired column width
 
-            // Add spaces to align the columns
-            for (int i = 0; i < spacesCount; i++)
+            for (int i = 0; i < spacesCount; i++)  // Add spaces to align the columns
             {
                 Console.Write(" ");
             }
@@ -94,6 +139,9 @@ namespace JourneyToTheMysticCave_Beta
                 case '~': // Water
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     Console.BackgroundColor = ConsoleColor.Blue;
+                    break;
+                case var _ when c == gameStats.SwordCharacter: // Sword (item)
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     break;
                 case var _ when c == gameStats.MoneyCharacter: // money (item)
                     Console.ForegroundColor = ConsoleColor.Black;

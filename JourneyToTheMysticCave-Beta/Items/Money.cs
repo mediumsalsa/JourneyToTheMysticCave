@@ -8,5 +8,6 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Money : Item
     {
+
     }
 }

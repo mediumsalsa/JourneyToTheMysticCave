@@ -8,8 +8,7 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class EnemyManager 
     {
-        private List<Enemy> enemies;
-        
+        public List<Enemy> enemies;
 
         public EnemyManager()
         {
@@ -33,9 +32,6 @@ namespace JourneyToTheMysticCave_Beta
         public int dy;
         public int newDx;
         public int newDy;
-
-        
-
 
         public void Init(Player player, Map map, Ranger ranger, Mage mage, Melee melee, Boss boss) //used for all enemies
         {

@@ -8,5 +8,7 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Potion : Item
     {
+        public int healAmount;
+
     }
 }

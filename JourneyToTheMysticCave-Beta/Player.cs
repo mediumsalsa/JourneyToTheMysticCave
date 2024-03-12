@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +51,7 @@ namespace JourneyToTheMysticCave_Beta
                 int newX = pos.x + dirX;
                 int newY = pos.y + dirY;
 
-                if(map.CheckBoundaries(newX,newY))
+                if (map.CheckBoundaries(newX, newY))
                 {
                     pos.x = newX;
                     pos.y = newY;
@@ -57,9 +59,10 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
+
         private void PlayerInput()
         {
-            ConsoleKeyInfo input = Console.ReadKey();
+            ConsoleKeyInfo input = Console.ReadKey(true); // Read key without displaying it
 
             dirX = 0;
             dirY = 0;
