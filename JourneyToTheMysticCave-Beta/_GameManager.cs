@@ -10,22 +10,15 @@ namespace JourneyToTheMysticCave_Beta
     {
         #region Declarations
         Map map = new Map();
+        _GameStats gameStats = new _GameStats();
         Player player = new Player();
         LevelManager levelManager = new LevelManager();
         LegendColors legendColors = new LegendColors();
-        _GameStats gameStats = new _GameStats();
-
-        Ranger ranger = new Ranger();
-        Mage mage = new Mage();
-        Melee melee = new Melee();
-        Boss boss = new Boss();
 
         Money money = new Money();
         Potion potion = new Potion();
         Trap trap = new Trap();
         Sword sword = new Sword();
-
-        public int rowCount;
 
         EnemyManager enemyManager = new EnemyManager();
         ItemManager itemManager = new ItemManager();
@@ -41,15 +34,18 @@ namespace JourneyToTheMysticCave_Beta
             map.Update();
             map.Draw();
             player.Draw();
+            legendColors.Update();
+
+
             while (true)
             {
                 Update();
-                rowCount = map.GetMapRowCount();
                 Draw();
 
-                Console.SetCursorPosition(0, 25);
-                Console.WriteLine(map.GetMapColumnCount()); 
-                Console.WriteLine(player.pos.x + "," + player.pos.y);
+                //Console.SetCursorPosition(0, 25);
+                //Console.WriteLine(player.damageAmount.ToString());
+                //Console.WriteLine(player.pos.x + "," + player.pos.y);
+
 
             }
         }
@@ -58,10 +54,10 @@ namespace JourneyToTheMysticCave_Beta
         {
             levelManager.Init(player);
             map.Init(levelManager, legendColors);
-            gameStats.Init(player, ranger, melee, mage, boss, money, potion, trap, sword, levelManager, enemyManager);
-            enemyManager.Init(player, map, ranger, mage, melee, boss);
-            legendColors.Init(player, ranger, mage, melee, boss, potion, money, trap, sword, gameStats, map, levelManager);
-            player.Init(map);
+            gameStats.Init(levelManager, enemyManager);
+            player.Init(map, gameStats);
+            legendColors.Init(gameStats, map, levelManager);
+            enemyManager.Init(gameStats);
         }
 
         private void Update()
@@ -78,7 +74,6 @@ namespace JourneyToTheMysticCave_Beta
         {
             map.Draw();
             player.Draw();
-            Console.SetCursorPosition(0, rowCount++);
             legendColors.Draw();
             enemyManager.Draw();
             //   itemManager.Draw();

@@ -9,6 +9,8 @@ namespace JourneyToTheMysticCave_Beta
     internal class Gamelog
     {
         public Player player;
+        public EnemyManager enemyManager;
+        public ItemManager itemManager;
         public Ranger[] ranger;
         public Mage[] mage;
         public Melee[] melee;
@@ -76,7 +78,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 if(sword.pickedUp)
                 {
-                    Console.Write($"{player.name} picked up sword, attack damage is now {player.damageAmount}\n");
+                    Console.Write($"{player.name} picked up sword, attack damage is now {player.damage}\n");
                     sword.pickedUp = false;
                 }
             }
@@ -106,7 +108,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 if (enemies[i].healthSystem.hurt)
                 {
-                    Console.Write($"Attacked {enemies[i].name}{i} - {player.damageAmount} damage\n");
+                    Console.Write($"Attacked {enemies[i].name}{i} - {player.damage} damage\n");
                     enemies[i].healthSystem.hurt = false;
                 }
             }

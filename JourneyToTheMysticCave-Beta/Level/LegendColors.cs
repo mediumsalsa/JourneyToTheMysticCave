@@ -10,15 +10,6 @@ namespace JourneyToTheMysticCave_Beta
     internal class LegendColors
     {
         public _GameStats gameStats;
-        public Player player;
-        public Ranger ranged;
-        public Mage mage;
-        public Melee melee;
-        public Potion potion;
-        public Money money;
-        public Trap trap;
-        public Sword sword;
-        public Boss boss;
         public Map map;
         public LevelManager levelManager;
 
@@ -26,17 +17,8 @@ namespace JourneyToTheMysticCave_Beta
         int rowCount = 0;
         int level;
 
-        public void Init(Player player, Ranger ranged, Mage mage, Melee melee, Boss boss, Potion potion, Money money, Trap trap, Sword sword, _GameStats gamestats, Map map, LevelManager levelManager)
+        public void Init(_GameStats gamestats, Map map, LevelManager levelManager)
         {
-            this.player = player;
-            this.ranged = ranged;
-            this.mage = mage;
-            this.melee = melee;
-            this.boss = boss;
-            this.potion = potion;
-            this.money = money;
-            this.trap = trap;
-            this.sword = sword;
             this.gameStats = gamestats;
             this.map = map;
             this.levelManager = levelManager;
@@ -61,25 +43,25 @@ namespace JourneyToTheMysticCave_Beta
             Console.SetCursorPosition(columnCount, rowCount++);
             Console.WriteLine("Map Legend:");
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayChar(player.character, player.name);
+            DisplayChar(gameStats.PlayerCharacter, gameStats.PlayerName);
             Console.SetCursorPosition(columnCount, rowCount++);
             if (level == 0)
-                DisplayChar(ranged.character, ranged.name);
+                DisplayChar(gameStats.RangedCharacter, gameStats.RangerName);
             if (level == 1)
-                DisplayChar(mage.character, mage.name);
+                DisplayChar(gameStats.MageCharacter, gameStats.MageName);
             if (level == 2)
             {
-                DisplayInColumns(melee.character, melee.name);
-                DisplayChar(boss.character, boss.name);
+                DisplayInColumns(gameStats.MeleeCharacter, gameStats.MeleeName);
+                DisplayChar(gameStats.BossCharacter, gameStats.BossName);
             }
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns(money.character, money.name);
-            DisplayInColumns(potion.character, potion.name);
+            DisplayInColumns(gameStats.MoneyCharacter, gameStats.MoneyName);
+            DisplayInColumns(gameStats.PotionCharacter, gameStats.PotionName);
 
             Console.WriteLine();
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns(trap.character, trap.name);
-            DisplayInColumns(sword.character, sword.name);
+            DisplayInColumns(gameStats.TrapCharacter, gameStats.TrapName);
+            DisplayInColumns(gameStats.SwordCharacter, gameStats.SwordName);
 
             Console.WriteLine();
             Console.SetCursorPosition(columnCount, rowCount++);

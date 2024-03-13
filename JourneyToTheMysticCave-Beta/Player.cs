@@ -17,17 +17,23 @@ namespace JourneyToTheMysticCave_Beta
         public bool itemPickedUp = false;
 
         Map map;
+        _GameStats gameStats;
 
 
         public Player()
         {
             healthSystem = new HealthSystem();
-            healthSystem.health = health;
         }
 
-        public void Init(Map map)
+        public void Init(Map map, _GameStats gameStats)
         {
             this.map = map;
+            this.gameStats = gameStats;
+            
+            healthSystem.health = gameStats.PlayerHealth;
+            character = gameStats.PlayerCharacter;
+            pos = gameStats.PlayerPos;
+            damage = gameStats.PlayerDamage;
         }
 
         public void Update()

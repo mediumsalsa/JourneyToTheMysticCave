@@ -10,11 +10,22 @@ namespace JourneyToTheMysticCave_Beta
     {
         Random random = new Random();
 
-        public Boss()
+        public Boss(int count, char character, string name, int damage, int health, Point2D pos) : base(count, character, name, damage, health, pos)
         {
-            healthSystem = new HealthSystem();
-            randomHealth = random.Next(minHp, maxHp);
-            healthSystem.health = randomHealth;
+            this.count = count;
+            this.character = character;
+            this.name = name;
+            this.damage = damage;
+            this.health = health;
+            this.pos = pos;
+        }
+
+        public override void Update()
+        {
+        }
+
+        public override void Draw()
+        {
         }
     }
 }

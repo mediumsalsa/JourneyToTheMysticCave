@@ -12,38 +12,95 @@ namespace JourneyToTheMysticCave_Beta
         Player player;
         EnemyManager enemyManager;
         Item allItems;
-        Ranger ranger;
-        Melee melee;
-        Mage mage;
-        Boss boss;
-        Money money;
-        Potion potion;
-        Trap trap;
-        Sword sword;
         LevelManager levelManager;
 
+        Random random = new Random();
+
+        #region PlayerStat Declarations
+        public string PlayerName { get; set; }
         public char PlayerCharacter { get; set; }
-        public char RangedCharacter {  get; set; }
+        public int PlayerDamage { get; set; }
+        public int PlayerHealth { get; set; }
+        public Point2D PlayerPos { get; set; }
+
+        #endregion
+
+        #region RangerStat Declarations
+        public int RangerCount { get; set; }
+        public char RangedCharacter { get; set; }
+        public string RangerName { get; set; }
+        public int RangerDamage { get; set; }
+        public int RangerHealth { get; set; }
+        public Point2D RangerPos { get; set; }
+        private int rangerMaxHp;
+        private int rangerMinHp;
+        #endregion
+
+        #region MeleeStat Declarations
+        public int MeleeCount { get; set; }
         public char MeleeCharacter { get; set; }
+        public string MeleeName { get; set; }
+        public int MeleeDamage { get; set; }
+        public int MeleeHealth { get; set; }
+        public Point2D MeleePos { get; set; }
+
+        private int meleeMaxHp;
+        private int meleeMinHp;
+        #endregion
+
+        #region BossStat Declarations
+        public int BossCount { get; set; }
         public char BossCharacter { get; set; }
+        public string BossName { get; set; }
+        public int BossDamage { get; set; }
+        public int BossHealth { get; set; }
+        public Point2D BossPos { get; set; }
+        #endregion
+
+        #region MageStat Declarations
+        public int MageCount { get; set; }
         public char MageCharacter { get; set; }
+        public string MageName { get; set; }
+        public int MageDamage { get; set; }
+        public int MageHealth { get; set; }
+        public Point2D MagePos { get; set; }
+        private int mageMaxHp;
+        private int mageMinHp;
+        #endregion
+
+        #region MoneyStat Declarations
+        public int MoneyCount { get; set; }
         public char MoneyCharacter { get; set; }
+        public string MoneyName { get; set; }
+        public Point2D MoneyPos { get; set; }
+        #endregion
+
+        #region PotionStat Declarations
+        public int PotionCount { get; set; }
         public char PotionCharacter { get; set; }
+        public string PotionName { get; set; }
+        public int PotionHeal { get; set; }
+        public Point2D PotionPos { get; set; }
+        #endregion
+
+        #region TrapStat Declarations
+        public int TrapCount { get; set; }
         public char TrapCharacter { get; set; }
+        public string TrapName { get; set; }
+        public int TrapDamage { get; set; }
+        public Point2D TrapPos { get; set; }
+        #endregion
+
+        #region SwordStat Declarations
+        public int SwordCount { get; set; }
         public char SwordCharacter { get; set; }
+        public string SwordName { get; set; }
+        public int SwordMultiplier { get; set; }
+        public Point2D SwordPos { get; set; }
+        #endregion
 
-
-        public void Init(Player player, Ranger ranger, Melee melee, Mage mage, Boss boss, Money money, Potion potion, Trap trap, Sword sword, LevelManager levelManager, EnemyManager enemyManager)
+        public void Init(LevelManager levelManager, EnemyManager enemyManager)
         {
-            this.player = player;
-            this.ranger = ranger;
-            this.melee = melee;
-            this.mage = mage;
-            this.boss = boss;
-            this.money = money;
-            this.potion = potion;
-            this.trap = trap;
-            this.sword = sword;
             this.levelManager = levelManager;
             this.enemyManager = enemyManager;
 
@@ -53,105 +110,93 @@ namespace JourneyToTheMysticCave_Beta
         public void GameConfig()
         {
             //Player Configs/Stats
-            player.character = 'H';
-            PlayerCharacter = player.character;
-            player.name = "Hero";
-            player.health = 100;
-            player.damageAmount = 10;
-            player.pos = new Point2D { x = 2, y = 5 };
-            
+            PlayerCharacter = 'H';
+            PlayerName = "Hero";
+            PlayerHealth = 100;
+            PlayerDamage = 10;
+            PlayerPos = new Point2D { x = 2, y = 5 };
+
             // Ranger Configs/Stats
-            ranger.count = 3;
-            ranger.character = 'R';
-            RangedCharacter = ranger.character;
-            ranger.name = "Ranger";
-            ranger.damageAmount = 3;
-            ranger.maxHp = 60;
-            ranger.minHp = 35;
-            PlaceCharacters(0);
+            RangerCount = 3;
+            RangedCharacter = 'R';
+            RangerName = "Ranger";
+            RangerDamage = 3;
+            rangerMinHp = 35;
+            rangerMaxHp = 60;
+            RangerHealth = random.Next(rangerMinHp, rangerMaxHp);
+            RangerPos = PlaceCharacters(0, random);
 
             // Mage Configs/Stats
-            mage.count = 3;
-            mage.character = 'M';
-            MageCharacter = mage.character;
-            mage.name = "Mage";
-            mage.damageAmount = 3;
-            mage.maxHp = 65;
-            mage.minHp = 40;
-            PlaceCharacters(1);
+            MageCount = 3;
+            MageCharacter = 'M';
+            MageName = "Mage";
+            MageDamage = 3;
+            mageMinHp = 40;
+            mageMaxHp = 65;
+            MageHealth = random.Next(mageMinHp, mageMaxHp);
+            MagePos = PlaceCharacters(1, random);
 
-            // Slime Configs/Stats
-            melee.count = 30;
-            melee.character = 'S';
-            MeleeCharacter = melee.character;
-            melee.name = "Slime";
-            melee.damageAmount = 1;
-            melee.maxHp = 50;
-            melee.minHp = 25;
-            PlaceCharacters(2);
+            // Melee Configs/Stats
+            MeleeCount = 30;
+            MeleeCharacter = 'S';
+            MeleeName = "Slime";
+            MeleeDamage = 1;
+            meleeMinHp = 2;
+            meleeMaxHp = 10;
+            MeleeHealth = random.Next(meleeMinHp, meleeMaxHp);
+            MeleePos = PlaceCharacters(2, random);
 
             // Boss Configs/Stats
-            boss.count = 1;
-            boss.character = 'B';
-            BossCharacter = boss.character;
-            boss.name = "Boss";
-            boss.damageAmount = 6;
-            boss.maxHp = 120;
-            boss.minHp = 80;
-            PlaceCharacters(2);
+            BossCount = 1;
+            BossCharacter = 'B';
+            BossName = "Boss";
+            BossDamage = 6;
+            BossPos = PlaceCharacters(2, random);
 
             // Money Configs
-            money.count = 4;
-            money.character = '$';
-            money.name = "Money";
-            MoneyCharacter = money.character;
+            MoneyCount = 4;
+            MoneyCharacter = '$';
+            MoneyName = "Money";
 
             // Potion Configs
-            potion.count = 4;
-            potion.healAmount = 6;
-            potion.character = '☼';
-            potion.name = "Potion";
-            PotionCharacter = potion.character;
+            PotionCount = 4;
+            PotionCharacter = '☼';
+            PotionName = "Potion";
+            PotionHeal = 6;
 
             // Trap Configs
-            trap.count = 4;
-            trap.character = 'T';
-            trap.name = "Trap";
-            TrapCharacter = trap.character;
+            TrapCount = 4;
+            TrapCharacter = 'T';
+            TrapName = "Trap";
+            TrapDamage = 4;
 
             // Sword Configs
-            sword.count = 3;
-            sword.character = 't';
-            sword.name = "Sword";
-            SwordCharacter = sword.character;
+            SwordCount = 3;
+            SwordCharacter = 't';
+            SwordName = "Sword";
+            SwordMultiplier = 2;
         }
 
-        private void PlaceCharacters(int levelNumber)
+
+        private Point2D PlaceCharacters(int levelNumber, Random random)
         {
-            Random random = new Random();
-            foreach (Enemy enemy in enemyManager.enemies)
+            int x, y;
+
+            do
             {
-                int x, y;
+                x = random.Next(0, levelManager.AllMapContents[levelNumber].GetLength(1));
+                y = random.Next(0, levelManager.AllMapContents[levelNumber].GetLength(0));
+            } while (!CheckInitialPlacement(x, y, levelNumber));
 
-                if ((levelNumber == 0 && enemy is Ranger) ||
-                    (levelNumber == 1 && enemy is Mage) ||
-                    (levelNumber == 2 && (enemy is Melee || enemy is Boss)))
-                {
-                    do
-                    {
-                        x = random.Next(0, levelManager.AllMapContents[levelNumber].GetLength(1));
-                        y = random.Next(0, levelManager.AllMapContents[levelNumber].GetLength(0));
-                    } while (!CheckInitialPlacement(x, y, levelNumber));
-
-                    enemy.pos = new Point2D { x = x, y = y };
-                }
-            }
+            return new Point2D { x = x, y = y };
         }
+
 
         private bool CheckInitialPlacement(int x, int y, int levelNumber)
         {
-            return levelManager.InitialBoundaries(x,y,levelNumber);
+            return levelManager.InitialBoundaries(x, y, levelNumber);
         }
+
 
         //private bool IsEmpty(int x, int y, int levelNumber)
         //{
