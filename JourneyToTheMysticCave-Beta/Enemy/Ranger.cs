@@ -10,14 +10,13 @@ namespace JourneyToTheMysticCave_Beta
     {
         Random random = new Random();
 
-        public Ranger(int count, char character, string name, int damage, int health, Point2D pos) : base(count, character, name, damage, health, pos)
+        public Ranger(int count, char character, string name, int damage, int health) : base(count, character, name, damage, health)
         {
             this.count = count;
             this.character = character;
             this.name = name;
             this.damage = damage;
             this.health = health;
-            this.pos = pos;
         }
 
         public override void Update()

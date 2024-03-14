@@ -32,8 +32,7 @@ namespace JourneyToTheMysticCave_Beta
         public void Gameplay()
         {
             map.Update();
-            map.Draw();
-            player.Draw();
+            Draw();
             legendColors.Update();
 
 
@@ -45,8 +44,6 @@ namespace JourneyToTheMysticCave_Beta
                 //Console.SetCursorPosition(0, 25);
                 //Console.WriteLine(player.damageAmount.ToString());
                 //Console.WriteLine(player.pos.x + "," + player.pos.y);
-
-
             }
         }
 
@@ -57,7 +54,7 @@ namespace JourneyToTheMysticCave_Beta
             gameStats.Init(levelManager, enemyManager);
             player.Init(map, gameStats);
             legendColors.Init(gameStats, map, levelManager);
-            enemyManager.Init(gameStats);
+            enemyManager.Init(gameStats, levelManager);
         }
 
         private void Update()

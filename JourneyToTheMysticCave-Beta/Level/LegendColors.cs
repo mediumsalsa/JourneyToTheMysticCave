@@ -27,12 +27,14 @@ namespace JourneyToTheMysticCave_Beta
         public void Update()
         {
             columnCount = map.GetMapColumnCount() + 2;
-            level = levelManager.mapLevel;
             rowCount = 0;
+            level = levelManager.mapLevel;
         }
 
         public void Draw()
         {
+            columnCount = map.GetMapColumnCount() + 2;
+            rowCount = 0;
             Legend();
         }
 

@@ -13,7 +13,6 @@ namespace JourneyToTheMysticCave_Beta
         EnemyManager enemyManager;
         Item allItems;
         LevelManager levelManager;
-
         Random random = new Random();
 
         #region PlayerStat Declarations
@@ -31,9 +30,18 @@ namespace JourneyToTheMysticCave_Beta
         public string RangerName { get; set; }
         public int RangerDamage { get; set; }
         public int RangerHealth { get; set; }
-        public Point2D RangerPos { get; set; }
         private int rangerMaxHp;
         private int rangerMinHp;
+        #endregion
+
+        #region MageStat Declarations
+        public int MageCount { get; set; }
+        public char MageCharacter { get; set; }
+        public string MageName { get; set; }
+        public int MageDamage { get; set; }
+        public int MageHealth { get; set; }
+        private int mageMaxHp;
+        private int mageMinHp;
         #endregion
 
         #region MeleeStat Declarations
@@ -42,8 +50,6 @@ namespace JourneyToTheMysticCave_Beta
         public string MeleeName { get; set; }
         public int MeleeDamage { get; set; }
         public int MeleeHealth { get; set; }
-        public Point2D MeleePos { get; set; }
-
         private int meleeMaxHp;
         private int meleeMinHp;
         #endregion
@@ -54,25 +60,12 @@ namespace JourneyToTheMysticCave_Beta
         public string BossName { get; set; }
         public int BossDamage { get; set; }
         public int BossHealth { get; set; }
-        public Point2D BossPos { get; set; }
-        #endregion
-
-        #region MageStat Declarations
-        public int MageCount { get; set; }
-        public char MageCharacter { get; set; }
-        public string MageName { get; set; }
-        public int MageDamage { get; set; }
-        public int MageHealth { get; set; }
-        public Point2D MagePos { get; set; }
-        private int mageMaxHp;
-        private int mageMinHp;
         #endregion
 
         #region MoneyStat Declarations
         public int MoneyCount { get; set; }
         public char MoneyCharacter { get; set; }
         public string MoneyName { get; set; }
-        public Point2D MoneyPos { get; set; }
         #endregion
 
         #region PotionStat Declarations
@@ -80,7 +73,6 @@ namespace JourneyToTheMysticCave_Beta
         public char PotionCharacter { get; set; }
         public string PotionName { get; set; }
         public int PotionHeal { get; set; }
-        public Point2D PotionPos { get; set; }
         #endregion
 
         #region TrapStat Declarations
@@ -88,7 +80,6 @@ namespace JourneyToTheMysticCave_Beta
         public char TrapCharacter { get; set; }
         public string TrapName { get; set; }
         public int TrapDamage { get; set; }
-        public Point2D TrapPos { get; set; }
         #endregion
 
         #region SwordStat Declarations
@@ -96,7 +87,6 @@ namespace JourneyToTheMysticCave_Beta
         public char SwordCharacter { get; set; }
         public string SwordName { get; set; }
         public int SwordMultiplier { get; set; }
-        public Point2D SwordPos { get; set; }
         #endregion
 
         public void Init(LevelManager levelManager, EnemyManager enemyManager)
@@ -124,7 +114,7 @@ namespace JourneyToTheMysticCave_Beta
             rangerMinHp = 35;
             rangerMaxHp = 60;
             RangerHealth = random.Next(rangerMinHp, rangerMaxHp);
-            RangerPos = PlaceCharacters(0, random);
+            
 
             // Mage Configs/Stats
             MageCount = 3;
@@ -134,7 +124,6 @@ namespace JourneyToTheMysticCave_Beta
             mageMinHp = 40;
             mageMaxHp = 65;
             MageHealth = random.Next(mageMinHp, mageMaxHp);
-            MagePos = PlaceCharacters(1, random);
 
             // Melee Configs/Stats
             MeleeCount = 30;
@@ -144,14 +133,12 @@ namespace JourneyToTheMysticCave_Beta
             meleeMinHp = 2;
             meleeMaxHp = 10;
             MeleeHealth = random.Next(meleeMinHp, meleeMaxHp);
-            MeleePos = PlaceCharacters(2, random);
 
             // Boss Configs/Stats
             BossCount = 1;
             BossCharacter = 'B';
             BossName = "Boss";
             BossDamage = 6;
-            BossPos = PlaceCharacters(2, random);
 
             // Money Configs
             MoneyCount = 4;
@@ -178,7 +165,7 @@ namespace JourneyToTheMysticCave_Beta
         }
 
 
-        private Point2D PlaceCharacters(int levelNumber, Random random)
+        public Point2D PlaceCharacters(int levelNumber, Random random)
         {
             int x, y;
 
