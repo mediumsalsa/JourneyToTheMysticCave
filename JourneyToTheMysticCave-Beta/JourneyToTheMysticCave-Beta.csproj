@@ -50,6 +50,7 @@
     <Compile Include="Gamelog.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="HealthSystem.cs" />
+    <Compile Include="HUD.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemManager.cs" />
     <Compile Include="Items\Sword.cs" />

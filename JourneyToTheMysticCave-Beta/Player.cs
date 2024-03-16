@@ -18,6 +18,7 @@ namespace JourneyToTheMysticCave_Beta
 
         Map map;
         _GameStats gameStats;
+        LegendColors legendColors;
 
 
         public Player()
@@ -25,10 +26,11 @@ namespace JourneyToTheMysticCave_Beta
             healthSystem = new HealthSystem();
         }
 
-        public void Init(Map map, _GameStats gameStats)
+        public void Init(Map map, _GameStats gameStats, LegendColors legendColors)
         {
             this.map = map;
             this.gameStats = gameStats;
+            this.legendColors = legendColors;
             
             healthSystem.health = gameStats.PlayerHealth;
             character = gameStats.PlayerCharacter;
@@ -44,7 +46,9 @@ namespace JourneyToTheMysticCave_Beta
         public void Draw()
         {
             Console.SetCursorPosition(pos.x, pos.y);
+            legendColors.MapColor(character);
             Console.Write(character);
+            Console.ResetColor();
             Console.CursorVisible = false;
         }
 

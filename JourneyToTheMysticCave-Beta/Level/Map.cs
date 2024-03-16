@@ -12,13 +12,15 @@ namespace JourneyToTheMysticCave_Beta
         //game entities
         public LevelManager levelManager;
         public LegendColors legendColors;
+        public EnemyManager enemyManager;
 
         char[,] currentMap;
 
-        public void Init(LevelManager levelManager, LegendColors legendColors)
+        public void Init(LevelManager levelManager, LegendColors legendColors, EnemyManager enemyManager)
         {
             this.levelManager = levelManager;
             this.legendColors = legendColors;
+            this.enemyManager = enemyManager;
         }
 
         public void Update()
@@ -61,5 +63,17 @@ namespace JourneyToTheMysticCave_Beta
         {
             return currentMap[y, x] != '#' && currentMap[y, x] != '^';
         }
+
+        //public bool IsEmptySpace(int x, int y)
+        //{
+        //    foreach (Enemy enemy in enemyManager.enemies)
+        //    {
+        //        switch(levelManager.mapLevel)
+        //        {
+        //            case 0:
+        //        }
+
+        //    }
+        //}
     }
 }

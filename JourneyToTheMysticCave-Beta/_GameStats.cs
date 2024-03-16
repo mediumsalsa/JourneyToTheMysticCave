@@ -147,8 +147,8 @@ namespace JourneyToTheMysticCave_Beta
 
             // Potion Configs
             PotionCount = 4;
-            PotionCharacter = '☼';
             PotionName = "Potion";
+            PotionCharacter = '6';
             PotionHeal = 6;
 
             // Trap Configs

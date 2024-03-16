@@ -144,6 +144,9 @@ namespace JourneyToTheMysticCave_Beta
                 case var _ when c == gameStats.MageCharacter: // Mage
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     break;
+                case var _ when c == gameStats.BossCharacter: // boss - enemy
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    break;
                 case var _ when c == gameStats.PlayerCharacter: // (Player)
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     break;

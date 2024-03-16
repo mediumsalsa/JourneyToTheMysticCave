@@ -10,15 +10,18 @@ namespace JourneyToTheMysticCave_Beta
     internal abstract class Enemy : GameEntity
     {
         protected int count;
+        Player player;
+
        
         // Constructor
-        public Enemy(int count, char character, string name, int damage, int health)
+        public Enemy(int count, char character, string name, int damage, int health, Player player)
         {
             this.count = count;
             this.character = character;
             this.name = name;
             this.damage = damage;
             this.health = health;
+            this.player = player;
         }
 
         // Movement
@@ -30,9 +33,9 @@ namespace JourneyToTheMysticCave_Beta
         public abstract void Draw();
         public abstract void Update();
 
-        //public int PlayerDistance() //calculates distance to player
-        //{
-        //    return Math.Abs(pos.x - player.pos.x) + Math.Abs(pos.y - player.pos.y);
-        //}
+        public int PlayerDistance() //calculates distance to player
+        {
+            return Math.Abs(pos.x - player.pos.x) + Math.Abs(pos.y - player.pos.y);
+        }
     }
 }

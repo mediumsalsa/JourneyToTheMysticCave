@@ -11,9 +11,11 @@ namespace JourneyToTheMysticCave_Beta
         #region Declarations
         Map map = new Map();
         _GameStats gameStats = new _GameStats();
+        Gamelog gamelog = new Gamelog();
         Player player = new Player();
         LevelManager levelManager = new LevelManager();
         LegendColors legendColors = new LegendColors();
+        HUD hUD = new HUD();
 
         Money money = new Money();
         Potion potion = new Potion();
@@ -50,11 +52,13 @@ namespace JourneyToTheMysticCave_Beta
         private void Init()
         {
             levelManager.Init(player);
-            map.Init(levelManager, legendColors);
+            map.Init(levelManager, legendColors, enemyManager);
             gameStats.Init(levelManager, enemyManager);
-            player.Init(map, gameStats);
+            player.Init(map, gameStats, legendColors);
             legendColors.Init(gameStats, map, levelManager);
-            enemyManager.Init(gameStats, levelManager);
+            enemyManager.Init(gameStats, levelManager, legendColors, gamelog, player);
+            gamelog.Init(player, enemyManager, itemManager, gameStats, map);
+            hUD.Init(player, enemyManager, itemManager, map);
         }
 
         private void Update()
@@ -64,6 +68,8 @@ namespace JourneyToTheMysticCave_Beta
             map.Update();
             legendColors.Update();
             enemyManager.Update();
+            hUD.Update();
+            gamelog.Update();
             // itemManager.Update();
         }
 
@@ -73,6 +79,8 @@ namespace JourneyToTheMysticCave_Beta
             player.Draw();
             legendColors.Draw();
             enemyManager.Draw();
+            hUD.Draw();
+            gamelog.Draw();
             //   itemManager.Draw();
         }
     }
