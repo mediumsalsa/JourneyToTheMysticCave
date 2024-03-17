@@ -38,7 +38,7 @@ namespace JourneyToTheMysticCave_Beta
             Console.WriteLine("+---------------------------+");
             Console.WriteLine($"Player Health: {player.health}");
             Console.WriteLine($"Player Damage: {player.damage}");
-            Console.WriteLine($"Last Enemy Attacked - enemy: - {lastEnemyAttacked}"); // this should show the last enemy attacked and how much health they have left
+            Console.WriteLine($"Last Enemy Attacked - {player.GetLastEnountered()}"); // this should show the last enemy attacked and how much health they have left
             Console.Write("Money Picked Up:");
             // need to add each amount of money in the item manager
             Console.WriteLine();

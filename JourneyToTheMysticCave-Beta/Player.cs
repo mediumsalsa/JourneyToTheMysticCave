@@ -15,10 +15,18 @@ namespace JourneyToTheMysticCave_Beta
 
         public bool attackedEnemy = false;
         public bool itemPickedUp = false;
+        private Enemy lastEncountered;
+
+        public Enemy GetLastEnountered()
+        {
+            return lastEncountered;
+        }
 
         Map map;
         _GameStats gameStats;
+        EnemyManager enemyManager;
         LegendColors legendColors;
+        LevelManager levelManager;
 
 
         public Player()
@@ -26,12 +34,14 @@ namespace JourneyToTheMysticCave_Beta
             healthSystem = new HealthSystem();
         }
 
-        public void Init(Map map, _GameStats gameStats, LegendColors legendColors)
+        public void Init(Map map, _GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager)
         {
             this.map = map;
             this.gameStats = gameStats;
             this.legendColors = legendColors;
-            
+            this.enemyManager = enemyManager;
+            this.levelManager = levelManager;
+
             healthSystem.health = gameStats.PlayerHealth;
             character = gameStats.PlayerCharacter;
             pos = gameStats.PlayerPos;
@@ -63,12 +73,17 @@ namespace JourneyToTheMysticCave_Beta
 
                 if (map.CheckBoundaries(newX, newY))
                 {
-                    pos.x = newX;
-                    pos.y = newY;
+                    lastEncountered = GetEnemyAtPosition(newX, newY);
+                    if (lastEncountered == null)
+                    {
+                        pos.x = newX;
+                        pos.y = newY;
+                    }
+                    else
+                        AttackEnemy(lastEncountered);
                 }
             }
         }
-
 
         private void PlayerInput()
         {
@@ -109,6 +124,36 @@ namespace JourneyToTheMysticCave_Beta
                     System.Environment.Exit(0);
                     return;
             }
+        }
+
+
+        private Enemy GetEnemyAtPosition(int x, int y)
+        {
+            foreach (Enemy enemy in enemyManager.enemies)
+            {
+                if(enemy is Ranger && levelManager.mapLevel == 0)
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return enemy;
+                }
+                if(enemy is Mage && levelManager.mapLevel == 1)
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return enemy;
+                }
+                if(enemy is Melee && levelManager.mapLevel == 2)
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return enemy;
+                }
+            }
+            return null; // Return null if no enemy is found at the position
+        }
+
+        private void AttackEnemy(Enemy enemy)
+        {
+            enemy.healthSystem.TakeDamage(damage); // this is killing the enemy??? why do they disappear?!
+            //add log string here.
         }
     }
 }

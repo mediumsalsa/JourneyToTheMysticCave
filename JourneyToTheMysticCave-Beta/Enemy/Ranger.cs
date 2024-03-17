@@ -19,6 +19,7 @@ namespace JourneyToTheMysticCave_Beta
             this.character = character;
             this.name = name;
             this.damage = damage;
+            healthSystem = new HealthSystem();
             this.health = health;
             this.legendColors = legendColors;
             this.player = player;
@@ -27,15 +28,46 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Update()
         {
+            if (!healthSystem.mapDead)
+            {
+                Movement();
+            }
         }
 
         public override void Draw()
         {
-            Console.SetCursorPosition(pos.x, pos.y);
-            legendColors.MapColor(character);
-            Console.Write(character.ToString());
-            Console.ResetColor();
-            Console.CursorVisible = false;
+            if (!healthSystem.mapDead)
+            {
+                Console.SetCursorPosition(pos.x, pos.y);
+                legendColors.MapColor(character);
+                Console.Write(character.ToString());
+                Console.ResetColor();
+                Console.CursorVisible = false;
+            }
+        }
+
+        private void Movement()
+        {
+            if (!healthSystem.mapDead)
+            {
+                if (PlayerDistance() < 10 && PlayerDistance() >= 3)
+                {
+                    dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
+                    dy = Math.Sign(player.pos.y - pos.y);
+
+                    newDx = pos.x + dx;
+                    newDy = pos.y + dy;
+
+                }
+                if (PlayerDistance() <= 4)
+                    AttackPlayer();
+            }
+        }
+
+        private void AttackPlayer()
+        {
+            player.healthSystem.TakeDamage(damage);
+            log.enemyAttack = $"by Ranger arrow - {damage} damage";
         }
     }
 }

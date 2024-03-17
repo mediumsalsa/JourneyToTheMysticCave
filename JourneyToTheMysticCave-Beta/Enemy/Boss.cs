@@ -19,6 +19,7 @@ namespace JourneyToTheMysticCave_Beta
             this.character = character;
             this.name = name;
             this.damage = damage;
+            healthSystem = new HealthSystem();
             this.health = health;
             this.legendColors = legendColors;
             this.player = player;

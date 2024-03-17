@@ -54,7 +54,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Draw()
         {
-            rowCount = map.GetMapRowCount() + 9;
+            rowCount = map.GetMapRowCount() + 8;
             columnCount = 0;
             Console.SetCursorPosition(columnCount, rowCount);
             Console.Write("Game Log:\n");
@@ -110,7 +110,7 @@ namespace JourneyToTheMysticCave_Beta
         {
             if(player.healthSystem.hurt)
             {
-                Console.Write($"{player.name} was attacked by {enemyAttack} \n"); // might need to fix this?
+                Console.Write(player.name + "was attacked by " + enemyAttack + "\n");
                 player.healthSystem.hurt = false;
                 enemyAttack = null;
             }
