@@ -14,6 +14,7 @@ namespace JourneyToTheMysticCave_Beta
         Gamelog log;
         Player player;
         Random random = new Random();
+        Map map;
         public List<Enemy> enemies;
 
         public EnemyManager()
@@ -21,18 +22,19 @@ namespace JourneyToTheMysticCave_Beta
             enemies = new List<Enemy>();
         }
 
-        public void Init(_GameStats stats, LevelManager levelManager, LegendColors legendColors, Gamelog log, Player player)
+        public void Init(_GameStats stats, LevelManager levelManager, LegendColors legendColors, Gamelog log, Player player, Map map)
         {
             this.stats = stats;
             this.levelManager = levelManager;
             this.legendColors = legendColors;
             this.log = log;
             this.player = player;
+            this.map = map;
 
             for (int i = 0; i < stats.RangerCount; i++)
                 enemies.Add(new Ranger(stats.RangerCount, stats.RangedCharacter, stats.RangerName, stats.RangerDamage, stats.RangerHealth, legendColors, player, log));
             for (int i = 0; i < stats.MageCount; i++)
-                enemies.Add(new Mage(stats.MageCount, stats.MageCharacter, stats.MageName, stats.MageDamage, stats.MageHealth, legendColors, player, log));
+                enemies.Add(new Mage(stats.MageCount, stats.MageCharacter, stats.MageName, stats.MageDamage, stats.MageHealth, legendColors, player, log, map));
             for (int i = 0; i < stats.MeleeCount; i++)
                 enemies.Add(new Melee(stats.MeleeCount, stats.MeleeCharacter, stats.MeleeName, stats.MeleeDamage, stats.MeleeHealth, legendColors, player, log));
             for (int i = 0; i < stats.BossCount; i++)

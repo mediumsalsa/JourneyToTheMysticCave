@@ -54,7 +54,7 @@ namespace JourneyToTheMysticCave_Beta
             return currentMap.GetLength(1);
         }
 
-        private char[,] GetCurrentMapContent()
+        public char[,] GetCurrentMapContent()
         {
             return levelManager.AllMapContents[levelManager.mapLevel];
         }

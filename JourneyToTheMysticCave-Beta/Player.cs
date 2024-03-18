@@ -81,7 +81,7 @@ namespace JourneyToTheMysticCave_Beta
                         pos.y = newY;
                     }
                     else
-                        AttackEnemy(lastEncountered);
+                        AttackEnemy();
                 }
             }
         }
@@ -151,9 +151,9 @@ namespace JourneyToTheMysticCave_Beta
             return null;
         }
 
-        private void AttackEnemy(Enemy enemy)
+        private void AttackEnemy()
         {
-            enemy.healthSystem.TakeDamage(damage);
+            lastEncountered.healthSystem.TakeDamage(damage);
             //add log string here.
         }
     }

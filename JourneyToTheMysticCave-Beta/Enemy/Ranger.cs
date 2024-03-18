@@ -30,7 +30,7 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (!healthSystem.mapDead)
             {
-                //Movement();
+                Movement();
             }
             else
                 pos = new Point2D { x = 0, y = 0 };
@@ -45,7 +45,6 @@ namespace JourneyToTheMysticCave_Beta
                 Console.Write(character.ToString());
                 Console.ResetColor();
             }
-
             Console.CursorVisible = false;
         }
 

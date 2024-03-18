@@ -28,16 +28,29 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Update()
         {
-
+            if (!healthSystem.mapDead)
+            {
+                Movement();
+            }
+            else
+                pos = new Point2D { x = 0, y = 0 };
         }
 
         public override void Draw()
         {
-            Console.SetCursorPosition(pos.x, pos.y);
-            legendColors.MapColor(character);
-            Console.Write(character);
-            Console.ResetColor();
+            if (!healthSystem.mapDead)
+            {
+                Console.SetCursorPosition(pos.x, pos.y);
+                legendColors.MapColor(character);
+                Console.Write(character.ToString());
+                Console.ResetColor();
+            }
             Console.CursorVisible = false;
+        }
+
+        private void Movement()
+        {
+
         }
     }
 }
