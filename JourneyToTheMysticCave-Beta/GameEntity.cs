@@ -10,6 +10,5 @@ namespace JourneyToTheMysticCave_Beta
     {
         public int damage;
         public HealthSystem healthSystem;
-        public int health;
     }
 }

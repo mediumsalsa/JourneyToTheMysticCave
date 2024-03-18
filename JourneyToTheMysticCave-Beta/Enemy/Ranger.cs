@@ -13,14 +13,14 @@ namespace JourneyToTheMysticCave_Beta
         Gamelog log;
         LegendColors legendColors;
 
-        public Ranger(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, health, player)
+        public Ranger(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, player)
         {
             this.count = count;
             this.character = character;
             this.name = name;
             this.damage = damage;
             healthSystem = new HealthSystem();
-            this.health = health;
+            healthSystem.health = health;
             this.legendColors = legendColors;
             this.player = player;
             this.log = log;
@@ -30,8 +30,10 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (!healthSystem.mapDead)
             {
-                Movement();
+                //Movement();
             }
+            else
+                pos = new Point2D { x = 0, y = 0 };
         }
 
         public override void Draw()
@@ -42,8 +44,9 @@ namespace JourneyToTheMysticCave_Beta
                 legendColors.MapColor(character);
                 Console.Write(character.ToString());
                 Console.ResetColor();
-                Console.CursorVisible = false;
             }
+
+            Console.CursorVisible = false;
         }
 
         private void Movement()

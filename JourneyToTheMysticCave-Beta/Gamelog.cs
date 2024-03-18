@@ -110,10 +110,11 @@ namespace JourneyToTheMysticCave_Beta
         {
             if(player.healthSystem.hurt)
             {
-                Console.Write(player.name + "was attacked by " + enemyAttack + "\n");
+                Console.Write($"{player.name} was attacked by {enemyAttack} \n");
                 player.healthSystem.hurt = false;
                 enemyAttack = null;
             }
+            CheckLogEnemyHurtStatus();
             //CheckLogEnemyHurtStatus(ranger);
             //CheckLogEnemyHurtStatus(mage);
             //CheckLogEnemyHurtStatus(melee);
@@ -121,14 +122,17 @@ namespace JourneyToTheMysticCave_Beta
 
         }
 
-        private void CheckLogEnemyHurtStatus(Enemy[] enemies)
+        private void CheckLogEnemyHurtStatus()
         {
-            for (int i = 0; i < enemies.Length; i++)
+            foreach(Enemy enemy in enemyManager.enemies)
             {
-                if (enemies[i].healthSystem.hurt)
+                for (int i = 0; i < enemyManager.enemies.Count; i++)
                 {
-                    Console.Write($"Attacked {enemies[i].name}{i} - {player.damage} damage\n");
-                    enemies[i].healthSystem.hurt = false;
+                    if (enemy.healthSystem.hurt)
+                    {
+                        Console.Write($"Attacked {enemyManager.enemies[i].name}{i} - {player.damage} damage\n");
+                        enemyManager.enemies[i].healthSystem.hurt = false;
+                    }
                 }
             }
         }

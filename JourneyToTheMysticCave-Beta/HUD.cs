@@ -12,9 +12,10 @@ namespace JourneyToTheMysticCave_Beta
         EnemyManager enemyManager;
         ItemManager itemManager;
         Map map;
-        int columnCount = 0;
-        int rowCount = 0;
-        int lastEnemyAttacked; // probably not an int but leaving this as place holder
+        int columnCount;
+        int rowCount;
+        string health;
+
 
         public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, Map map)
         {
@@ -28,22 +29,64 @@ namespace JourneyToTheMysticCave_Beta
         {
             rowCount = map.GetMapRowCount() + 1;
             columnCount = 0;
+
+            // Clear only the area where the HUD is displayed
+            for (int i = 0; i < 9; i++) // Assuming 9 lines for HUD display
+            {
+                Console.SetCursorPosition(columnCount, rowCount + i);
+                Console.Write(new string(' ', Console.WindowWidth));
+            }
         }
 
         public void Draw()
         {
-            rowCount = map.GetMapRowCount() + 1;
-            columnCount = 0;
+            
             Console.SetCursorPosition(columnCount, rowCount);
-            Console.WriteLine("+---------------------------+");
-            Console.WriteLine($"Player Health: {player.health}");
-            Console.WriteLine($"Player Damage: {player.damage}");
-            Console.WriteLine($"Last Enemy Attacked - {player.GetLastEnountered()}"); // this should show the last enemy attacked and how much health they have left
+
+            HUDInfo();
+        }
+
+        private void HUDInfo()
+        {
+            Console.WriteLine("+-------------------------------+");
+            Console.WriteLine($"{player.name} Health: {player.healthSystem.health}");
+            Console.WriteLine($"{player.name} Damage: {player.damage}");
+            Console.WriteLine($"Last Enemy Attacked - {EnemyName()}");
+            if (EnemyHealth() == 0)
+                health = $"{EnemyName()} is dead";
+            else
+                health = $"{EnemyHealth()}";
+            Console.WriteLine($"Enemy Health - {health}");
             Console.Write("Money Picked Up:");
             // need to add each amount of money in the item manager
             Console.WriteLine();
-            Console.WriteLine("+---------------------------+");
+            Console.WriteLine("+-------------------------------+");
+        }
 
+        private string EnemyName()
+        {
+            Enemy enemy = player.GetLastEnountered();
+            if( enemy != null )
+            {
+                string fullTypeName = enemy.GetType().ToString();
+                string[] parts = fullTypeName.Split('.');
+                string enemyName = parts[parts.Length - 1];
+                return enemyName;
+            }
+            else
+                return string.Empty;
+        }
+
+        private int? EnemyHealth()
+        {
+            Enemy enemy = player.GetLastEnountered();
+            if (enemy != null)
+            {
+                int enemyHealth = enemy.healthSystem.health;
+                return enemyHealth;
+            }
+            else
+                return null;
         }
 
     }

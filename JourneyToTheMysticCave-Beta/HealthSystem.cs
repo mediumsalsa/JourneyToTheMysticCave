@@ -25,7 +25,8 @@ namespace JourneyToTheMysticCave_Beta
         {
             health -= damage;
             hurt = true;
-            if(health < 0)
+
+            if(health <= 0)
             {
                 health = 0;
                 mapDead = true;

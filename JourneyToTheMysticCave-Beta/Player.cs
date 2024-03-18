@@ -46,6 +46,7 @@ namespace JourneyToTheMysticCave_Beta
             character = gameStats.PlayerCharacter;
             pos = gameStats.PlayerPos;
             damage = gameStats.PlayerDamage;
+            name = gameStats.PlayerName;
         }
 
         public void Update()
@@ -147,12 +148,12 @@ namespace JourneyToTheMysticCave_Beta
                         return enemy;
                 }
             }
-            return null; // Return null if no enemy is found at the position
+            return null;
         }
 
         private void AttackEnemy(Enemy enemy)
         {
-            enemy.healthSystem.TakeDamage(damage); // this is killing the enemy??? why do they disappear?!
+            enemy.healthSystem.TakeDamage(damage);
             //add log string here.
         }
     }

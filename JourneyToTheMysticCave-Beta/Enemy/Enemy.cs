@@ -14,13 +14,12 @@ namespace JourneyToTheMysticCave_Beta
 
        
         // Constructor
-        public Enemy(int count, char character, string name, int damage, int health, Player player)
+        public Enemy(int count, char character, string name, int damage, Player player)
         {
             this.count = count;
             this.character = character;
             this.name = name;
             this.damage = damage;
-            this.health = health;
             this.player = player;
         }
 

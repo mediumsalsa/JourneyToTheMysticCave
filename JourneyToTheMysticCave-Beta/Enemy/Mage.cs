@@ -13,14 +13,14 @@ namespace JourneyToTheMysticCave_Beta
         Gamelog log;
         LegendColors legendColors;
 
-        public Mage(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, health, player)
+        public Mage(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, player)
         {
             this.count = count;
             this.character = character;
             this.name = name;
             this.damage = damage;
             healthSystem = new HealthSystem();
-            this.health = health;
+            healthSystem.health = health;
             this.legendColors = legendColors;
             this.player = player;
             this.log = log;

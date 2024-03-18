@@ -41,7 +41,7 @@ namespace JourneyToTheMysticCave_Beta
         private void Legend() // displays legend on the bottom of the map.
         {
             Console.SetCursorPosition(columnCount, rowCount++);
-            Console.WriteLine("+-------------------------------+");
+            Console.WriteLine("+------------------------+");
             Console.SetCursorPosition(columnCount, rowCount++);
             Console.WriteLine("Map Legend:");
             Console.SetCursorPosition(columnCount, rowCount++);
@@ -53,35 +53,29 @@ namespace JourneyToTheMysticCave_Beta
                 DisplayChar(gameStats.MageCharacter, gameStats.MageName);
             if (level == 2)
             {
-                DisplayInColumns(gameStats.MeleeCharacter, gameStats.MeleeName);
                 DisplayChar(gameStats.BossCharacter, gameStats.BossName);
+                DisplayChar(gameStats.MeleeCharacter, gameStats.MeleeName);
             }
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns(gameStats.MoneyCharacter, gameStats.MoneyName);
-            DisplayInColumns(gameStats.PotionCharacter, gameStats.PotionName);
-
-            Console.WriteLine();
+            DisplayChar(gameStats.MoneyCharacter, gameStats.MoneyName);
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns(gameStats.TrapCharacter, gameStats.TrapName);
-            DisplayInColumns(gameStats.SwordCharacter, gameStats.SwordName);
-
-            Console.WriteLine();
+            DisplayChar(gameStats.PotionCharacter, gameStats.PotionName);
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns('*', "Next Area");
-            DisplayInColumns('~', "Deep Water");
-
-            Console.WriteLine();
+            DisplayChar(gameStats.TrapCharacter, gameStats.TrapName);
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns('P', "Poison Spill");
-            DisplayInColumns('^', "Mountains");
-
-            Console.WriteLine();
+            DisplayChar(gameStats.SwordCharacter, gameStats.SwordName);
             Console.SetCursorPosition(columnCount, rowCount++);
-            DisplayInColumns('#', "Walls");
-
-            Console.WriteLine();
+            DisplayChar('*', "Next Area");
             Console.SetCursorPosition(columnCount, rowCount++);
-            Console.WriteLine("+-------------------------------+");
+            DisplayChar('~', "Deep Water");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayChar('P', "Poison Spill");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayChar('^', "Mountains");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayChar('#', "Walls");
+            Console.SetCursorPosition(columnCount, rowCount++);
+            Console.WriteLine("+------------------------+");
         }
 
         private void DisplayChar(char symbol, string description)
