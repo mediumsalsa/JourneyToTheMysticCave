@@ -48,7 +48,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Update()
         {
-            rowCount = map.GetMapRowCount()+2;
+            rowCount = map.GetMapRowCount()+8;
             columnCount = 0;
         }
 
