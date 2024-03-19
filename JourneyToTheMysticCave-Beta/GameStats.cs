@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class _GameStats
+    internal class GameStats
     {
-        Item allItems;
         LevelManager levelManager;
         Random random = new Random();
 
@@ -132,18 +131,18 @@ namespace JourneyToTheMysticCave_Beta
             BossHealth = 200;
 
             // Money Configs
-            MoneyCount = 4;
+            MoneyCount = 6;
             MoneyCharacter = '$';
             MoneyName = "Money";
 
             // Potion Configs
-            PotionCount = 4;
+            PotionCount = 6;
             PotionName = "Potion";
             PotionCharacter = '6';
             PotionHeal = 6;
 
             // Trap Configs
-            TrapCount = 4;
+            TrapCount = 30;
             TrapCharacter = 'T';
             TrapName = "Trap";
             TrapDamage = 4;
@@ -170,7 +169,6 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
-
         public Point2D PlaceCharacters(int levelNumber, Random random)
         {
             int x, y;
@@ -184,26 +182,9 @@ namespace JourneyToTheMysticCave_Beta
             return new Point2D { x = x, y = y };
         }
 
-
         private bool CheckInitialPlacement(int x, int y, int levelNumber)
         {
             return levelManager.InitialBoundaries(x, y, levelNumber);
         }
-
-
-        //private bool IsEmpty(int x, int y, int levelNumber)
-        //{
-        //    if (player.pos.x == x && player.pos.y == y)
-        //        return false;
-
-        //    switch(levelNumber)
-        //    {
-        //        case 0:
-        //            foreach (Ranger[] ranger in Ranger)
-        //            {
-
-        //            }
-        //    }
-        //}
     }
 }

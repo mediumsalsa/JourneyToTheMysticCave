@@ -36,9 +36,10 @@ namespace JourneyToTheMysticCave_Beta
         public int newDx;
         public int newDy;
 
-        public abstract void Draw();
         public abstract void Update(Random random);
 
+        public abstract void Draw();
+        
         public int PlayerDistance() //calculates distance to player
         {
             return Math.Abs(pos.x - player.pos.x) + Math.Abs(pos.y - player.pos.y);

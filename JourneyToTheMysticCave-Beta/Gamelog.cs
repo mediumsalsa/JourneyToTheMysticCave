@@ -22,14 +22,14 @@ namespace JourneyToTheMysticCave_Beta
         //public Sword[] sword;
         public string enemyAttack;
 
-        public _GameStats gameStats;
+        public GameStats gameStats;
         public Map map;
 
         int columnCount = 0;
         int rowCount = 0;
         //Ranger[] ranger, Melee[] melee, Mage[] mage, Boss[] boss, Money[] money, Potion[] potion, Trap[] trap, Sword[] sword
 
-        public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, _GameStats gamestats, Map map)
+        public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, GameStats gamestats, Map map)
         {
             this.player = player;
             this.enemyManager = enemyManager;
@@ -68,8 +68,7 @@ namespace JourneyToTheMysticCave_Beta
             LogFloorDamage();
             LogTrap();
             LogPickUp();
-            EnemyDeath();
-
+            LogEnemyDeath();
         }
 
         #region PickUps
@@ -187,22 +186,14 @@ namespace JourneyToTheMysticCave_Beta
         #endregion
 
         #region Death
-        private void EnemyDeath()
+        private void LogEnemyDeath()
         {
-            //LogEnemyDeath(ranger);
-            //LogEnemyDeath(mage);
-            //LogEnemyDeath(melee);
-            //LogEnemyDeath(boss);
-        }
-
-        private void LogEnemyDeath(Enemy[] enemies)
-        {
-            for (int i = 0; i < enemies.Length; i++)
+            for (int i = 0; i < enemyManager.enemies.Count; i++)
             {
-                if (enemies[i].healthSystem.dead)
+                if (enemyManager.enemies[i].healthSystem.dead)
                 {
-                    Console.Write($"{enemies[i].name}{i} has died \n");
-                    enemies[i].healthSystem.dead = false;
+                    Console.Write($"{enemyManager.enemies[i].name}{i} has died \n");
+                    enemyManager.enemies[i].healthSystem.dead = false;
                 }
             }
         }

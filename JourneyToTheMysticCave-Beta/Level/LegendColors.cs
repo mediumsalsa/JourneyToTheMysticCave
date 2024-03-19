@@ -9,7 +9,7 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class LegendColors
     {
-        public _GameStats gameStats;
+        public GameStats gameStats;
         public Map map;
         public LevelManager levelManager;
 
@@ -17,7 +17,7 @@ namespace JourneyToTheMysticCave_Beta
         int rowCount = 0;
         int level;
 
-        public void Init(_GameStats gamestats, Map map, LevelManager levelManager)
+        public void Init(GameStats gamestats, Map map, LevelManager levelManager)
         {
             this.gameStats = gamestats;
             this.map = map;
@@ -86,21 +86,6 @@ namespace JourneyToTheMysticCave_Beta
             Console.ResetColor();
             Console.Write($" = {description}\n");
             Console.WriteLine();
-        }
-
-        private void DisplayInColumns(char symbol, string description)
-        {
-            MapColor(symbol);
-            Console.Write(symbol);
-            Console.ResetColor();
-            Console.Write($" = {description}");
-
-            int spacesCount = 15 - description.Length; // Adjust this number based on desired column width
-
-            for (int i = 0; i < spacesCount; i++)  // Add spaces to align the columns
-            {
-                Console.Write(" ");
-            }
         }
 
         public void MapColor(char c)    // handles map color

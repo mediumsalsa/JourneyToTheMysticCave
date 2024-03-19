@@ -29,10 +29,6 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Draw()
         {
-            Console.SetCursorPosition(0, 30);
-            Console.WriteLine(moveCount.ToString());
-
-
             if (!healthSystem.mapDead)
             {
                 Console.SetCursorPosition(pos.x, pos.y);

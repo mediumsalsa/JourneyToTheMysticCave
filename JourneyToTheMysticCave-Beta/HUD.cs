@@ -11,18 +11,20 @@ namespace JourneyToTheMysticCave_Beta
         Player player;
         EnemyManager enemyManager;
         ItemManager itemManager;
+        LegendColors legendColors;
         Map map;
         int columnCount;
         int rowCount;
         string health;
 
 
-        public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, Map map)
+        public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, Map map, LegendColors legendColors)
         {
             this.player = player;
             this.enemyManager = enemyManager;
             this.itemManager = itemManager;
             this.map = map;
+            this.legendColors = legendColors;
         }
 
         public void Update()
@@ -58,6 +60,15 @@ namespace JourneyToTheMysticCave_Beta
                 health = $"{EnemyHealth()}";
             Console.WriteLine($"Enemy Health - {health}");
             Console.Write("Money Picked Up:");
+            foreach(Item money in itemManager.items)
+            {
+                if (money.collected)
+                {
+                    legendColors.MapColor(money.character);
+                    Console.Write(money.character);
+                    Console.ResetColor();
+                }
+            }
             // need to add each amount of money in the item manager
             Console.WriteLine();
             Console.WriteLine("+-------------------------------+");

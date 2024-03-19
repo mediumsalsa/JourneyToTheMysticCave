@@ -10,17 +10,12 @@ namespace JourneyToTheMysticCave_Beta
     {
         #region Declarations
         Map map = new Map();
-        _GameStats gameStats = new _GameStats();
+        GameStats gameStats = new GameStats();
         Gamelog gamelog = new Gamelog();
         Player player = new Player();
         LevelManager levelManager = new LevelManager();
         LegendColors legendColors = new LegendColors();
         HUD hUD = new HUD();
-
-        Money money = new Money();
-        Potion potion = new Potion();
-        Trap trap = new Trap();
-        Sword sword = new Sword();
 
         EnemyManager enemyManager = new EnemyManager();
         ItemManager itemManager = new ItemManager();
@@ -42,8 +37,6 @@ namespace JourneyToTheMysticCave_Beta
             {
                 Update();
                 Draw();
-
-                //Console.SetCursorPosition(0, 30);
             }
         }
 
@@ -55,8 +48,9 @@ namespace JourneyToTheMysticCave_Beta
             player.Init(map, gameStats, legendColors, enemyManager, levelManager);
             legendColors.Init(gameStats, map, levelManager);
             enemyManager.Init(gameStats, levelManager, legendColors, gamelog, player, map);
+            itemManager.Init(gameStats, levelManager, legendColors, gamelog, player, map);
             gamelog.Init(player, enemyManager, itemManager, gameStats, map);
-            hUD.Init(player, enemyManager, itemManager, map);
+            hUD.Init(player, enemyManager, itemManager, map, legendColors);
         }
 
         private void Update()

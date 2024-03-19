@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal abstract class Item
+    internal abstract class Item : GameObject
     {
         public bool collected = false;
         public bool pickedUp = false;
-        public char character;
-        public string name;
         public int count;
 
         public Item(int count, char character, string name)
@@ -25,9 +23,13 @@ namespace JourneyToTheMysticCave_Beta
         public virtual void Update() { }
         public virtual void Draw() { }
 
-        public virtual void TryCollect()
+        public virtual void TryCollect(int posX, int posY)
         {
-
+            if (pos.y == posY && pos.x == posX && !collected)
+            {
+                collected = true;
+                pickedUp = true;
+            }
         }
     }
 }

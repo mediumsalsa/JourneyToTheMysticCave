@@ -23,7 +23,7 @@ namespace JourneyToTheMysticCave_Beta
         }
 
         Map map;
-        _GameStats gameStats;
+        GameStats gameStats;
         EnemyManager enemyManager;
         LegendColors legendColors;
         LevelManager levelManager;
@@ -34,7 +34,7 @@ namespace JourneyToTheMysticCave_Beta
             healthSystem = new HealthSystem();
         }
 
-        public void Init(Map map, _GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager)
+        public void Init(Map map, GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager)
         {
             this.map = map;
             this.gameStats = gameStats;

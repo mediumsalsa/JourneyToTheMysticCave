@@ -8,7 +8,7 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class EnemyManager
     {
-        public _GameStats stats;
+        public GameStats stats;
         public LevelManager levelManager;
         LegendColors legendColors;
         Gamelog log;
@@ -24,7 +24,7 @@ namespace JourneyToTheMysticCave_Beta
             enemies = new List<Enemy>();
         }
 
-        public void Init(_GameStats stats, LevelManager levelManager, LegendColors legendColors, Gamelog log, Player player, Map map)
+        public void Init(GameStats stats, LevelManager levelManager, LegendColors legendColors, Gamelog log, Player player, Map map)
         {
             this.stats = stats;
             this.levelManager = levelManager;
