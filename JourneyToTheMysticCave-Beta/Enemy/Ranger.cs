@@ -9,15 +9,11 @@ namespace JourneyToTheMysticCave_Beta
     internal class Ranger : Enemy
     {
         Random random = new Random();
-        Gamelog log;
         LegendColors legendColors;
-        Map map;
 
-        public Ranger(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager)
+        public Ranger(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
         {
             this.legendColors = legendColors;
-            this.log = log;
-            this.map = map;
         }
 
         public override void Update(Random random)
@@ -56,7 +52,7 @@ namespace JourneyToTheMysticCave_Beta
                         newDx = pos.x + dx;
                         newDy = pos.y + dy;
 
-                    } while (map.CheckBoundaries(newDx, newDy) && enemyManager.CheckEnemyPos(newDx, newDy, 0) && newDx != player.pos.x && newDy != player.pos.y);
+                    } while (CheckValidMovement(newDx, newDy, 0) && newDx != player.pos.x && newDy != player.pos.y);
 
                     pos = new Point2D { x = newDx, y = newDy};
                 }

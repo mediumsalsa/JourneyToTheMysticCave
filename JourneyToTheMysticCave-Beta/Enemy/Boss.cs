@@ -9,10 +9,8 @@ namespace JourneyToTheMysticCave_Beta
     internal class Boss : Enemy
     {
         LegendColors legendColors;
-        Player player;
-        Gamelog log;
 
-        public Boss(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager) : base(count, character, name, damage, player, enemyManager)
+        public Boss(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
         {
             this.count = count;
             this.character = character;
@@ -21,8 +19,6 @@ namespace JourneyToTheMysticCave_Beta
             healthSystem = new HealthSystem();
             healthSystem.health = health;
             this.legendColors = legendColors;
-            this.player = player;
-            this.log = log;
         }
 
         public override void Update(Random random)

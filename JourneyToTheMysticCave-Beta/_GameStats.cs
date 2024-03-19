@@ -9,8 +9,6 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class _GameStats
     {
-        Player player;
-        EnemyManager enemyManager;
         Item allItems;
         LevelManager levelManager;
         Random random = new Random();
@@ -86,10 +84,9 @@ namespace JourneyToTheMysticCave_Beta
         public int SwordMultiplier { get; set; }
         #endregion
 
-        public void Init(LevelManager levelManager, EnemyManager enemyManager)
+        public void Init(LevelManager levelManager)
         {
             this.levelManager = levelManager;
-            this.enemyManager = enemyManager;
 
             GameConfig();
         }

@@ -72,7 +72,7 @@ namespace JourneyToTheMysticCave_Beta
                 int newX = pos.x + dirX;
                 int newY = pos.y + dirY;
 
-                if (map.CheckBoundaries(newX, newY))
+                if (CheckBoundaries(newX, newY))
                 {
                     lastEncountered = GetEnemyAtPosition(newX, newY);
                     if (lastEncountered == null)
@@ -155,6 +155,12 @@ namespace JourneyToTheMysticCave_Beta
         {
             lastEncountered.healthSystem.TakeDamage(damage);
             //add log string here.
+        }
+
+        private bool CheckBoundaries(int x, int y)
+        {
+            return x > 0 && x < map.GetMapColumnCount() && y > 0 && y < map.GetMapRowCount() &&
+                map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^';
         }
     }
 }

@@ -40,7 +40,7 @@ namespace JourneyToTheMysticCave_Beta
             for (int i = 0; i < stats.MeleeCount; i++)
                 enemies.Add(new Melee(stats.MeleeCount, stats.MeleeCharacter, stats.MeleeName, stats.MeleeDamage, legendColors, player, log, this, map));
             for (int i = 0; i < stats.BossCount; i++)
-                enemies.Add(new Boss(stats.BossCount, stats.BossCharacter, stats.BossName, stats.BossDamage, stats.BossHealth, legendColors, player, log, this));
+                enemies.Add(new Boss(stats.BossCount, stats.BossCharacter, stats.BossName, stats.BossDamage, stats.BossHealth, legendColors, player, log, this, map));
 
             foreach (Enemy enemy in enemies)
             {

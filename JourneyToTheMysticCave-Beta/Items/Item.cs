@@ -14,17 +14,18 @@ namespace JourneyToTheMysticCave_Beta
         public string name;
         public int count;
 
-        public virtual void Init()
+        public Item(int count, char character, string name)
         {
-
+            this.count = count;
+            this.character = character;
+            this.name = name;
         }
 
-        public virtual void Update()
-        {
+        public virtual void Init() { }
+        public virtual void Update() { }
+        public virtual void Draw() { }
 
-        }
-
-        public virtual void Draw()
+        public virtual void TryCollect()
         {
 
         }

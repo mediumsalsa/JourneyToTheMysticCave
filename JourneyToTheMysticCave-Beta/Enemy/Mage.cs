@@ -9,16 +9,12 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Mage : Enemy
     {
-        Gamelog log;
         LegendColors legendColors;
-        Map map;
         public int moveCount = 0;
 
-        public Mage(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, Map map, EnemyManager enemyManager) : base(count, character, name, damage, player, enemyManager)
+        public Mage(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, Map map, EnemyManager enemyManager) : base(count, character, name, damage, player, enemyManager, map, log)
         {
             this.legendColors = legendColors;
-            this.log = log;
-            this.map = map;
         }
 
         public override void Update(Random random)
@@ -79,7 +75,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 x = random.Next(0, map.GetCurrentMapContent().GetLength(1));
                 y = random.Next(0, map.GetCurrentMapContent().GetLength(0));
-            } while (x != player.pos.x && y != player.pos.y && map.CheckBoundaries(x,y) && enemyManager.CheckEnemyPos(x,y,2));
+            } while (x != player.pos.x && y != player.pos.y && CheckValidMovement(x,y,2));
 
             moveCount = 0;
             return new Point2D { x = x, y = y };
