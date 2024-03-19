@@ -10,7 +10,7 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class LevelManager
     {
-        public int mapLevel = 0;
+        public int mapLevel = 2;
         public int previousLevel = 0;
         private string[] mapTextFiles = new string[] { "Level\\Map0.txt", "Level\\Map1.txt", "Level\\Map2.txt" };
         private char[][,] mapContents = new char[3][,];
@@ -66,11 +66,11 @@ namespace JourneyToTheMysticCave_Beta
                     if (player.pos.x == 37 && player.pos.y == 3)
                     {
                         mapLevel = 2;
-                        player.pos = new Point2D {x = 37, y = 16 };
+                        player.pos = new Point2D {x = 37, y = 21 };
                     }
                     break;
                 case 2:
-                    if (player.pos.x == 37 && player.pos.y == 17)
+                    if (player.pos.x == 37 && player.pos.y == 22)
                     {
                         mapLevel = 1;
                         player.pos = new Point2D { x = 37, y = 4 };

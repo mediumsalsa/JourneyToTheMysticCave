@@ -53,8 +53,9 @@ namespace JourneyToTheMysticCave_Beta
                 DisplayChar(gameStats.MageCharacter, gameStats.MageName);
             if (level == 2)
             {
-                DisplayChar(gameStats.BossCharacter, gameStats.BossName);
                 DisplayChar(gameStats.MeleeCharacter, gameStats.MeleeName);
+                Console.SetCursorPosition(columnCount, rowCount++);
+                DisplayChar(gameStats.BossCharacter, gameStats.BossName);
             }
             Console.SetCursorPosition(columnCount, rowCount++);
             DisplayChar(gameStats.MoneyCharacter, gameStats.MoneyName);

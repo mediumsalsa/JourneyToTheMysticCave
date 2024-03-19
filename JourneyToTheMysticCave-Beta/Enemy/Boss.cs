@@ -8,12 +8,11 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Boss : Enemy
     {
-        Random random = new Random();
         LegendColors legendColors;
         Player player;
         Gamelog log;
 
-        public Boss(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, player)
+        public Boss(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager) : base(count, character, name, damage, player, enemyManager)
         {
             this.count = count;
             this.character = character;
@@ -26,7 +25,7 @@ namespace JourneyToTheMysticCave_Beta
             this.log = log;
         }
 
-        public override void Update()
+        public override void Update(Random random)
         {
             if (!healthSystem.mapDead)
             {

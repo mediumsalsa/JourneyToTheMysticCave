@@ -9,31 +9,27 @@ namespace JourneyToTheMysticCave_Beta
     internal class Melee : Enemy
     {
         LegendColors legendColors;
-        Random randomMovement = new Random();   
-        Player player;
         Gamelog log;
+        Map map;
 
-        public Melee(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, player)
+        public Melee(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager)
         {
-            this.count = count;
-            this.character = character;
-            this.name = name;
-            this.damage = damage;
-            healthSystem = new HealthSystem();
-            healthSystem.health = health;
             this.legendColors = legendColors;
-            this.player = player;
             this.log = log;
+            this.map = map;
         }
 
-        public override void Update()
+        public override void Update(Random random)
         {
             if (!healthSystem.mapDead)
             {
-                Movement();
+                Movement(random);
             }
             else
+            {
+                IsAlive = false;
                 pos = new Point2D { x = 0, y = 0 };
+            }
         }
 
         public override void Draw()
@@ -48,36 +44,42 @@ namespace JourneyToTheMysticCave_Beta
             Console.CursorVisible = false;
         }
 
-        private void Movement()
+        private void Movement(Random randomMovement)
         {
             if(!healthSystem.mapDead)
             {
                 if(PlayerDistance() < 4)
                 {
-                    dx = Math.Sign(player.pos.x - pos.x);
-                    dy = Math.Sign(player.pos.y - pos.y);
+                    do
+                    {
+                        dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
+                        dy = Math.Sign(player.pos.y - pos.y);
 
-                    newDx = pos.x + dx;
-                    newDy = pos.y + dy;
+                        newDx = pos.x + dx;
+                        newDy = pos.y + dy;
+
+                    } while (map.CheckBoundaries(newDx, newDy) && enemyManager.CheckEnemyPos(newDx, newDy, 0));
+
 
                     if (newDx == player.pos.x && newDy == player.pos.y)
                         AttackPlayer();
                     else
-                    {
-                        pos.x = newDx;
-                        pos.y = newDy;
-                    }
+                        pos = new Point2D { x =  newDx, y = newDy };
                     //CheckFloor(newDx, newDy)?? for poison or traps? or should trap handle this?
                 }
-
                 else
                 {
+                    do
+                    {
                     int direction = randomMovement.Next(0, 4);
                     dx = (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
                     dy = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
 
                     newDx = pos.x + dx;
                     newDy = pos.y + dy;
+
+                    } while (map.CheckBoundaries(newDx, newDy) && enemyManager.CheckEnemyPos(newDx, newDy, 0)) ;
+                    pos = new Point2D { x = newDx, y = newDy };
                 }
                 //CheckFloor(newDx, newDy)?? for poison or traps? or should trap handle this?
             }

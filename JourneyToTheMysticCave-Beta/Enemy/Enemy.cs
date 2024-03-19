@@ -10,17 +10,19 @@ namespace JourneyToTheMysticCave_Beta
     internal abstract class Enemy : GameEntity
     {
         protected int count;
-        Player player;
+        public EnemyManager enemyManager;
+        public Player player;
+        public bool IsAlive { get; set; } = true;
 
-       
         // Constructor
-        public Enemy(int count, char character, string name, int damage, Player player)
+        public Enemy(int count, char character, string name, int damage, Player player, EnemyManager enemyManager)
         {
             this.count = count;
             this.character = character;
             this.name = name;
             this.damage = damage;
             this.player = player;
+            this.enemyManager = enemyManager;
         }
 
         // Movement
@@ -28,9 +30,9 @@ namespace JourneyToTheMysticCave_Beta
         public int dy;
         public int newDx;
         public int newDy;
-        
+
         public abstract void Draw();
-        public abstract void Update();
+        public abstract void Update(Random random);
 
         public int PlayerDistance() //calculates distance to player
         {

@@ -29,7 +29,6 @@ namespace JourneyToTheMysticCave_Beta
         public char RangedCharacter { get; set; }
         public string RangerName { get; set; }
         public int RangerDamage { get; set; }
-        public int RangerHealth { get; set; }
         private int rangerMaxHp;
         private int rangerMinHp;
         #endregion
@@ -39,7 +38,6 @@ namespace JourneyToTheMysticCave_Beta
         public char MageCharacter { get; set; }
         public string MageName { get; set; }
         public int MageDamage { get; set; }
-        public int MageHealth { get; set; }
         private int mageMaxHp;
         private int mageMinHp;
         #endregion
@@ -49,7 +47,6 @@ namespace JourneyToTheMysticCave_Beta
         public char MeleeCharacter { get; set; }
         public string MeleeName { get; set; }
         public int MeleeDamage { get; set; }
-        public int MeleeHealth { get; set; }
         private int meleeMaxHp;
         private int meleeMinHp;
         #endregion
@@ -113,8 +110,6 @@ namespace JourneyToTheMysticCave_Beta
             RangerDamage = 3;
             rangerMinHp = 35;
             rangerMaxHp = 60;
-            RangerHealth = random.Next(rangerMinHp, rangerMaxHp);
-            
 
             // Mage Configs/Stats
             MageCount = 3;
@@ -123,7 +118,6 @@ namespace JourneyToTheMysticCave_Beta
             MageDamage = 3;
             mageMinHp = 40;
             mageMaxHp = 65;
-            MageHealth = random.Next(mageMinHp, mageMaxHp);
 
             // Melee Configs/Stats
             MeleeCount = 30;
@@ -132,13 +126,13 @@ namespace JourneyToTheMysticCave_Beta
             MeleeDamage = 1;
             meleeMinHp = 2;
             meleeMaxHp = 10;
-            MeleeHealth = random.Next(meleeMinHp, meleeMaxHp);
 
             // Boss Configs/Stats
             BossCount = 1;
             BossCharacter = 'B';
             BossName = "Boss";
             BossDamage = 6;
+            BossHealth = 200;
 
             // Money Configs
             MoneyCount = 4;
@@ -162,6 +156,21 @@ namespace JourneyToTheMysticCave_Beta
             SwordCharacter = 't';
             SwordName = "Sword";
             SwordMultiplier = 2;
+        }
+
+        public int GiveHealth(Random random, string type)
+        {
+            int health;
+            switch (type)
+            {
+                case "Ranger": health = random.Next(rangerMinHp, rangerMaxHp);
+                    return (health);
+                case "Mage": health = random.Next(mageMinHp, mageMaxHp);
+                    return (health);
+                case "Melee": health = (random.Next(meleeMinHp, meleeMaxHp));
+                    return (health);
+                    default : return 0;
+            }
         }
 
 

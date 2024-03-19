@@ -9,32 +9,23 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Mage : Enemy
     {
-        Random random = new Random();
-        Player player;
         Gamelog log;
         LegendColors legendColors;
         Map map;
-        int moveCount = 0;
+        public int moveCount = 0;
 
-        public Mage(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log, Map map) : base(count, character, name, damage, player)
+        public Mage(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, Map map, EnemyManager enemyManager) : base(count, character, name, damage, player, enemyManager)
         {
-            this.count = count;
-            this.character = character;
-            this.name = name;
-            this.damage = damage;
-            healthSystem = new HealthSystem();
-            healthSystem.health = health;
             this.legendColors = legendColors;
-            this.player = player;
             this.log = log;
             this.map = map;
         }
 
-        public override void Update()
+        public override void Update(Random random)
         {
-           if (!healthSystem.mapDead)
+            if (!healthSystem.mapDead)
             {
-                Movement();
+                Movement(random);
             }
             else
                 pos = new Point2D { x = 0, y = 0 };
@@ -42,6 +33,10 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Draw()
         {
+            Console.SetCursorPosition(0, 30);
+            Console.WriteLine(moveCount.ToString());
+
+
             if (!healthSystem.mapDead)
             {
                 Console.SetCursorPosition(pos.x, pos.y);
@@ -52,7 +47,7 @@ namespace JourneyToTheMysticCave_Beta
             Console.CursorVisible = false;
         }
 
-        void Movement()
+        void Movement(Random random)
         {
             if (!healthSystem.mapDead)
             {
@@ -84,7 +79,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 x = random.Next(0, map.GetCurrentMapContent().GetLength(1));
                 y = random.Next(0, map.GetCurrentMapContent().GetLength(0));
-            } while (x == player.pos.x && y == player.pos.y);
+            } while (x != player.pos.x && y != player.pos.y && map.CheckBoundaries(x,y) && enemyManager.CheckEnemyPos(x,y,2));
 
             moveCount = 0;
             return new Point2D { x = x, y = y };

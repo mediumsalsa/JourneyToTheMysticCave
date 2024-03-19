@@ -61,19 +61,8 @@ namespace JourneyToTheMysticCave_Beta
 
         public bool CheckBoundaries(int x, int y)
         {
-            return currentMap[y, x] != '#' && currentMap[y, x] != '^';
+            return x >= 0 && x < currentMap.GetLength(1) && y >= 0 && y < currentMap.GetLength(0) &&
+                currentMap[y, x] != '#' && currentMap[y, x] != '^';
         }
-
-        //public bool IsEmptySpace(int x, int y)
-        //{
-        //    foreach (Enemy enemy in enemyManager.enemies)
-        //    {
-        //        switch(levelManager.mapLevel)
-        //        {
-        //            case 0:
-        //        }
-
-        //    }
-        //}
     }
 }

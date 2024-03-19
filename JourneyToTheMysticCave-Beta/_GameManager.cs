@@ -42,6 +42,8 @@ namespace JourneyToTheMysticCave_Beta
             {
                 Update();
                 Draw();
+
+                //Console.SetCursorPosition(0, 30);
             }
         }
 

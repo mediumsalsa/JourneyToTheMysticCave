@@ -9,24 +9,18 @@ namespace JourneyToTheMysticCave_Beta
     internal class Ranger : Enemy
     {
         Random random = new Random();
-        Player player;
         Gamelog log;
         LegendColors legendColors;
+        Map map;
 
-        public Ranger(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log) : base(count, character, name, damage, player)
+        public Ranger(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager)
         {
-            this.count = count;
-            this.character = character;
-            this.name = name;
-            this.damage = damage;
-            healthSystem = new HealthSystem();
-            healthSystem.health = health;
             this.legendColors = legendColors;
-            this.player = player;
             this.log = log;
+            this.map = map;
         }
 
-        public override void Update()
+        public override void Update(Random random)
         {
             if (!healthSystem.mapDead)
             {
@@ -54,12 +48,17 @@ namespace JourneyToTheMysticCave_Beta
             {
                 if (PlayerDistance() < 10 && PlayerDistance() >= 3)
                 {
-                    dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
-                    dy = Math.Sign(player.pos.y - pos.y);
+                    do
+                    {
+                        dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
+                        dy = Math.Sign(player.pos.y - pos.y);
 
-                    newDx = pos.x + dx;
-                    newDy = pos.y + dy;
+                        newDx = pos.x + dx;
+                        newDy = pos.y + dy;
 
+                    } while (map.CheckBoundaries(newDx, newDy) && enemyManager.CheckEnemyPos(newDx, newDy, 0) && newDx != player.pos.x && newDy != player.pos.y);
+
+                    pos = new Point2D { x = newDx, y = newDy};
                 }
                 if (PlayerDistance() <= 4)
                     AttackPlayer();
