@@ -23,9 +23,9 @@ namespace JourneyToTheMysticCave_Beta
         public virtual void Update() { }
         public virtual void Draw() { }
 
-        public virtual void TryCollect(int posX, int posY)
+        public void TryCollect()
         {
-            if (pos.y == posY && pos.x == posX && !collected)
+            if (!collected)
             {
                 collected = true;
                 pickedUp = true;

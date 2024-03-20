@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JourneyToTheMysticCave_Beta;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,9 @@ namespace JourneyToTheMysticCave_Beta
         Map map;
         Random random = new Random();
 
-        int potionsForEachLevel;
-        int moneyForEachLevel;
-        int trapsForEachLevel;
-
+        int itemsLevel0;
+        int itemsLevel1;
+        int itemsLevel2;
 
         public ItemManager()
         {
@@ -38,85 +38,95 @@ namespace JourneyToTheMysticCave_Beta
             this.map = map;
             this.enemyManager = enemyManager;
 
-            for(int i = 0; i < stats.MoneyCount; i++)
-                items.Add(new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName, legendColors));
-            for(int i = 0; i < stats.PotionCount; i++)
-                items.Add(new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal, legendColors));
-            for(int i = 0; i < stats.TrapCount; i++)
-                items.Add(new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage, legendColors,log, player, enemyManager, levelManager));
-            for(int i = 0; i < stats.SwordCount; i++)
-                items.Add(new Sword(stats.SwordCount, stats.SwordCharacter, stats.SwordName, stats.SwordMultiplier, legendColors, player));
 
-
-            PlaceItemsForLevel(0);
-            PlaceItemsForLevel(1);
-            PlaceItemsForLevel(2);
+            DistributeItems(2, 2, 1, 0, 0);
+            DistributeItems(2, 2, 1, 15, 1);
+            DistributeItems(2, 2, 1, 15, 2);
         }
 
         public void Update()
         {
-            foreach (Item item in items)
+            switch (levelManager.mapLevel)
             {
-                item.Update();
+                case 0:
+                    for (int i = 0; i <= 5; i++)
+                        items[i].Update();
+                    break;
+                case 1:
+                    for (int i = 6; i <= 20; i++)
+                        items[i].Update();
+                    break;
+                case 2:
+                    for (int i = 21; i <= items.Count; i++)
+                        items[i].Update();
+                    break;
             }
         }
 
         public void Draw()
         {
-            foreach (Item item in items)
+            switch (levelManager.mapLevel)
             {
-                //switch (levelManager.mapLevel)
-                //{
-                //    case 0:
-                //        foreach(Potion potion in items)
-                //        {
-
-                //        }
-                //    //case nameof(Potion): item.Draw(); break;
-                //    //case nameof(Money): item.Draw(); break;
-                //    //case nameof(Sword): item.Draw(); break;
-                //    //case nameof(Trap): item.Draw(); break;
-                //}
+                case 0:
+                    for (int i = 0; i <= 5; i++)
+                        items[i].Draw();
+                    break;
+                case 1:
+                    for (int i = 6; i <= 20; i++)
+                        items[i].Draw();
+                    break;
+                case 2:
+                    for (int i = 21; i <= items.Count; i++)
+                        items[i].Draw();
+                    break;
             }
         }
-        private void PlaceItemsForLevel(int level)
+
+        private void DistributeItems(int potionCount, int moneyCount, int swordCount, int trapCount, int level)
         {
-            foreach (Item item in items)
+            int index = items.Count; // Get the starting index for this level's items
+
+            // Distribute potions
+            for (int i = 0; i < potionCount; i++)
             {
-                switch (item.GetType().Name)
+                var potion = new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal, legendColors);
+                potion.pos = stats.PlaceCharacters(level, random);
+                items.Add(potion);
+            }
+
+            // Distribute money
+            for (int i = 0; i < moneyCount; i++)
+            {
+                var money = new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName, legendColors);
+                money.pos = stats.PlaceCharacters(level, random);
+                items.Add(money);
+            }
+
+            // Distribute swords
+            for (int i = 0; i < swordCount; i++)
+            {
+                var sword = new Sword(stats.SwordCount, stats.SwordCharacter, stats.SwordName, stats.SwordMultiplier, legendColors, player);
+                sword.pos = stats.PlaceCharacters(level, random);
+                items.Add(sword);
+            }
+
+            // Distribute traps
+            for (int i = 0; i < trapCount; i++)
+            {
+                var trap = new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage, legendColors, log, player, enemyManager, levelManager);
+                trap.pos = stats.PlaceCharacters(level, random);
+                items.Add(trap);
+            }
+
+            // Update positions for newly added items
+            for (int i = index; i < items.Count; i++)
+            {
+                while (items[i].pos.x == 0 && items[i].pos.y == 0)
                 {
-                    case nameof(Money):
-                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Money), level), random);
-                        break;
-                    case nameof(Potion):
-                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Potion), level), random);
-                        break;
-                    case nameof(Trap):
-                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Trap), level), random);
-                        break;
-                    case nameof(Sword):
-                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Sword), level), random);
-                        break;
+                    items[i].pos = stats.PlaceCharacters(level, random);
                 }
             }
         }
 
-
-        private int AmountForThisLevel(string name, int level)
-        {
-            switch (name)
-            {
-                case "Potion":
-                    return level <= 2 ? 2 : 0; // 2 potions for levels 0, 1, and 2
-                case "Money":
-                    return level <= 2 ? 2 : 0; // 2 money for levels 0, 1, and 2
-                case "Trap":
-                    return level >= 1 && level <= 2 ? 15 : 0; // 15 traps for level 1, 0 otherwise
-                case "Sword":
-                    return 1; // 1 sword for each level
-                default:
-                    return 0;
-            }
-        }
     }
 }

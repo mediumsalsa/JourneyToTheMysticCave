@@ -37,15 +37,21 @@ namespace JourneyToTheMysticCave_Beta
             {
                 Update();
                 Draw();
+
+                //Console.SetCursorPosition(0, 28);
+                //foreach(Item item in itemManager.items)
+                //{
+                //    Console.WriteLine($"{item.name} - {item.pos.x}, {item.pos.y}");
+                //}
             }
         }
 
         private void Init()
         {
             levelManager.Init(player);
-            map.Init(levelManager, legendColors);
-            gameStats.Init(levelManager);
-            player.Init(map, gameStats, legendColors, enemyManager, levelManager);
+            map.Init(levelManager, legendColors, player, enemyManager, itemManager);
+            gameStats.Init(levelManager, map);
+            player.Init(map, gameStats, legendColors, enemyManager, levelManager, itemManager);
             legendColors.Init(gameStats, map, levelManager);
             enemyManager.Init(gameStats, levelManager, legendColors, gamelog, player, map);
             itemManager.Init(gameStats, levelManager, legendColors, gamelog, player, map, enemyManager);

@@ -71,10 +71,13 @@ namespace JourneyToTheMysticCave_Beta
             {
                 x = random.Next(0, map.GetCurrentMapContent().GetLength(1));
                 y = random.Next(0, map.GetCurrentMapContent().GetLength(0));
-            } while (x != player.pos.x && y != player.pos.y && CheckValidMovement(x,y,2));
 
-            moveCount = 0;
-            return new Point2D { x = x, y = y };
+                if(CheckValidMovement(x, y, 2) && x != player.pos.x && y != player.pos.y)
+                {
+                    moveCount = 0;
+                    return new Point2D { x = x, y = y };
+                }
+            } while (true);
         }
     }
 }

@@ -12,13 +12,19 @@ namespace JourneyToTheMysticCave_Beta
         //game entities
         public LevelManager levelManager;
         public LegendColors legendColors;
+        Player player;
+        EnemyManager enemyManager;
+        ItemManager itemManager;
 
         char[,] currentMap;
 
-        public void Init(LevelManager levelManager, LegendColors legendColors)
+        public void Init(LevelManager levelManager, LegendColors legendColors, Player player, EnemyManager enemyManager, ItemManager itemManager)
         {
             this.levelManager = levelManager;
             this.legendColors = legendColors;
+            this.player = player;
+            this.enemyManager = enemyManager;
+            this.itemManager = itemManager;
         }
 
         public void Update()
@@ -55,6 +61,77 @@ namespace JourneyToTheMysticCave_Beta
         public char[,] GetCurrentMapContent()
         {
             return levelManager.AllMapContents[levelManager.mapLevel];
+        }
+
+        public bool EmptySpace(int x, int y, int mapLevel)
+        {
+            if (player.pos.x == x && player.pos.y == y)
+                return false;
+
+            foreach (Enemy enemy in enemyManager.enemies)
+            {
+                switch (enemy.GetType().Name)
+                {
+                    case nameof(Ranger):
+                        if (mapLevel == 0)
+                        {
+                            if (enemy.pos.x == x && enemy.pos.y == y)
+                                return false;
+                        }
+                        break;
+                    case nameof(Mage):
+                        if (mapLevel == 1)
+                        {
+                            if (enemy.pos.x == x && enemy.pos.y == y)
+                                return false;
+                        }
+                        break;
+                    case nameof(Melee):
+                        if (mapLevel == 2)
+                        {
+                            if (enemy.pos.x == x && enemy.pos.y == y)
+                                return false;
+                        }
+                        break;
+                    case nameof(Boss):
+                        if (mapLevel == 2)
+                        {
+                            if (enemy.pos.x == x && enemy.pos.y == y)
+                                return false;
+                        }
+                        break;
+                }
+            }
+
+            foreach (Item item in itemManager.items)
+            {
+                switch (mapLevel)
+                {
+                    case 0:
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            if (item.pos.x == x && item.pos.y == y)
+                                return false;
+                        }
+                        break;
+                    case 1:
+                        for (int i = 6; i <= 20; i++)
+                        {
+                            if (item.pos.x == x && item.pos.y == y)
+                                return false;
+                        }
+                        break;
+                    case 2:
+                        for (int i = 21; i <= itemManager.items.Count; i++)
+                        {
+                            if (item.pos.x == x && item.pos.y == y)
+                                return false;
+                        }
+                        break;
+                }
+            }
+
+            return true;
         }
     }
 }

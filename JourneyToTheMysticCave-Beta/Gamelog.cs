@@ -11,38 +11,18 @@ namespace JourneyToTheMysticCave_Beta
         public Player player;
         public EnemyManager enemyManager;
         public ItemManager itemManager;
-
-        //public Ranger[] ranger;
-        //public Mage[] mage;
-        //public Melee[] melee;
-        //public Boss[] boss;
-        //public Money[] money;
-        //public Potion[] potion;
-        //public Trap[] trap;
-        //public Sword[] sword;
-        public string enemyAttack;
-
-
         public GameStats gameStats;
         public Map map;
 
+        public string enemyAttack;
         int columnCount = 0;
         int rowCount = 0;
-        //Ranger[] ranger, Melee[] melee, Mage[] mage, Boss[] boss, Money[] money, Potion[] potion, Trap[] trap, Sword[] sword
 
         public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, GameStats gamestats, Map map)
         {
             this.player = player;
             this.enemyManager = enemyManager;
             this.itemManager = itemManager;
-            //this.ranger = ranger;
-            //this.melee = melee;
-            //this.mage = mage;
-            //this.boss = boss;
-            //this.money = money;
-            //this.potion = potion;
-            //this.trap = trap;
-            //this.sword = sword;
             this.gameStats = gamestats;
             this.map = map;
         }
@@ -80,17 +60,13 @@ namespace JourneyToTheMysticCave_Beta
                 if (itemManager.items[i].pickedUp)
                 {
                     if (itemManager.items[i].name == "Money")
-                    {
                         Console.Write($"{player.name} picked up money \n");
-                    }
                     if (itemManager.items[i].name == "Potion")
-                    {
                         Console.Write($"{player.name} picked up potion, player has healed by {gameStats.PotionHeal} \n");
-                    }
                     if (itemManager.items[i].name == "Sword")
-                    {
                         Console.Write($"{player.name} picked up sword, player damage increased by {gameStats.SwordMultiplier} \n");
-                    }
+
+                    itemManager.items[i].pickedUp = false;
                 }
             }
         }

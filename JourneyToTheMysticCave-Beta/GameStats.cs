@@ -11,6 +11,7 @@ namespace JourneyToTheMysticCave_Beta
     {
         LevelManager levelManager;
         Random random = new Random();
+        Map map;
 
         #region PlayerStat Declarations
         public string PlayerName { get; set; }
@@ -83,9 +84,10 @@ namespace JourneyToTheMysticCave_Beta
         public int SwordMultiplier { get; set; }
         #endregion
 
-        public void Init(LevelManager levelManager)
+        public void Init(LevelManager levelManager, Map map)
         {
             this.levelManager = levelManager;
+            this.map = map;
 
             GameConfig();
         }
@@ -159,13 +161,16 @@ namespace JourneyToTheMysticCave_Beta
             int health;
             switch (type)
             {
-                case "Ranger": health = random.Next(rangerMinHp, rangerMaxHp);
+                case "Ranger":
+                    health = random.Next(rangerMinHp, rangerMaxHp);
                     return (health);
-                case "Mage": health = random.Next(mageMinHp, mageMaxHp);
+                case "Mage":
+                    health = random.Next(mageMinHp, mageMaxHp);
                     return (health);
-                case "Melee": health = (random.Next(meleeMinHp, meleeMaxHp));
+                case "Melee":
+                    health = (random.Next(meleeMinHp, meleeMaxHp));
                     return (health);
-                    default : return 0;
+                default: return 0;
             }
         }
 
@@ -184,7 +189,7 @@ namespace JourneyToTheMysticCave_Beta
 
         private bool CheckInitialPlacement(int x, int y, int levelNumber)
         {
-            return levelManager.InitialBoundaries(x, y, levelNumber);
+            return levelManager.InitialBoundaries(x, y, levelNumber) && map.EmptySpace(x,y, levelNumber);
         }
     }
 }

@@ -73,28 +73,28 @@ namespace JourneyToTheMysticCave_Beta
         {
             foreach (Enemy enemy in enemies)
             {
-                switch (enemy.GetType().Name)
+                switch (levelManager.mapLevel)
                 {
-                    case nameof(Ranger):
-                        if (levelManager.mapLevel == 0)
+                    case 0:
+                        if (enemy.GetType().Name == "Ranger")
                             enemy.Update(random);
                         break;
-                    case nameof(Mage):
-                        if (levelManager.mapLevel == 1)
+                    case 1:
+                        if (enemy.GetType().Name == "Mage")
                             enemy.Update(random);
                         break;
-                    case nameof(Melee):
-                        if (levelManager.mapLevel == 2)
+                    case 2:
+                        if (enemy.GetType().Name == "Melee")
                             enemy.Update(random);
-                        break;
-                    case nameof(Boss):
-                        if (AreAllMeleeDead() && firstDead == false)
+                        else if (enemy.GetType().Name == "Boss" && AreAllMeleeDead())
                         {
-                            enemy.pos = stats.PlaceCharacters(2, random);
-                            firstDead = true;
-                        }
-                        if (levelManager.mapLevel == 2 && AreAllMeleeDead())
+                            if (AreAllMeleeDead() && firstDead == false)
+                            {
+                                enemy.pos = stats.PlaceCharacters(2, random);
+                                firstDead = true;
+                            }
                             enemy.Update(random);
+                        }
                         break;
                 }
             }
@@ -104,22 +104,20 @@ namespace JourneyToTheMysticCave_Beta
         {
             foreach (Enemy enemy in enemies)
             {
-                switch (enemy.GetType().Name)
+                switch (levelManager.mapLevel)
                 {
-                    case nameof(Ranger):
-                        if (levelManager.mapLevel == 0)
+                    case 0:
+                        if (enemy is Ranger)
                             enemy.Draw();
                         break;
-                    case nameof(Mage):
-                        if (levelManager.mapLevel == 1)
+                    case 1:
+                        if (enemy is Mage)
                             enemy.Draw();
                         break;
-                    case nameof(Melee):
-                        if (levelManager.mapLevel == 2)
+                    case 2:
+                        if (enemy is Melee)
                             enemy.Draw();
-                        break;
-                    case nameof(Boss):
-                        if (levelManager.mapLevel == 2 && AreAllMeleeDead())
+                        else if (enemy is Boss && AreAllMeleeDead())
                             enemy.Draw();
                         break;
                 }
@@ -131,29 +129,27 @@ namespace JourneyToTheMysticCave_Beta
             return !enemies.Any(enemy => enemy is Melee && enemy.IsAlive);
         }
 
-        public bool CheckEnemyPos(int x, int y, int level)
-        {
-            switch (level)
-            {
-                case 0:
-                    foreach (Enemy Ranger in enemies)
-                        if (x == Ranger.pos.x && y == Ranger.pos.y)
-                            return true;
-                    break;
-                case 1:
-                    foreach (Enemy Mage in enemies)
-                        if (x == Mage.pos.x && y == Mage.pos.y)
-                            return true;
-                    break;
-                case 2:
-                    foreach (Enemy Melee in enemies)
-                        if (x == Melee.pos.x && y == Melee.pos.y)
-                            return true;
-                    break;
-                default: return false;
-            }
-            return false;
-        }
-
+        //public bool CheckEnemyPos(int x, int y)
+        //{
+        //    foreach (Enemy enemy in enemies)
+        //    {
+        //        switch (levelManager.mapLevel)
+        //        {
+        //            case 0:
+        //                if (enemy.GetType().Name == "Ranger" && x == enemy.pos.x && y == enemy.pos.y)
+        //                    return true;
+        //                break;
+        //            case 1:
+        //                if (enemy.GetType().Name == "Mage" && x == enemy.pos.x && y == enemy.pos.y)
+        //                    return true;
+        //                break;
+        //            case 2:
+        //                if (enemy.GetType().Name == "Melee" && x == enemy.pos.x && y == enemy.pos.y)
+        //                    return true;
+        //                break;
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }

@@ -16,6 +16,7 @@ namespace JourneyToTheMysticCave_Beta
         public bool attackedEnemy = false;
         public bool itemPickedUp = false;
         private Enemy lastEncountered;
+        private Item itemPickup;
 
         public Enemy GetLastEnountered()
         {
@@ -27,6 +28,7 @@ namespace JourneyToTheMysticCave_Beta
         EnemyManager enemyManager;
         LegendColors legendColors;
         LevelManager levelManager;
+        ItemManager itemManager;
 
 
         public Player()
@@ -34,13 +36,14 @@ namespace JourneyToTheMysticCave_Beta
             healthSystem = new HealthSystem();
         }
 
-        public void Init(Map map, GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager)
+        public void Init(Map map, GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager, ItemManager itemManager)
         {
             this.map = map;
             this.gameStats = gameStats;
             this.legendColors = legendColors;
             this.enemyManager = enemyManager;
             this.levelManager = levelManager;
+            this.itemManager = itemManager;
 
             healthSystem.health = gameStats.PlayerHealth;
             character = gameStats.PlayerCharacter;
@@ -75,13 +78,15 @@ namespace JourneyToTheMysticCave_Beta
                 if (CheckBoundaries(newX, newY))
                 {
                     lastEncountered = GetEnemyAtPosition(newX, newY);
-                    if (lastEncountered == null)
-                    {
-                        pos.x = newX;
-                        pos.y = newY;
-                    }
+                    itemPickup = GetItemAtPosition(newX, newY);
+
+                    if (lastEncountered != null)
+                        AttackEnemy(lastEncountered);
+                    else if (itemPickup != null)
+                        itemPickup.TryCollect();
                     else
-                        AttackEnemy();
+                        pos.x = newX;
+                    pos.y = newY;
                 }
             }
         }
@@ -127,22 +132,21 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
-
         private Enemy GetEnemyAtPosition(int x, int y)
         {
             foreach (Enemy enemy in enemyManager.enemies)
             {
-                if(enemy is Ranger && levelManager.mapLevel == 0)
+                if (enemy is Ranger && levelManager.mapLevel == 0)
                 {
                     if (enemy.pos.x == x && enemy.pos.y == y)
                         return enemy;
                 }
-                if(enemy is Mage && levelManager.mapLevel == 1)
+                if (enemy is Mage && levelManager.mapLevel == 1)
                 {
                     if (enemy.pos.x == x && enemy.pos.y == y)
                         return enemy;
                 }
-                if(enemy is Melee && levelManager.mapLevel == 2)
+                if (enemy is Melee && levelManager.mapLevel == 2)
                 {
                     if (enemy.pos.x == x && enemy.pos.y == y)
                         return enemy;
@@ -151,10 +155,41 @@ namespace JourneyToTheMysticCave_Beta
             return null;
         }
 
-        private void AttackEnemy()
+        private Item GetItemAtPosition(int x, int y)
         {
-            lastEncountered.healthSystem.TakeDamage(damage, "Attacked");
-            //add log string here.
+            foreach (Item item in itemManager.items)
+            {
+                switch (levelManager.mapLevel)
+                {
+                    case 0:
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            if (item.pos.x == x && item.pos.y == y)
+                                return item;
+                        }
+                        break;
+                    case 1:
+                        for (int i = 6; i <= 20; i++)
+                        {
+                            if (item.pos.x == x && item.pos.y == y)
+                                return item;
+                        }
+                        break;
+                    case 2:
+                        for (int i = 21; i <= itemManager.items.Count; i++)
+                        {
+                            if (item.pos.x == x && item.pos.y == y)
+                                return item;
+                        }
+                        break;
+                }
+            }
+            return null;
+        }
+
+        private void AttackEnemy(Enemy enemy)
+        {
+            enemy.healthSystem.TakeDamage(damage, "Attacked");
         }
 
         private bool CheckBoundaries(int x, int y)
