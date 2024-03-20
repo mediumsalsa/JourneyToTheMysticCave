@@ -21,10 +21,19 @@ namespace JourneyToTheMysticCave_Beta
         public bool healed;
 
 
-        public void TakeDamage(int damage) // can be used for floor damage, player attack, trap damage
+        public void TakeDamage(int damage, string hurtByWhat) // can be used for floor damage, player attack, trap damage
         {
             health -= damage;
-            hurt = true;
+            
+            switch(hurtByWhat)
+            {
+                case "Trap":
+                    hurtByTrap = true; break;
+                case "Attacked":
+                    hurt = true; break;
+                case "Floor":
+                    floorDamage = true; break;
+            }    
 
             if(health <= 0)
             {

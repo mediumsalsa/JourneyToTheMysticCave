@@ -59,7 +59,7 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (PlayerDistance() <= 8)
             {
-                player.healthSystem.TakeDamage(damage);
+                player.healthSystem.TakeDamage(damage, "Attacked");
                 log.enemyAttack = $"by mage magic - {damage} damage";
             }
         }

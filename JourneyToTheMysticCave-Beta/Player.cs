@@ -153,7 +153,7 @@ namespace JourneyToTheMysticCave_Beta
 
         private void AttackEnemy()
         {
-            lastEncountered.healthSystem.TakeDamage(damage);
+            lastEncountered.healthSystem.TakeDamage(damage, "Attacked");
             //add log string here.
         }
 

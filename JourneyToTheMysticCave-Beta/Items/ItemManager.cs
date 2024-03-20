@@ -12,9 +12,11 @@ namespace JourneyToTheMysticCave_Beta
         public GameStats stats;
         LegendColors legendColors;
         LevelManager levelManager;
+        EnemyManager enemyManager;
         Gamelog log;
         Player player;
         Map map;
+        Random random = new Random();
 
         int potionsForEachLevel;
         int moneyForEachLevel;
@@ -26,7 +28,7 @@ namespace JourneyToTheMysticCave_Beta
             items = new List<Item>();
         }
 
-        public void Init(GameStats stats, LevelManager levelManager, LegendColors legendColors, Gamelog log, Player player, Map map)
+        public void Init(GameStats stats, LevelManager levelManager, LegendColors legendColors, Gamelog log, Player player, Map map, EnemyManager enemyManager)
         {
             this.stats = stats;
             this.levelManager = levelManager;
@@ -34,43 +36,21 @@ namespace JourneyToTheMysticCave_Beta
             this.log = log;
             this.player = player;
             this.map = map;
+            this.enemyManager = enemyManager;
 
             for(int i = 0; i < stats.MoneyCount; i++)
                 items.Add(new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName, legendColors));
             for(int i = 0; i < stats.PotionCount; i++)
                 items.Add(new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal, legendColors));
             for(int i = 0; i < stats.TrapCount; i++)
-                items.Add(new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage, legendColors));
+                items.Add(new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage, legendColors,log, player, enemyManager, levelManager));
             for(int i = 0; i < stats.SwordCount; i++)
-                items.Add(new Sword(stats.SwordCount, stats.SwordCharacter, stats.SwordName, stats.SwordMultiplier, legendColors));
-
-            //switch (levelManager.mapLevel) // this might be where i set the positions?!
-            //{
-            //    case 0:
-            //        for (int i = 0; i < AmountForThisLevel("Potion", 3); i++)
-            //            items.Add(new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal));
-            //        for (int i = 0; i < AmountForThisLevel("Money", 3); i++)
-            //            items.Add(new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName));
-            //        break;
-            //    case 1:
-            //        items.Add(new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal));
-            //        for (int i = 0; i < AmountForThisLevel("Money", 3); i++)
-            //            items.Add(new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName));
-            //        for (int i = 0; i < AmountForThisLevel("Trap", 2); i++)
-            //            items.Add(new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage));
-            //        break;
-            //        case 2:
-            //        items.Add(new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal));
-            //        for (int i = 0; i < AmountForThisLevel("Money", 3); i++)
-            //            items.Add(new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName));
-            //        for (int i = 0; i < AmountForThisLevel("Trap", 2); i++)
-            //            items.Add(new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage));
-            //        for (int i = 0; i < stats.SwordCount; i++)
-            //            items.Add(new Sword(stats.SwordCount, stats.SwordCharacter, stats.SwordName, stats.SwordMultiplier)); 
-            //        break;
-            //}
+                items.Add(new Sword(stats.SwordCount, stats.SwordCharacter, stats.SwordName, stats.SwordMultiplier, legendColors, player));
 
 
+            PlaceItemsForLevel(0);
+            PlaceItemsForLevel(1);
+            PlaceItemsForLevel(2);
         }
 
         public void Update()
@@ -99,22 +79,43 @@ namespace JourneyToTheMysticCave_Beta
                 //}
             }
         }
+        private void PlaceItemsForLevel(int level)
+        {
+            foreach (Item item in items)
+            {
+                switch (item.GetType().Name)
+                {
+                    case nameof(Money):
+                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Money), level), random);
+                        break;
+                    case nameof(Potion):
+                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Potion), level), random);
+                        break;
+                    case nameof(Trap):
+                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Trap), level), random);
+                        break;
+                    case nameof(Sword):
+                        item.pos = stats.PlaceCharacters(AmountForThisLevel(nameof(Sword), level), random);
+                        break;
+                }
+            }
+        }
 
 
-        private int AmountForThisLevel(string name, int amount)
+        private int AmountForThisLevel(string name, int level)
         {
             switch (name)
             {
                 case "Potion":
-                    potionsForEachLevel = amount;
-                    return potionsForEachLevel;
+                    return level <= 2 ? 2 : 0; // 2 potions for levels 0, 1, and 2
                 case "Money":
-                    moneyForEachLevel = amount;
-                    return moneyForEachLevel;
+                    return level <= 2 ? 2 : 0; // 2 money for levels 0, 1, and 2
                 case "Trap":
-                    trapsForEachLevel = amount;
-                    return trapsForEachLevel;
-                default: return amount;
+                    return level >= 1 && level <= 2 ? 15 : 0; // 15 traps for level 1, 0 otherwise
+                case "Sword":
+                    return 1; // 1 sword for each level
+                default:
+                    return 0;
             }
         }
     }

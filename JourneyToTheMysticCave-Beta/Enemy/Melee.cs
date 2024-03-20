@@ -38,44 +38,45 @@ namespace JourneyToTheMysticCave_Beta
             Console.CursorVisible = false;
         }
 
-        private void Movement(Random randomMovement)
+        private void Movement(Random random)
         {
             if (PlayerDistance() < 4)
             {
                 do
                 {
-                    dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
+                    dx = Math.Sign(player.pos.x - pos.x); // Calculate direction to player
                     dy = Math.Sign(player.pos.y - pos.y);
 
-                    newDx = pos.x + dx;
+                    newDx = pos.x + dx; // Calculate new position
                     newDy = pos.y + dy;
 
-                } while (CheckValidMovement(newDx, newDy, 2));
-
-
-                if (newDx == player.pos.x && newDy == player.pos.y)
-                    AttackPlayer($"by Slime sludge - {damage} damage");
-                else
-                    pos = new Point2D { x = newDx, y = newDy };
-                //CheckFloor(newDx, newDy)?? for poison or traps? or should trap handle this?
+                    if (CheckValidMovement(newDx, newDy, 2))
+                    {
+                        if (newDx == player.pos.x && newDy == player.pos.y)
+                            AttackPlayer($"by Slime sludge - {damage} damage");
+                        else
+                            pos = new Point2D { x = newDx, y = newDy };
+                        break; // Break the loop if movement is valid
+                    }
+                } while (true);
             }
             else
             {
                 do
                 {
-                    int direction = randomMovement.Next(0, 4);
+                    int direction = random.Next(0, 4);
                     dx = (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
                     dy = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
 
-                    newDx = pos.x + dx;
+                    newDx = pos.x + dx; // Calculate new position
                     newDy = pos.y + dy;
 
-                    pos = new Point2D { x = newDx, y = newDy };
-
-                } while (!CheckValidMovement(newDx, newDy, 2));
-
-                //}
-                //CheckFloor(newDx, newDy)?? for poison or traps? or should trap handle this?
+                    if (CheckValidMovement(newDx, newDy, 2))
+                    {
+                        pos = new Point2D { x = newDx, y = newDy }; // Update position
+                        break; // Break the loop if movement is valid
+                    }
+                } while (true);
             }
         }
     }

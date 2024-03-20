@@ -63,7 +63,7 @@ namespace JourneyToTheMysticCave_Beta
 
         private void AttackPlayer()
         {
-            player.healthSystem.TakeDamage(damage);
+            player.healthSystem.TakeDamage(damage, "Attacked");
             log.enemyAttack = $"by Ranger arrow - {damage} damage";
         }
     }

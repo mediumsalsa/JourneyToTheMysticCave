@@ -10,7 +10,7 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class LevelManager
     {
-        public int mapLevel = 2;
+        public int mapLevel = 0;
         public int previousLevel = 0;
         private string[] mapTextFiles = new string[] { "Level\\Map0.txt", "Level\\Map1.txt", "Level\\Map2.txt" };
         private char[][,] mapContents = new char[3][,];

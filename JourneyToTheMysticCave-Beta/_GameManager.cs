@@ -48,7 +48,7 @@ namespace JourneyToTheMysticCave_Beta
             player.Init(map, gameStats, legendColors, enemyManager, levelManager);
             legendColors.Init(gameStats, map, levelManager);
             enemyManager.Init(gameStats, levelManager, legendColors, gamelog, player, map);
-            itemManager.Init(gameStats, levelManager, legendColors, gamelog, player, map);
+            itemManager.Init(gameStats, levelManager, legendColors, gamelog, player, map, enemyManager);
             gamelog.Init(player, enemyManager, itemManager, gameStats, map);
             hUD.Init(player, enemyManager, itemManager, map, legendColors);
         }
@@ -62,7 +62,7 @@ namespace JourneyToTheMysticCave_Beta
             enemyManager.Update();
             hUD.Update();
             gamelog.Update();
-            // itemManager.Update();
+            itemManager.Update();
         }
 
         private void Draw()
@@ -73,7 +73,7 @@ namespace JourneyToTheMysticCave_Beta
             enemyManager.Draw();
             hUD.Draw();
             gamelog.Draw();
-            //   itemManager.Draw();
+            itemManager.Draw();
         }
     }
 }

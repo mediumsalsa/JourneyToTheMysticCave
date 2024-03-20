@@ -22,6 +22,7 @@ namespace JourneyToTheMysticCave_Beta
         //public Sword[] sword;
         public string enemyAttack;
 
+
         public GameStats gameStats;
         public Map map;
 
@@ -74,38 +75,24 @@ namespace JourneyToTheMysticCave_Beta
         #region PickUps
         private void LogPickUp()
         {
-            //foreach (Money money in money)
-            //{
-            //    if (money.pickedUp)
-            //        Console.Write($"{player.name} picked up money \n");
-            //    money.pickedUp = false;
-            //}
-
-            //foreach (Potion potion in potion)
-            //{
-            //    if(potion.pickedUp)
-            //    {
-            //        if(player.healthSystem.healed)
-            //        {
-            //            Console.Write($"{player.name} picked up potion, healed {potion.healAmount} \n");
-            //            player.healthSystem.healed = false;
-            //        }
-            //        if(player.healthSystem.cannotHeal)
-            //        {
-            //            Console.Write($"{player.name} cannot heal anymore \n");
-            //            player.healthSystem.cannotHeal = false;
-            //        }
-            //    }
-            //}
-
-            //foreach (Sword sword in sword)
-            //{
-            //    if(sword.pickedUp)
-            //    {
-            //        Console.Write($"{player.name} picked up sword, attack damage is now {player.damage}\n");
-            //        sword.pickedUp = false;
-            //    }
-            //}
+            for(int i = 0; i < itemManager.items.Count; i++)
+            {
+                if (itemManager.items[i].pickedUp)
+                {
+                    if (itemManager.items[i].name == "Money")
+                    {
+                        Console.Write($"{player.name} picked up money \n");
+                    }
+                    if (itemManager.items[i].name == "Potion")
+                    {
+                        Console.Write($"{player.name} picked up potion, player has healed by {gameStats.PotionHeal} \n");
+                    }
+                    if (itemManager.items[i].name == "Sword")
+                    {
+                        Console.Write($"{player.name} picked up sword, player damage increased by {gameStats.SwordMultiplier} \n");
+                    }
+                }
+            }
         }
 
         #endregion
@@ -139,23 +126,17 @@ namespace JourneyToTheMysticCave_Beta
                 Console.Write($"{player.name} hurt by poison spill\n");
                 player.healthSystem.floorDamage = false;
             }
-            //CheckEnemyFloorDamage(ranger);
-            //CheckEnemyFloorDamage(mage);
-            //CheckEnemyFloorDamage(melee);
-            //CheckEnemyFloorDamage(boss);
+
+            for (int i = 0; i < enemyManager.enemies.Count; i++)
+            {
+                if (enemyManager.enemies[i].healthSystem.floorDamage)
+                {
+                    Console.Write($"{enemyManager.enemies[i].name}{i} has been hurt by poison spill \n");
+                    enemyManager.enemies[i].healthSystem.floorDamage = false;
+                }
+            }
         }
 
-        //private void CheckEnemyFloorDamage(Enemy[] enemies)
-        //{
-        //    if (trap.GetLastEnountered() != null)
-        //    {
-        //        if (player.GetLastEnountered().healthSystem.hurt)
-        //        {
-        //            Console.Write($"Attacked {player.GetLastEnountered().name} - {player.damage} damage\n");
-        //            player.GetLastEnountered().healthSystem.hurt = false;
-        //        }
-        //    }
-        //}
         #endregion
 
         #region Trap
@@ -166,23 +147,18 @@ namespace JourneyToTheMysticCave_Beta
                 Console.Write($"{player.name} hurt by a trap \n");
                 player.healthSystem.hurtByTrap = false;
             }
-            //CheckEnemyTrap(ranger);
-            //CheckEnemyTrap(mage);
-            //CheckEnemyTrap(melee);
-            //CheckEnemyTrap(boss);
-        }
 
-        private void CheckEnemyTrap(Enemy[] enemies)
-        {
-            for (int i = 0; i < enemies.Length; i++)
+            for (int i = 0; i < enemyManager.enemies.Count; i++)
             {
-                if (enemies[i].healthSystem.hurt)
+                if (enemyManager.enemies[i].healthSystem.floorDamage)
                 {
-                    Console.Write($"{enemies[i].name}{i} hurt by a trap \n");
-                    enemies[i].healthSystem.hurtByTrap = false;
+                    Console.Write($"{enemyManager.enemies[i].name}{i} has been hurt by a trap \n");
+                    enemyManager.enemies[i].healthSystem.floorDamage = false;
                 }
             }
         }
+
+       
         #endregion
 
         #region Death

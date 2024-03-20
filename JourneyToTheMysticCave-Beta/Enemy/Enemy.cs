@@ -39,7 +39,7 @@ namespace JourneyToTheMysticCave_Beta
         public abstract void Update(Random random);
 
         public abstract void Draw();
-        
+
         public int PlayerDistance() //calculates distance to player
         {
             return Math.Abs(pos.x - player.pos.x) + Math.Abs(pos.y - player.pos.y);
@@ -47,14 +47,14 @@ namespace JourneyToTheMysticCave_Beta
 
         public void AttackPlayer(string attack)
         {
-            player.healthSystem.TakeDamage(damage);
+            player.healthSystem.TakeDamage(damage, "Attacked");
             log.enemyAttack = attack;
         }
 
         #region Enemy Position Check
         public bool CheckValidMovement(int x, int y, int level)
         {
-            return CheckBoundaries(x, y) && CheckEnemyPos(x, y, level);
+            return CheckBoundaries(x, y) && !CheckEnemyPos(x, y, level);
         }
 
         private bool CheckBoundaries(int x, int y)
@@ -62,6 +62,7 @@ namespace JourneyToTheMysticCave_Beta
             return x > 0 && x < map.GetMapColumnCount() && y > 0 && y < map.GetMapRowCount() &&
                 map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^' && map.GetCurrentMapContent()[y, x] != '*';
         }
+
         public bool CheckEnemyPos(int x, int y, int level)
         {
             switch (level)
@@ -81,11 +82,9 @@ namespace JourneyToTheMysticCave_Beta
                         if (x == Melee.pos.x && y == Melee.pos.y)
                             return true;
                     break;
-                default: return false;
             }
             return false;
         }
-
         #endregion
     }
 }
