@@ -36,6 +36,7 @@ namespace JourneyToTheMysticCave_Beta
         public int newDx;
         public int newDy;
 
+
         public abstract void Update(Random random);
 
         public abstract void Draw();
@@ -57,7 +58,7 @@ namespace JourneyToTheMysticCave_Beta
             return CheckBoundaries(x, y) && !CheckEnemyPos(x, y, level);
         }
 
-        private bool CheckBoundaries(int x, int y)
+        public bool CheckBoundaries(int x, int y)
         {
             return x > 0 && x < map.GetMapColumnCount() && y > 0 && y < map.GetMapRowCount() &&
                 map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^' && map.GetCurrentMapContent()[y, x] != '*';
@@ -65,23 +66,26 @@ namespace JourneyToTheMysticCave_Beta
 
         public bool CheckEnemyPos(int x, int y, int level)
         {
-            switch (level)
+            foreach (Enemy enemy in enemyManager.enemies)
             {
-                case 0:
-                    foreach (Enemy Ranger in enemyManager.enemies)
-                        if (x == Ranger.pos.x && y == Ranger.pos.y)
+                if (level == 0 && enemy.GetType().Name == nameof(Ranger))
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return true;
+                }
+                else if (level == 1 && enemy.GetType().Name == nameof(Mage))
+                {
+                        if (enemy.pos.x == x && enemy.pos.y == y)
                             return true;
-                    break;
-                case 1:
-                    foreach (Enemy Mage in enemyManager.enemies)
-                        if (x == Mage.pos.x && y == Mage.pos.y)
+                }
+                else if (level == 2)
+                {
+                    if (enemy.GetType().Name == nameof(Melee))
+                    {
+                        if (enemy.pos.x == x && enemy.pos.y == y)
                             return true;
-                    break;
-                case 2:
-                    foreach (Enemy Melee in enemyManager.enemies)
-                        if (x == Melee.pos.x && y == Melee.pos.y)
-                            return true;
-                    break;
+                    }
+                }
             }
             return false;
         }

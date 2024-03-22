@@ -97,7 +97,8 @@ namespace JourneyToTheMysticCave_Beta
             //Player Configs/Stats
             PlayerCharacter = 'H';
             PlayerName = "Hero";
-            PlayerHealth = 100;
+            PlayerHealth = 700;
+            //PlayerHealth = 100;
             PlayerDamage = 10;
             PlayerPos = new Point2D { x = 2, y = 5 };
 
@@ -141,7 +142,7 @@ namespace JourneyToTheMysticCave_Beta
             PotionCount = 6;
             PotionName = "Potion";
             PotionCharacter = '6';
-            PotionHeal = 6;
+            PotionHeal = 10;
 
             // Trap Configs
             TrapCount = 30;

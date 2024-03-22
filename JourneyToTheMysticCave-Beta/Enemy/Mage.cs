@@ -67,17 +67,21 @@ namespace JourneyToTheMysticCave_Beta
         private Point2D RandomPlacement(Random random)
         {
             int x, y;
-            do
-            {
-                x = random.Next(0, map.GetCurrentMapContent().GetLength(1));
-                y = random.Next(0, map.GetCurrentMapContent().GetLength(0));
+            Console.SetCursorPosition(0, 36);
+            Console.WriteLine(moveCount.ToString());
+            x = random.Next(0, map.GetCurrentMapContent().GetLength(1));
+            y = random.Next(0, map.GetCurrentMapContent().GetLength(0));
 
-                if(CheckValidMovement(x, y, 2) && x != player.pos.x && y != player.pos.y)
-                {
-                    moveCount = 0;
-                    return new Point2D { x = x, y = y };
-                }
-            } while (true);
+            if (CheckValidMovement(x, y, 2) && x != player.pos.x && y != player.pos.y)
+            {
+                moveCount = 0;
+                return new Point2D { x = x, y = y };
+            }
+            else
+            {
+                moveCount = 10;
+                return new Point2D { x = pos.x, y = pos.y };
+            }
         }
     }
 }

@@ -67,6 +67,7 @@ namespace JourneyToTheMysticCave_Beta
                     legendColors.MapColor(item.character);
                     Console.Write(item.character);
                     Console.ResetColor();
+                    Console.Write(' ');
                 }
             }
             // need to add each amount of money in the item manager

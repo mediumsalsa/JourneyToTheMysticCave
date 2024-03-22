@@ -15,7 +15,7 @@ namespace JourneyToTheMysticCave_Beta
         Player player;
         EnemyManager enemyManager;
         ItemManager itemManager;
-
+        bool firstPlay = true;
         char[,] currentMap;
 
         public void Init(LevelManager levelManager, LegendColors legendColors, Player player, EnemyManager enemyManager, ItemManager itemManager)
@@ -29,7 +29,12 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Update()
         {
-            currentMap = GetCurrentMapContent();
+            if(firstPlay || levelManager.levelChange) // only updates if levelchange has been triggered or first play.
+            {
+                currentMap = GetCurrentMapContent();
+                firstPlay = false;
+                levelManager.levelChange = false;
+            }
         }
 
         public void Draw()

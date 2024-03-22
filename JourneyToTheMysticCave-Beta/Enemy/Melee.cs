@@ -10,7 +10,8 @@ namespace JourneyToTheMysticCave_Beta
     {
         LegendColors legendColors;
 
-        public Melee(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
+        public Melee(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : 
+            base(count, character, name, damage, player, enemyManager, map, log)
         {
             this.legendColors = legendColors;
         }

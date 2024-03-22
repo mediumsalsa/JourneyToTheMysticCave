@@ -37,12 +37,6 @@ namespace JourneyToTheMysticCave_Beta
             {
                 Update();
                 Draw();
-
-                //Console.SetCursorPosition(0, 28);
-                //foreach(Item item in itemManager.items)
-                //{
-                //    Console.WriteLine($"{item.name} - {item.pos.x}, {item.pos.y}");
-                //}
             }
         }
 

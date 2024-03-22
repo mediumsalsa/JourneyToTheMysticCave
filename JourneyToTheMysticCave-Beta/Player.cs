@@ -78,15 +78,17 @@ namespace JourneyToTheMysticCave_Beta
                 if (CheckBoundaries(newX, newY))
                 {
                     lastEncountered = GetEnemyAtPosition(newX, newY);
-                    itemPickup = GetItemAtPosition(newX, newY);
+                    //itemPickup = GetItemAtPosition(newX, newY);
 
                     if (lastEncountered != null)
                         AttackEnemy(lastEncountered);
-                    else if (itemPickup != null)
-                        itemPickup.TryCollect();
+                    //else if (itemPickup != null)
+                    //    itemPickup.TryCollect();
                     else
+                    {
                         pos.x = newX;
-                    pos.y = newY;
+                        pos.y = newY;
+                    }
                 }
             }
         }
@@ -100,35 +102,16 @@ namespace JourneyToTheMysticCave_Beta
 
             switch (input.Key)
             {
-                case ConsoleKey.W:
-                    dirY = -1;
-                    break;
-                case ConsoleKey.S:
-                    dirY = 1;
-                    break;
-                case ConsoleKey.A:
-                    dirX = -1;
-                    break;
-                case ConsoleKey.D:
-                    dirX = 1;
-                    break;
-                case ConsoleKey.Q:
-                    dirY = -1; dirX = -1;
-                    break;
-                case ConsoleKey.E:
-                    dirY = -1; dirX = 1;
-                    break;
-                case ConsoleKey.Z:
-                    dirY = 1; dirX = -1;
-                    break;
-                case ConsoleKey.C:
-                    dirY = 1; dirX = 1;
-                    break;
-                case ConsoleKey.Spacebar:
-                    return; // using for testing, player doesn't move
-                case ConsoleKey.Escape:
-                    System.Environment.Exit(0);
-                    return;
+                case ConsoleKey.W: dirY = -1; break;
+                case ConsoleKey.S: dirY = 1; break;
+                case ConsoleKey.A: dirX = -1; break;
+                case ConsoleKey.D: dirX = 1; break;
+                case ConsoleKey.Q: dirY = -1; dirX = -1; break; 
+                case ConsoleKey.E: dirY = -1; dirX = 1; break;
+                case ConsoleKey.Z: dirY = 1; dirX = -1; break;
+                case ConsoleKey.C: dirY = 1; dirX = 1; break;
+                case ConsoleKey.Spacebar: return; // using for testing, player doesn't move
+                case ConsoleKey.Escape: System.Environment.Exit(0); return;
             }
         }
 
@@ -136,56 +119,51 @@ namespace JourneyToTheMysticCave_Beta
         {
             foreach (Enemy enemy in enemyManager.enemies)
             {
-                if (enemy is Ranger && levelManager.mapLevel == 0)
+                if (enemy.pos.x == x && enemy.pos.y == y)
                 {
-                    if (enemy.pos.x == x && enemy.pos.y == y)
+                    if ((enemy is Ranger && levelManager.mapLevel == 0) ||
+                        (enemy is Mage && levelManager.mapLevel == 1) ||
+                        (enemy is Melee && levelManager.mapLevel == 2) || 
+                        (enemy is Boss && enemyManager.AreAllMeleeDead()))
+                    {
                         return enemy;
-                }
-                if (enemy is Mage && levelManager.mapLevel == 1)
-                {
-                    if (enemy.pos.x == x && enemy.pos.y == y)
-                        return enemy;
-                }
-                if (enemy is Melee && levelManager.mapLevel == 2)
-                {
-                    if (enemy.pos.x == x && enemy.pos.y == y)
-                        return enemy;
+                    }
                 }
             }
             return null;
         }
 
-        private Item GetItemAtPosition(int x, int y)
-        {
-            foreach (Item item in itemManager.items)
-            {
-                switch (levelManager.mapLevel)
-                {
-                    case 0:
-                        for (int i = 0; i <= 5; i++)
-                        {
-                            if (item.pos.x == x && item.pos.y == y)
-                                return item;
-                        }
-                        break;
-                    case 1:
-                        for (int i = 6; i <= 20; i++)
-                        {
-                            if (item.pos.x == x && item.pos.y == y)
-                                return item;
-                        }
-                        break;
-                    case 2:
-                        for (int i = 21; i <= itemManager.items.Count; i++)
-                        {
-                            if (item.pos.x == x && item.pos.y == y)
-                                return item;
-                        }
-                        break;
-                }
-            }
-            return null;
-        }
+        //private Item GetItemAtPosition(int x, int y)
+        //{
+        //    int startIndex = 0;
+        //    int endIndex = 0;
+
+        //    switch (levelManager.mapLevel)
+        //    {
+        //        case 0:
+        //            startIndex = 0;
+        //            endIndex = Math.Min(5, itemManager.items.Count - 1);
+        //            break;
+        //        case 1:
+        //            startIndex = 6;
+        //            endIndex = Math.Min(20, itemManager.items.Count - 1);
+        //            break;
+        //        case 2:
+        //            startIndex = 21;
+        //            endIndex = itemManager.items.Count - 1;
+        //            break;
+        //    }
+
+        //    for (int i = startIndex; i <= endIndex; i++)
+        //    {
+        //        Item item = itemManager.items[i];
+        //        if (item.pos.x == x && item.pos.y == y)
+        //            return item;
+        //    }
+
+        //    return null;
+        //}
+
 
         private void AttackEnemy(Enemy enemy)
         {
@@ -194,8 +172,7 @@ namespace JourneyToTheMysticCave_Beta
 
         private bool CheckBoundaries(int x, int y)
         {
-            return x > 0 && x < map.GetMapColumnCount() && y > 0 && y < map.GetMapRowCount() &&
-                map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^';
+            return map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^';
         }
     }
 }

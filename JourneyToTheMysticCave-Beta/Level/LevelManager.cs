@@ -14,6 +14,7 @@ namespace JourneyToTheMysticCave_Beta
         public int previousLevel = 0;
         private string[] mapTextFiles = new string[] { "Level\\Map0.txt", "Level\\Map1.txt", "Level\\Map2.txt" };
         private char[][,] mapContents = new char[3][,];
+        public bool levelChange;
 
         public Player player;
 
@@ -54,6 +55,7 @@ namespace JourneyToTheMysticCave_Beta
                     if (player.pos.x == 40 && player.pos.y == 7)
                     {
                         mapLevel = 1;
+                        levelChange = true;
                         player.pos = new Point2D { x = 1, y = 7 };
                     }
                     break;
@@ -61,11 +63,13 @@ namespace JourneyToTheMysticCave_Beta
                     if (player.pos.x == 0 && player.pos.y == 7)
                     {
                         mapLevel = 0;
+                        levelChange = true;
                         player.pos = new Point2D { x = 39, y = 7 };
                     }
                     if (player.pos.x == 37 && player.pos.y == 3)
                     {
                         mapLevel = 2;
+                        levelChange = true;
                         player.pos = new Point2D {x = 37, y = 21 };
                     }
                     break;
@@ -73,6 +77,7 @@ namespace JourneyToTheMysticCave_Beta
                     if (player.pos.x == 37 && player.pos.y == 22)
                     {
                         mapLevel = 1;
+                        levelChange = true;
                         player.pos = new Point2D { x = 37, y = 4 };
                     }
                     break;

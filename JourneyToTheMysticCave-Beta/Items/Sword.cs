@@ -21,9 +21,10 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Update()
         {
-            if(pickedUp)
+            if(player.pos.x == pos.x && player.pos.y == pos.y)
             {
-                player.damage += swordMultiplier;
+                TryCollect();
+                player.damage *= swordMultiplier;
                 pickedUp = false;
             }
         }

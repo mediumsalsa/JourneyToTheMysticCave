@@ -38,58 +38,57 @@ namespace JourneyToTheMysticCave_Beta
             this.map = map;
             this.enemyManager = enemyManager;
 
-
-            DistributeItems(2, 2, 1, 0, 0);
-            DistributeItems(2, 2, 1, 15, 1);
-            DistributeItems(2, 2, 1, 15, 2);
+            DistributeItems(1, 2, 1, 0, 0);
+            DistributeItems(2, 2, 1, 10, 1);
+            DistributeItems(3, 2, 1, 20, 2);
         }
 
         public void Update()
         {
-            switch (levelManager.mapLevel)
+            if (levelManager.mapLevel == 0)
             {
-                case 0:
-                    for (int i = 0; i <= 5; i++)
-                        items[i].Update();
-                    break;
-                case 1:
-                    for (int i = 6; i <= 20; i++)
-                        items[i].Update();
-                    break;
-                case 2:
-                    for (int i = 21; i <= items.Count; i++)
-                        items[i].Update();
-                    break;
+                for (int i = 0; i < itemsLevel0; i++)
+                    items[i].Update();
+            }
+            else if (levelManager.mapLevel == 1)
+            {
+                for (int i = itemsLevel0; i < itemsLevel1; i++)
+                    items[i].Update();
+            }
+            if (levelManager.mapLevel == 2)
+            {
+                for (int i = itemsLevel1; i < items.Count; i++)
+                    items[i].Update();
             }
         }
 
         public void Draw()
         {
-            switch (levelManager.mapLevel)
+            if (levelManager.mapLevel == 0)
             {
-                case 0:
-                    for (int i = 0; i <= 5; i++)
-                        items[i].Draw();
-                    break;
-                case 1:
-                    for (int i = 6; i <= 20; i++)
-                        items[i].Draw();
-                    break;
-                case 2:
-                    for (int i = 21; i <= items.Count; i++)
-                        items[i].Draw();
-                    break;
+                for (int i = 0; i < itemsLevel0; i++)
+                    items[i].Draw();
+            }
+            else if (levelManager.mapLevel == 1)
+            {
+                for (int i = itemsLevel0; i < itemsLevel1; i++)
+                    items[i].Draw();
+            }
+            if (levelManager.mapLevel == 2)
+            {
+                for (int i = itemsLevel1; i < items.Count; i++)
+                    items[i].Draw();
             }
         }
 
         private void DistributeItems(int potionCount, int moneyCount, int swordCount, int trapCount, int level)
         {
-            int index = items.Count; // Get the starting index for this level's items
+            int index = items.Count; 
 
             // Distribute potions
             for (int i = 0; i < potionCount; i++)
             {
-                var potion = new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal, legendColors);
+                var potion = new Potion(stats.PotionCount, stats.PotionCharacter, stats.PotionName, stats.PotionHeal, legendColors, player);
                 potion.pos = stats.PlaceCharacters(level, random);
                 items.Add(potion);
             }
@@ -97,7 +96,7 @@ namespace JourneyToTheMysticCave_Beta
             // Distribute money
             for (int i = 0; i < moneyCount; i++)
             {
-                var money = new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName, legendColors);
+                var money = new Money(stats.MoneyCount, stats.MoneyCharacter, stats.MoneyName, legendColors, player);
                 money.pos = stats.PlaceCharacters(level, random);
                 items.Add(money);
             }
@@ -117,6 +116,12 @@ namespace JourneyToTheMysticCave_Beta
                 trap.pos = stats.PlaceCharacters(level, random);
                 items.Add(trap);
             }
+
+            if (level == 0)
+                itemsLevel0 = items.Count + 1;
+            else if (level == 1)
+                itemsLevel1 = items.Count + 1;
+            
 
             // Update positions for newly added items
             for (int i = index; i < items.Count; i++)

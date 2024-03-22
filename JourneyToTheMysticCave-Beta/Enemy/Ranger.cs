@@ -42,21 +42,19 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (!healthSystem.mapDead)
             {
-                if (PlayerDistance() < 10 && PlayerDistance() >= 3)
+                if (PlayerDistance() < 10 && PlayerDistance() >= 4)
                 {
-                    do
-                    {
-                        dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
-                        dy = Math.Sign(player.pos.y - pos.y);
+                     
+                    dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
+                    dy = Math.Sign(player.pos.y - pos.y);
 
-                        newDx = pos.x + dx;
+                        newDx = pos.x + dx; // Calculate new position
                         newDy = pos.y + dy;
 
-                    } while (CheckValidMovement(newDx, newDy, 0) && newDx != player.pos.x && newDy != player.pos.y);
-
-                    pos = new Point2D { x = newDx, y = newDy};
+                    if(CheckValidMovement(newDx, newDy, 0))    
+                        pos = new Point2D { x = newDx, y = newDy };
                 }
-                if (PlayerDistance() <= 4)
+                if (PlayerDistance() <= 3)
                     AttackPlayer();
             }
         }

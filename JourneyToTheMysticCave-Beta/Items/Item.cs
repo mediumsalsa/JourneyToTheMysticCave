@@ -31,5 +31,10 @@ namespace JourneyToTheMysticCave_Beta
                 pickedUp = true;
             }
         }
+
+        public bool ItemAtPos(int x, int y)
+        {
+            return true;
+        }
     }
 }

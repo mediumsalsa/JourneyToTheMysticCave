@@ -10,23 +10,15 @@ namespace JourneyToTheMysticCave_Beta
     {
         LegendColors legendColors;
 
-        public Boss(int count, char character, string name, int damage, int health, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
+        public Boss(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
         {
-            this.count = count;
-            this.character = character;
-            this.name = name;
-            this.damage = damage;
-            healthSystem = new HealthSystem();
-            healthSystem.health = health;
             this.legendColors = legendColors;
         }
 
         public override void Update(Random random)
         {
             if (!healthSystem.mapDead)
-            {
                 Movement();
-            }
             else
                 pos = new Point2D { x = 0, y = 0 };
         }
@@ -45,7 +37,25 @@ namespace JourneyToTheMysticCave_Beta
 
         private void Movement()
         {
+            dx = Math.Sign(player.pos.x - pos.x);
+            dy = Math.Sign(player.pos.y - pos.y);
 
+            newDx = pos.x + dx;
+            newDy = pos.y + dy;
+
+            if (CheckBoundaries(newDx, newDy))
+            {
+                if (player.pos.x == newDx && player.pos.y == newDy)
+                    AttackPlayer();
+                else
+                    pos = new Point2D { x = newDx, y = newDy };
+            }
+        }
+
+        private void AttackPlayer()
+        {
+            player.healthSystem.TakeDamage(damage, "Attacked");
+            log.enemyAttack = $"by a giant fist - {damage} damage";
         }
     }
 }

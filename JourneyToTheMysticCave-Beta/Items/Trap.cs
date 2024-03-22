@@ -27,8 +27,9 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Update()
         {
-            if (pickedUp)
+            if (GetEntityAtPosition(pos.x, pos.y) != null)
             {
+                TryCollect();
                 GetEntityAtPosition(pos.x, pos.y).healthSystem.TakeDamage(trapDamage, "Trap");
                 pickedUp = false;
             }
@@ -55,13 +56,18 @@ namespace JourneyToTheMysticCave_Beta
                     if (enemy.pos.x == x && enemy.pos.y == y)
                         return enemy;
                 }
-                if (enemy is Melee && levelManager.mapLevel == 2)
+                else if (enemy is Melee && levelManager.mapLevel == 2)
                 {
                     if (enemy.pos.x == x && enemy.pos.y == y)
                         return enemy;
                 }
+                else if (enemy is Boss && levelManager.mapLevel == 2)
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y) 
+                        return enemy;
+                }
             }
-            if(player.pos.x == x && player.pos.y == y)
+            if (player.pos.x == x && player.pos.y == y)
                 return player;
 
             return null;

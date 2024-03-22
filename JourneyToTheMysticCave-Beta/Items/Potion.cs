@@ -10,10 +10,22 @@ namespace JourneyToTheMysticCave_Beta
     {
         public int healAmount;
         LegendColors legendColors;
-        public Potion(int count, char character, string name, int healAmount, LegendColors legendColors) : base(count, character, name)
+        Player player;
+
+        public Potion(int count, char character, string name, int healAmount, LegendColors legendColors, Player player) : base(count, character, name)
         {
             this.healAmount = healAmount;
             this.legendColors = legendColors;
+            this.player = player;
+        }
+
+        public override void Update()
+        {
+            if (player.pos.x == pos.x && player.pos.y == pos.y)
+            {
+                TryCollect();
+                player.healthSystem.Heal(healAmount);
+            }
         }
 
         public override void Draw()
