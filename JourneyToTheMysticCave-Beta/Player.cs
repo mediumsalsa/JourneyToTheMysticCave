@@ -12,6 +12,8 @@ namespace JourneyToTheMysticCave_Beta
     {
         int dirX;
         int dirY;
+        bool inDeep = false;
+        int moveCount; 
 
         public bool attackedEnemy = false;
         public bool itemPickedUp = false;
@@ -77,18 +79,18 @@ namespace JourneyToTheMysticCave_Beta
 
                 if (CheckBoundaries(newX, newY))
                 {
+                    moveCount++;
                     lastEncountered = GetEnemyAtPosition(newX, newY);
-                    //itemPickup = GetItemAtPosition(newX, newY);
-
+                    checkFloor(newX, newY);
                     if (lastEncountered != null)
                         AttackEnemy(lastEncountered);
-                    //else if (itemPickup != null)
-                    //    itemPickup.TryCollect();
-                    else
+                    else if(!inDeep)
                     {
                         pos.x = newX;
                         pos.y = newY;
                     }
+                    if(moveCount == 1)
+                        inDeep = false;
                 }
             }
         }
@@ -133,38 +135,6 @@ namespace JourneyToTheMysticCave_Beta
             return null;
         }
 
-        //private Item GetItemAtPosition(int x, int y)
-        //{
-        //    int startIndex = 0;
-        //    int endIndex = 0;
-
-        //    switch (levelManager.mapLevel)
-        //    {
-        //        case 0:
-        //            startIndex = 0;
-        //            endIndex = Math.Min(5, itemManager.items.Count - 1);
-        //            break;
-        //        case 1:
-        //            startIndex = 6;
-        //            endIndex = Math.Min(20, itemManager.items.Count - 1);
-        //            break;
-        //        case 2:
-        //            startIndex = 21;
-        //            endIndex = itemManager.items.Count - 1;
-        //            break;
-        //    }
-
-        //    for (int i = startIndex; i <= endIndex; i++)
-        //    {
-        //        Item item = itemManager.items[i];
-        //        if (item.pos.x == x && item.pos.y == y)
-        //            return item;
-        //    }
-
-        //    return null;
-        //}
-
-
         private void AttackEnemy(Enemy enemy)
         {
             enemy.healthSystem.TakeDamage(damage, "Attacked");
@@ -173,6 +143,18 @@ namespace JourneyToTheMysticCave_Beta
         private bool CheckBoundaries(int x, int y)
         {
             return map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^';
+        }
+
+        private void checkFloor(int x, int y)
+        {
+            if (map.GetCurrentMapContent()[y, x] == 'P')
+                healthSystem.TakeDamage(gameStats.PoisonDamage, "Floor");
+            else if (map.GetCurrentMapContent()[y,x] == '~' && !inDeep)
+            {
+                inDeep = true;
+                pos.x = x; pos.y = y;
+                moveCount = 0;
+            }
         }
     }
 }

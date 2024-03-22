@@ -27,12 +27,16 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Update()
         {
-            if (GetEntityAtPosition(pos.x, pos.y) != null)
+            if (enemyManager != null && player != null)
             {
-                TryCollect();
-                GetEntityAtPosition(pos.x, pos.y).healthSystem.TakeDamage(trapDamage, "Trap");
-                pickedUp = false;
+                GameEntity entity = GetEntityAtPosition(pos.x, pos.y);
+                if (entity != null)
+                {
+                    TryCollect();
+                    entity.healthSystem.TakeDamage(trapDamage, "Trap");
+                }
             }
+
         }
 
         public override void Draw()
@@ -69,8 +73,7 @@ namespace JourneyToTheMysticCave_Beta
             }
             if (player.pos.x == x && player.pos.y == y)
                 return player;
-
-            return null;
+            else return null;
         }
     }
 }

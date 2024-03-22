@@ -43,6 +43,8 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (PlayerDistance() < 4)
             {
+                int iterations = 0;
+                    int maxIterations= 100;
                 do
                 {
                     dx = Math.Sign(player.pos.x - pos.x); // Calculate direction to player
@@ -55,9 +57,13 @@ namespace JourneyToTheMysticCave_Beta
                     {
                         if (newDx == player.pos.x && newDy == player.pos.y)
                             AttackPlayer($"by Slime sludge - {damage} damage");
-                        else
+                        else if(iterations == maxIterations)
+                        {
+                            iterations = 0;
                             pos = new Point2D { x = newDx, y = newDy };
-                        break; // Break the loop if movement is valid
+                            break;
+                        }
+                        iterations++;
                     }
                 } while (true);
             }

@@ -29,6 +29,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 collected = true;
                 pickedUp = true;
+                pos = new Point2D { x = 0, y = 0 };
             }
         }
 

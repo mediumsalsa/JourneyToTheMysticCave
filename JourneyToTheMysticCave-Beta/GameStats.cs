@@ -84,6 +84,8 @@ namespace JourneyToTheMysticCave_Beta
         public int SwordMultiplier { get; set; }
         #endregion
 
+        public int PoisonDamage;
+
         public void Init(LevelManager levelManager, Map map)
         {
             this.levelManager = levelManager;
@@ -154,7 +156,10 @@ namespace JourneyToTheMysticCave_Beta
             SwordCount = 3;
             SwordCharacter = 't';
             SwordName = "Sword";
-            SwordMultiplier = 2;
+            SwordMultiplier = 10;
+
+            // Floor Damage
+            PoisonDamage = 5;
         }
 
         public int GiveHealth(Random random, string type)

@@ -24,8 +24,7 @@ namespace JourneyToTheMysticCave_Beta
             if(player.pos.x == pos.x && player.pos.y == pos.y)
             {
                 TryCollect();
-                player.damage *= swordMultiplier;
-                pickedUp = false;
+                player.damage += swordMultiplier;
             }
         }
 

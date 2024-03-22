@@ -59,7 +59,7 @@ namespace JourneyToTheMysticCave_Beta
             else
                 health = $"{EnemyHealth()}";
             Console.WriteLine($"Enemy Health - {health}");
-            Console.Write("Money Picked Up:");
+            Console.Write("Money Picked Up: ");
             foreach(Item item in itemManager.items)
             {
                 if (item.GetType().Name == "Money" && item.collected)

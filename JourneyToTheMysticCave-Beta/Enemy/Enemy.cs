@@ -14,6 +14,7 @@ namespace JourneyToTheMysticCave_Beta
         public Player player;
         public Map map;
         public Gamelog log;
+        public bool processed;
 
         public bool IsAlive { get; set; } = true;
 

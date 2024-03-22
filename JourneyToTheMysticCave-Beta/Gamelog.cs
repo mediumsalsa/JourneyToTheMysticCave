@@ -55,15 +55,15 @@ namespace JourneyToTheMysticCave_Beta
         #region PickUps
         private void LogPickUp()
         {
-            for(int i = 0; i < itemManager.items.Count; i++)
+            for (int i = 0; i < itemManager.items.Count; i++)
             {
                 if (itemManager.items[i].pickedUp)
                 {
                     if (itemManager.items[i].name == "Money")
                         Console.Write($"{player.name} picked up money \n");
-                    if (itemManager.items[i].name == "Potion")
+                    else if (itemManager.items[i].name == "Potion")
                         Console.Write($"{player.name} picked up potion, player has healed by {gameStats.PotionHeal} \n");
-                    if (itemManager.items[i].name == "Sword")
+                    else if (itemManager.items[i].name == "Sword")
                         Console.Write($"{player.name} picked up sword, player damage increased by {gameStats.SwordMultiplier} \n");
 
                     itemManager.items[i].pickedUp = false;
@@ -82,7 +82,6 @@ namespace JourneyToTheMysticCave_Beta
                 player.healthSystem.hurt = false;
                 enemyAttack = null;
             }
-
             if (player.GetLastEnountered() != null)
             {
                 if (player.GetLastEnountered().healthSystem.hurt)
@@ -90,6 +89,7 @@ namespace JourneyToTheMysticCave_Beta
                     Console.Write($"Attacked {player.GetLastEnountered().name} - {player.damage} damage\n");
                     player.GetLastEnountered().healthSystem.hurt = false;
                 }
+
             }
         }
         #endregion
@@ -134,7 +134,7 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
-       
+
         #endregion
 
         #region Death
@@ -142,10 +142,11 @@ namespace JourneyToTheMysticCave_Beta
         {
             for (int i = 0; i < enemyManager.enemies.Count; i++)
             {
-                if (enemyManager.enemies[i].healthSystem.dead)
+                if (!enemyManager.enemies[i].processed && enemyManager.enemies[i].healthSystem.dead)
                 {
                     Console.Write($"{enemyManager.enemies[i].name}{i} has died \n");
                     enemyManager.enemies[i].healthSystem.dead = false;
+                    enemyManager.enemies[i].processed = true;
                 }
             }
         }

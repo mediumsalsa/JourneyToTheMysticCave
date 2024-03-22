@@ -20,10 +20,7 @@ namespace JourneyToTheMysticCave_Beta
         public override void Update()
         {
             if (player.pos.x == pos.x && player.pos.y == pos.y)
-            {
                 TryCollect();
-                pickedUp = false;
-            }
         }
 
         public override void Draw()
