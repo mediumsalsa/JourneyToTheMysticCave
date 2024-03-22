@@ -15,11 +15,14 @@ namespace JourneyToTheMysticCave_Beta
         public Map map;
         public Gamelog log;
         public bool processed;
+        public bool inDeep;
+        GameStats stats;
+        public int moveCount;
 
         public bool IsAlive { get; set; } = true;
 
         // Constructor
-        public Enemy(int count, char character, string name, int damage, Player player, EnemyManager enemyManager, Map map, Gamelog log)
+        public Enemy(int count, char character, string name, int damage, Player player, EnemyManager enemyManager, Map map, Gamelog log, GameStats stats)
         {
             this.count = count;
             this.character = character;
@@ -29,6 +32,7 @@ namespace JourneyToTheMysticCave_Beta
             this.enemyManager = enemyManager;
             this.map = map;
             this.log = log;
+            this.stats = stats;
         }
 
         // Movement
@@ -53,43 +57,28 @@ namespace JourneyToTheMysticCave_Beta
             log.enemyAttack = attack;
         }
 
-        #region Enemy Position Check
-        public bool CheckValidMovement(int x, int y, int level)
-        {
-            return CheckBoundaries(x, y) && !CheckEnemyPos(x, y, level);
-        }
-
         public bool CheckBoundaries(int x, int y)
         {
             return x > 0 && x < map.GetMapColumnCount() && y > 0 && y < map.GetMapRowCount() &&
                 map.GetCurrentMapContent()[y, x] != '#' && map.GetCurrentMapContent()[y, x] != '^' && map.GetCurrentMapContent()[y, x] != '*';
         }
 
-        public bool CheckEnemyPos(int x, int y, int level)
+        public void CheckFloor(int x, int y)
         {
-            foreach (Enemy enemy in enemyManager.enemies)
+            if (map.GetCurrentMapContent()[y, x] == 'P')
             {
-                if (level == 0 && enemy.GetType().Name == nameof(Ranger))
-                {
-                    if (enemy.pos.x == x && enemy.pos.y == y)
-                        return true;
-                }
-                else if (level == 1 && enemy.GetType().Name == nameof(Mage))
-                {
-                        if (enemy.pos.x == x && enemy.pos.y == y)
-                            return true;
-                }
-                else if (level == 2)
-                {
-                    if (enemy.GetType().Name == nameof(Melee))
-                    {
-                        if (enemy.pos.x == x && enemy.pos.y == y)
-                            return true;
-                    }
-                }
+                healthSystem.TakeDamage(stats.PoisonDamage, "Floor");
             }
-            return false;
+            else if (map.GetCurrentMapContent()[y, x] == '~' && !inDeep)
+            {
+                inDeep = true;
+                pos.x = x; pos.y = y;
+                moveCount = 0;
+            }
+            else if (inDeep)
+                moveCount++;
+            if(moveCount == 1)
+                moveCount = 0;
         }
-        #endregion
     }
 }

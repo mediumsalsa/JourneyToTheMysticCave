@@ -42,9 +42,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Draw()
         {
-            
             Console.SetCursorPosition(columnCount, rowCount);
-
             HUDInfo();
         }
 
@@ -70,7 +68,6 @@ namespace JourneyToTheMysticCave_Beta
                     Console.Write(' ');
                 }
             }
-            // need to add each amount of money in the item manager
             Console.WriteLine();
             Console.WriteLine("+-------------------------------+");
         }
@@ -100,6 +97,5 @@ namespace JourneyToTheMysticCave_Beta
             else
                 return null;
         }
-
     }
 }

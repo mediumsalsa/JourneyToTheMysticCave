@@ -98,9 +98,9 @@ namespace JourneyToTheMysticCave_Beta
         {
             //Player Configs/Stats
             PlayerCharacter = 'H';
-            PlayerName = "Hero";
-            PlayerHealth = 700;
-            //PlayerHealth = 100;
+            PlayerName = "Harold";
+            //PlayerHealth = 300; //for testing only
+            PlayerHealth = 100; 
             PlayerDamage = 10;
             PlayerPos = new Point2D { x = 2, y = 5 };
 
@@ -108,12 +108,12 @@ namespace JourneyToTheMysticCave_Beta
             RangerCount = 3;
             RangedCharacter = 'R';
             RangerName = "Ranger";
-            RangerDamage = 3;
+            RangerDamage = 1;
             rangerMinHp = 35;
             rangerMaxHp = 60;
 
             // Mage Configs/Stats
-            MageCount = 3;
+            MageCount = 2;
             MageCharacter = 'M';
             MageName = "Mage";
             MageDamage = 3;

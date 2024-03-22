@@ -12,7 +12,8 @@ namespace JourneyToTheMysticCave_Beta
         LegendColors legendColors;
         public int moveCount = 0;
 
-        public Mage(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, Map map, EnemyManager enemyManager) : base(count, character, name, damage, player, enemyManager, map, log)
+        public Mage(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, Map map, EnemyManager enemyManager, GameStats stats) : 
+            base(count, character, name, damage, player, enemyManager, map, log, stats)
         {
             this.legendColors = legendColors;
         }
@@ -24,7 +25,10 @@ namespace JourneyToTheMysticCave_Beta
                 Movement(random);
             }
             else
+            {
                 pos = new Point2D { x = 0, y = 0 };
+                IsAlive = false;
+            }
         }
 
         public override void Draw()
@@ -72,7 +76,7 @@ namespace JourneyToTheMysticCave_Beta
             x = random.Next(0, map.GetCurrentMapContent().GetLength(1));
             y = random.Next(0, map.GetCurrentMapContent().GetLength(0));
 
-            if (CheckValidMovement(x, y, 2) && x != player.pos.x && y != player.pos.y)
+            if (CheckValidMovement(x, y))
             {
                 moveCount = 0;
                 return new Point2D { x = x, y = y };
@@ -83,5 +87,26 @@ namespace JourneyToTheMysticCave_Beta
                 return new Point2D { x = pos.x, y = pos.y };
             }
         }
+
+        private bool CheckValidMovement(int x, int y)
+        {
+            return CheckBoundaries(x, y) && !CheckMagePos(x, y) && (player.pos.x != x && player.pos.y != y);
+        }
+
+
+        public bool CheckMagePos(int x, int y)
+        {
+            foreach (Enemy enemy in enemyManager.enemies)
+            {
+                if (enemy.GetType().Name == nameof(Mage))
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+
     }
 }

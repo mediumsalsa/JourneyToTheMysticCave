@@ -81,9 +81,14 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
+        public bool IsMoneyCollected()
+        {
+            return items.Where(item => item is Money).All(money => money.collected);
+        }
+
         private void DistributeItems(int potionCount, int moneyCount, int swordCount, int trapCount, int level)
         {
-            int index = items.Count; 
+            int index = items.Count;
 
             // Distribute potions
             for (int i = 0; i < potionCount; i++)
@@ -121,7 +126,7 @@ namespace JourneyToTheMysticCave_Beta
                 itemsLevel0 = items.Count + 1;
             else if (level == 1)
                 itemsLevel1 = items.Count + 1;
-            
+
 
             // Update positions for newly added items
             for (int i = index; i < items.Count; i++)

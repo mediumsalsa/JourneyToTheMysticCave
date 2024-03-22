@@ -10,8 +10,8 @@ namespace JourneyToTheMysticCave_Beta
     {
         LegendColors legendColors;
 
-        public Melee(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : 
-            base(count, character, name, damage, player, enemyManager, map, log)
+        public Melee(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) :
+            base(count, character, name, damage, player, enemyManager, map, log, stats)
         {
             this.legendColors = legendColors;
         }
@@ -22,8 +22,8 @@ namespace JourneyToTheMysticCave_Beta
                 Movement(random);
             else
             {
-                IsAlive = false;
                 pos = new Point2D { x = 0, y = 0 };
+                IsAlive = false;
             }
         }
 
@@ -41,10 +41,10 @@ namespace JourneyToTheMysticCave_Beta
 
         private void Movement(Random random)
         {
-            if (PlayerDistance() < 4)
+            if (PlayerDistance() < 3)
             {
                 int iterations = 0;
-                    int maxIterations= 100;
+                int maxIterations = 100;
                 do
                 {
                     dx = Math.Sign(player.pos.x - pos.x); // Calculate direction to player
@@ -52,23 +52,29 @@ namespace JourneyToTheMysticCave_Beta
 
                     newDx = pos.x + dx; // Calculate new position
                     newDy = pos.y + dy;
-
-                    if (CheckValidMovement(newDx, newDy, 2))
+                    if (CheckBoundaries(newDx, newDy) && !CheckMeleePos(newDx, newDy))
                     {
-                        if (newDx == player.pos.x && newDy == player.pos.y)
+                        if (player.pos.x == newDx && player.pos.y == newDy)
+                        {
                             AttackPlayer($"by Slime sludge - {damage} damage");
+                            break;
+                        }
                         else if(iterations == maxIterations)
                         {
                             iterations = 0;
+                            CheckFloor(newDx, newDy);
                             pos = new Point2D { x = newDx, y = newDy };
                             break;
                         }
-                        iterations++;
+                        else
+                            iterations++;
                     }
                 } while (true);
             }
             else
             {
+                int iterations = 0;
+                int maxIterations = 100;
                 do
                 {
                     int direction = random.Next(0, 4);
@@ -78,13 +84,35 @@ namespace JourneyToTheMysticCave_Beta
                     newDx = pos.x + dx; // Calculate new position
                     newDy = pos.y + dy;
 
-                    if (CheckValidMovement(newDx, newDy, 2))
+                    if (CheckBoundaries(newDx, newDy) && !CheckMeleePos(newDx, newDy))
                     {
+                        CheckFloor(newDy, newDy);
                         pos = new Point2D { x = newDx, y = newDy }; // Update position
                         break; // Break the loop if movement is valid
                     }
+                    else if (iterations == maxIterations) // used for if there are never valid movements due to calculation
+                    {
+                        iterations = 0;
+                        CheckFloor(newDy, newDy);
+                        pos = new Point2D { x = newDx, y = newDy };
+                        break;
+                    }
+                    iterations++;
                 } while (true);
             }
+        }
+
+        public bool CheckMeleePos(int x, int y)
+        {
+            foreach (Enemy enemy in enemyManager.enemies)
+            {
+                if (enemy.GetType().Name == nameof(Melee))
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }

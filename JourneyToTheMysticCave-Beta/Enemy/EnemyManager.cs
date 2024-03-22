@@ -34,13 +34,13 @@ namespace JourneyToTheMysticCave_Beta
             this.map = map;
 
             for (int i = 0; i < stats.RangerCount; i++)
-                enemies.Add(new Ranger(stats.RangerCount, stats.RangedCharacter, stats.RangerName, stats.RangerDamage, legendColors, player, log, this, map));
+                enemies.Add(new Ranger(stats.RangerCount, stats.RangedCharacter, stats.RangerName, stats.RangerDamage, legendColors, player, log, this, map, stats));
             for (int i = 0; i < stats.MageCount; i++)
-                enemies.Add(new Mage(stats.MageCount, stats.MageCharacter, stats.MageName, stats.MageDamage, legendColors, player, log, map, this));
+                enemies.Add(new Mage(stats.MageCount, stats.MageCharacter, stats.MageName, stats.MageDamage, legendColors, player, log, map, this, stats));
             for (int i = 0; i < stats.MeleeCount; i++)
-                enemies.Add(new Melee(stats.MeleeCount, stats.MeleeCharacter, stats.MeleeName, stats.MeleeDamage, legendColors, player, log, this, map));
+                enemies.Add(new Melee(stats.MeleeCount, stats.MeleeCharacter, stats.MeleeName, stats.MeleeDamage, legendColors, player, log, this, map, stats));
             for (int i = 0; i < stats.BossCount; i++)
-                enemies.Add(new Boss(stats.BossCount, stats.BossCharacter, stats.BossName, stats.BossDamage, legendColors, player, log, this, map));
+                enemies.Add(new Boss(stats.BossCount, stats.BossCharacter, stats.BossName, stats.BossDamage, legendColors, player, log, this, map, stats));
 
             foreach (Enemy enemy in enemies)
             {
@@ -126,6 +126,11 @@ namespace JourneyToTheMysticCave_Beta
                     }
                 }
             }
+        }
+
+        public bool AreAllEnemiesDead()
+        {
+            return enemies.All(enemy => !enemy.IsAlive);
         }
 
         public bool AreAllMeleeDead()

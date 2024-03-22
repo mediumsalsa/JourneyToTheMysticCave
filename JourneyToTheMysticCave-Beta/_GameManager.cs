@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace JourneyToTheMysticCave_Beta
 
         EnemyManager enemyManager = new EnemyManager();
         ItemManager itemManager = new ItemManager();
+        bool gameOver = false;
+        bool playerWon = false; 
+
         #endregion
 
         public _GameManager()
@@ -28,16 +32,20 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Gameplay()
         {
+            TutorialText();
             map.Update();
             hUD.Update();
             Draw();
             legendColors.Update();
 
-            while (true)
+            while (!gameOver)
             {
                 Update();
                 Draw();
+                CheckGameOver();
             }
+            Console.SetCursorPosition(0, 35);
+            EndGame();
         }
 
         private void Init()
@@ -74,6 +82,71 @@ namespace JourneyToTheMysticCave_Beta
             hUD.Draw();
             gamelog.Draw();
             itemManager.Draw();
+        }
+
+        void TutorialText()
+        {
+            Console.CursorVisible = false;
+
+            Console.Write("Text Based RPG Beta \n");
+            Console.WriteLine();
+            Console.WriteLine("Move:");
+            DisplaySymbolsInColumns("Up   ", "W");
+            DisplaySymbolsInColumns("Up-Left", "Q");
+            Console.WriteLine();
+            DisplaySymbolsInColumns("Down ", "S");
+            DisplaySymbolsInColumns("Up-Right", "E");
+            Console.WriteLine();
+            DisplaySymbolsInColumns("Left ", "A");
+            DisplaySymbolsInColumns("Down-Left", "Z");
+            Console.WriteLine();
+            DisplaySymbolsInColumns("Right", "D");
+            DisplaySymbolsInColumns("Down-Right", "C");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey(true);
+        }
+
+        private void DisplaySymbolsInColumns(string direction, string description)
+        {
+            Console.Write($"{direction} = {description}");
+
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(" ");
+            }
+        }
+
+        void CheckGameOver()
+        {
+            if (enemyManager.AreAllEnemiesDead() && itemManager.IsMoneyCollected())
+            {
+                gameOver = true;
+                playerWon = true;
+            }
+            if (player.healthSystem.dead)
+            {
+                gameOver = true;
+                playerWon = false;
+            }
+        }
+
+        void EndGame()
+        {
+            if (!player.healthSystem.dead)
+                Console.WriteLine(player.name + " has won! Press enter to exit");
+            else
+                Console.WriteLine(player.name + " has died, press enter to exit");
+
+            ConsoleKeyInfo input = Console.ReadKey();
+            while (input.Key != ConsoleKey.Enter)
+            {
+                Console.WriteLine("Press Enter");
+                input = Console.ReadKey();
+            }
+            System.Environment.Exit(0);
         }
     }
 }

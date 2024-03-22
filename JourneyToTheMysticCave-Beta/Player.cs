@@ -81,14 +81,17 @@ namespace JourneyToTheMysticCave_Beta
                 {
                     moveCount++;
                     lastEncountered = GetEnemyAtPosition(newX, newY);
-                    checkFloor(newX, newY);
                     if (lastEncountered != null)
                         AttackEnemy(lastEncountered);
-                    else if(!inDeep)
+                    
+                    checkFloor(newX, newY);
+                    if (!inDeep & !attackedEnemy)
                     {
                         pos.x = newX;
                         pos.y = newY;
                     }
+                    else
+                        attackedEnemy = false;
                     if(moveCount == 1)
                         inDeep = false;
                 }
@@ -138,6 +141,7 @@ namespace JourneyToTheMysticCave_Beta
         private void AttackEnemy(Enemy enemy)
         {
             enemy.healthSystem.TakeDamage(damage, "Attacked");
+            attackedEnemy = true;
         }
 
         private bool CheckBoundaries(int x, int y)
@@ -147,7 +151,7 @@ namespace JourneyToTheMysticCave_Beta
 
         private void checkFloor(int x, int y)
         {
-            if (map.GetCurrentMapContent()[y, x] == 'P')
+            if (map.GetCurrentMapContent()[y, x] == 'P' && !attackedEnemy)
                 healthSystem.TakeDamage(gameStats.PoisonDamage, "Floor");
             else if (map.GetCurrentMapContent()[y,x] == '~' && !inDeep)
             {

@@ -75,36 +75,29 @@ namespace JourneyToTheMysticCave_Beta
 
             foreach (Enemy enemy in enemyManager.enemies)
             {
-                switch (enemy.GetType().Name)
+                if(mapLevel == 0)
                 {
-                    case nameof(Ranger):
-                        if (mapLevel == 0)
-                        {
-                            if (enemy.pos.x == x && enemy.pos.y == y)
-                                return false;
-                        }
-                        break;
-                    case nameof(Mage):
-                        if (mapLevel == 1)
-                        {
-                            if (enemy.pos.x == x && enemy.pos.y == y)
-                                return false;
-                        }
-                        break;
-                    case nameof(Melee):
-                        if (mapLevel == 2)
-                        {
-                            if (enemy.pos.x == x && enemy.pos.y == y)
-                                return false;
-                        }
-                        break;
-                    case nameof(Boss):
-                        if (mapLevel == 2)
-                        {
-                            if (enemy.pos.x == x && enemy.pos.y == y)
-                                return false;
-                        }
-                        break;
+                    if(enemy.GetType().Name == nameof(Ranger))
+                    {
+                        if (enemy.pos.x == x && enemy.pos.y == y)
+                            return false;
+                    }
+                }
+                else if(mapLevel == 1)
+                {
+                    if (enemy.GetType().Name == nameof(Mage))
+                    {
+                        if (enemy.pos.x == x && enemy.pos.y == y)
+                            return false;
+                    }
+                }
+                else if(mapLevel == 2)
+                {
+                    if (enemy.GetType().Name == nameof(Melee))
+                    {
+                        if (enemy.pos.x == x && enemy.pos.y == y)
+                            return false;
+                    }
                 }
             }
 

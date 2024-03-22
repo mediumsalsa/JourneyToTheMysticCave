@@ -11,7 +11,8 @@ namespace JourneyToTheMysticCave_Beta
         Random random = new Random();
         LegendColors legendColors;
 
-        public Ranger(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
+        public Ranger(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) : 
+            base(count, character, name, damage, player, enemyManager, map, log, stats)
         {
             this.legendColors = legendColors;
         }
@@ -23,7 +24,10 @@ namespace JourneyToTheMysticCave_Beta
                 Movement();
             }
             else
+            {
                 pos = new Point2D { x = 0, y = 0 };
+                IsAlive = false;
+            }
         }
 
         public override void Draw()
@@ -51,8 +55,11 @@ namespace JourneyToTheMysticCave_Beta
                         newDx = pos.x + dx; // Calculate new position
                         newDy = pos.y + dy;
 
-                    if(CheckValidMovement(newDx, newDy, 0))    
+                    if(CheckValidMovement(newDx, newDy))
+                    {
+                        CheckFloor(newDx, newDy);
                         pos = new Point2D { x = newDx, y = newDy };
+                    }
                 }
                 if (PlayerDistance() <= 3)
                     AttackPlayer();
@@ -63,6 +70,23 @@ namespace JourneyToTheMysticCave_Beta
         {
             player.healthSystem.TakeDamage(damage, "Attacked");
             log.enemyAttack = $"by Ranger arrow - {damage} damage";
+        }
+        private bool CheckValidMovement(int x, int y)
+        {
+            return CheckBoundaries(x, y) && !CheckRangerPos(x, y) && (player.pos.x != x && player.pos.y != y);
+        }
+
+        public bool CheckRangerPos(int x, int y)
+        {
+            foreach (Enemy enemy in enemyManager.enemies)
+            {
+                if (enemy.GetType().Name == nameof(Ranger))
+                {
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }

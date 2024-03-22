@@ -10,7 +10,8 @@ namespace JourneyToTheMysticCave_Beta
     {
         LegendColors legendColors;
 
-        public Boss(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map) : base(count, character, name, damage, player, enemyManager, map, log)
+        public Boss(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) :
+            base(count, character, name, damage, player, enemyManager, map, log, stats)
         {
             this.legendColors = legendColors;
         }
@@ -20,7 +21,10 @@ namespace JourneyToTheMysticCave_Beta
             if (!healthSystem.mapDead)
                 Movement();
             else
+            {
                 pos = new Point2D { x = 0, y = 0 };
+                IsAlive = false;
+            }
         }
 
         public override void Draw()
@@ -48,7 +52,10 @@ namespace JourneyToTheMysticCave_Beta
                 if (player.pos.x == newDx && player.pos.y == newDy)
                     AttackPlayer();
                 else
+                {
+                    CheckFloor(newDx, newDy);
                     pos = new Point2D { x = newDx, y = newDy };
+                }
             }
         }
 
