@@ -95,7 +95,7 @@ namespace JourneyToTheMysticCave_Beta
         public bool InitialBoundaries(int x, int y, int levelNumber)
         {
             return x >= 0 && x < GetMapContent(levelNumber).GetLength(1) && y >= 0 && y < GetMapContent(levelNumber).GetLength(0) &&
-                GetMapContent(levelNumber)[y, x] != '#' && GetMapContent(levelNumber)[y, x] != '~' && GetMapContent(levelNumber)[y, x] != '^';
+                GetMapContent(levelNumber)[y, x] != '#' && GetMapContent(levelNumber)[y, x] != '~' && GetMapContent(levelNumber)[y, x] != '^' && GetMapContent(levelNumber)[y,x] != '*';
         }
     }
 }

@@ -11,17 +11,33 @@ namespace JourneyToTheMysticCave_Beta
         public bool collected = false;
         public bool pickedUp = false;
         public int count;
+        public Player player;
+        LegendColors legendColors;
 
-        public Item(int count, char character, string name)
+        public Item(int count, char character, string name, LegendColors legendColors, Player player)
         {
             this.count = count;
             this.character = character;
             this.name = name;
+            this.legendColors = legendColors;
+            this.player = player;
         }
 
-        public virtual void Init() { }
+        
         public virtual void Update() { }
-        public virtual void Draw() { }
+
+        public void Draw()
+        {
+            if (!collected)
+            {
+                Console.SetCursorPosition(pos.x, pos.y);
+                legendColors.MapColor(character);
+                Console.Write(character.ToString());
+                Console.ResetColor();
+            }
+            Console.CursorVisible = false;
+        }
+
 
         public void TryCollect()
         {
@@ -31,11 +47,6 @@ namespace JourneyToTheMysticCave_Beta
                 pickedUp = true;
                 pos = new Point2D { x = 0, y = 0 };
             }
-        }
-
-        public bool ItemAtPos(int x, int y)
-        {
-            return true;
         }
     }
 }

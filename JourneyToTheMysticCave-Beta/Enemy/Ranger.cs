@@ -9,12 +9,10 @@ namespace JourneyToTheMysticCave_Beta
     internal class Ranger : Enemy
     {
         Random random = new Random();
-        LegendColors legendColors;
 
-        public Ranger(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) : 
-            base(count, character, name, damage, player, enemyManager, map, log, stats)
+        public Ranger(int count, char character, string name, int damage, string enemyAttack, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) :
+            base(count, character, name, damage, enemyAttack, player, enemyManager, map, log, stats, legendColors)
         {
-            this.legendColors = legendColors;
         }
 
         public override void Update(Random random)
@@ -29,51 +27,53 @@ namespace JourneyToTheMysticCave_Beta
                 IsAlive = false;
             }
         }
-
-        public override void Draw()
-        {
-            if (!healthSystem.mapDead)
-            {
-                Console.SetCursorPosition(pos.x, pos.y);
-                legendColors.MapColor(character);
-                Console.Write(character.ToString());
-                Console.ResetColor();
-            }
-            Console.CursorVisible = false;
-        }
-
+       
         private void Movement()
         {
-            if (!healthSystem.mapDead)
+            int maxIterations = 100;
+            int iterations = 0;
+
+            if (PlayerDistance() < 12 && PlayerDistance() >= 4)
             {
-                if (PlayerDistance() < 10 && PlayerDistance() >= 4)
+                while (iterations < maxIterations)
                 {
-                     
-                    dx = Math.Sign(player.pos.x - pos.x); // calculations direction to player
+                    dx = Math.Sign(player.pos.x - pos.x);
                     dy = Math.Sign(player.pos.y - pos.y);
 
-                        newDx = pos.x + dx; // Calculate new position
-                        newDy = pos.y + dy;
+                    newDx = pos.x + dx;
+                    newDy = pos.y + dy;
 
-                    if(CheckValidMovement(newDx, newDy))
-                    {
-                        CheckFloor(newDx, newDy);
-                        pos = new Point2D { x = newDx, y = newDy };
-                    }
+                    if (TryMove(newDx, newDy))
+                        break;
+
+                    iterations++;
                 }
-                if (PlayerDistance() <= 3)
-                    AttackPlayer();
             }
+            if (PlayerDistance() <= 3)
+                AttackPlayer();
+        }
+
+
+        private bool TryMove(int x, int y)
+        {
+            if (CheckBoundaries(x, y) && !CheckRangerPos(x, y))
+            {
+                CheckFloor(x, y);
+
+                if (inDeep)
+                    pos = new Point2D { x = pos.x, y = pos.y };
+                else
+                    pos = new Point2D { x = x, y = y };
+                
+                return true;
+            }
+            return false;
         }
 
         private void AttackPlayer()
         {
             player.healthSystem.TakeDamage(damage, "Attacked");
-            log.enemyAttack = $"by Ranger arrow - {damage} damage";
-        }
-        private bool CheckValidMovement(int x, int y)
-        {
-            return CheckBoundaries(x, y) && !CheckRangerPos(x, y) && (player.pos.x != x && player.pos.y != y);
+            log.enemyAttack = enemyAttack;
         }
 
         public bool CheckRangerPos(int x, int y)

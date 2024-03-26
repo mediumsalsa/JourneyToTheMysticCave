@@ -19,9 +19,8 @@ namespace JourneyToTheMysticCave_Beta
         Map map;
         Random random = new Random();
 
-        int itemsLevel0;
-        int itemsLevel1;
-        int itemsLevel2;
+        public int itemsLevel0;
+        public int itemsLevel1;
 
         public ItemManager()
         {
@@ -117,16 +116,15 @@ namespace JourneyToTheMysticCave_Beta
             // Distribute traps
             for (int i = 0; i < trapCount; i++)
             {
-                var trap = new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage, legendColors, log, player, enemyManager, levelManager);
+                var trap = new Trap(stats.TrapCount, stats.TrapCharacter, stats.TrapName, stats.TrapDamage, legendColors, player, enemyManager, levelManager);
                 trap.pos = stats.PlaceCharacters(level, random);
                 items.Add(trap);
             }
 
             if (level == 0)
-                itemsLevel0 = items.Count + 1;
+                itemsLevel0 = items.Count;
             else if (level == 1)
-                itemsLevel1 = items.Count + 1;
-
+                itemsLevel1 = items.Count;
 
             // Update positions for newly added items
             for (int i = index; i < items.Count; i++)

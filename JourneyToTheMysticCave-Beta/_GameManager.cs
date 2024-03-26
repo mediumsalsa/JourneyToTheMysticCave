@@ -17,12 +17,11 @@ namespace JourneyToTheMysticCave_Beta
         LevelManager levelManager = new LevelManager();
         LegendColors legendColors = new LegendColors();
         HUD hUD = new HUD();
-
         EnemyManager enemyManager = new EnemyManager();
         ItemManager itemManager = new ItemManager();
-        bool gameOver = false;
-        bool playerWon = false; 
 
+        bool gameOver = false;
+        bool playerWon = false;
         #endregion
 
         public _GameManager()
@@ -68,9 +67,9 @@ namespace JourneyToTheMysticCave_Beta
             map.Update();
             legendColors.Update();
             enemyManager.Update();
+            itemManager.Update();
             hUD.Update();
             gamelog.Update();
-            itemManager.Update();
         }
 
         private void Draw()
@@ -78,17 +77,17 @@ namespace JourneyToTheMysticCave_Beta
             map.Draw();
             player.Draw();
             legendColors.Draw();
+            itemManager.Draw();
             enemyManager.Draw();
             hUD.Draw();
             gamelog.Draw();
-            itemManager.Draw();
         }
 
         void TutorialText()
         {
             Console.CursorVisible = false;
 
-            Console.Write("Text Based RPG Beta \n");
+            Console.WriteLine("Text Based RPG Beta");
             Console.WriteLine();
             Console.WriteLine("Move:");
             DisplaySymbolsInColumns("Up   ", "W");
@@ -141,6 +140,7 @@ namespace JourneyToTheMysticCave_Beta
                 Console.WriteLine(player.name + " has died, press enter to exit");
 
             ConsoleKeyInfo input = Console.ReadKey();
+
             while (input.Key != ConsoleKey.Enter)
             {
                 Console.WriteLine("Press Enter");

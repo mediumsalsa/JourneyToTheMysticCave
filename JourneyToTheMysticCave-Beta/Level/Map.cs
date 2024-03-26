@@ -29,7 +29,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Update()
         {
-            if(firstPlay || levelManager.levelChange) // only updates if levelchange has been triggered or first play.
+            if (firstPlay || levelManager.levelChange) // only updates if levelchange has been triggered or first play.
             {
                 currentMap = GetCurrentMapContent();
                 firstPlay = false;
@@ -75,29 +75,20 @@ namespace JourneyToTheMysticCave_Beta
 
             foreach (Enemy enemy in enemyManager.enemies)
             {
-                if(mapLevel == 0)
+                if (enemy.GetType().Name == nameof(Ranger) && mapLevel == 0)
                 {
-                    if(enemy.GetType().Name == nameof(Ranger))
-                    {
-                        if (enemy.pos.x == x && enemy.pos.y == y)
-                            return false;
-                    }
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return false;
                 }
-                else if(mapLevel == 1)
+                else if (enemy.GetType().Name == nameof(Mage) && mapLevel == 1)
                 {
-                    if (enemy.GetType().Name == nameof(Mage))
-                    {
-                        if (enemy.pos.x == x && enemy.pos.y == y)
-                            return false;
-                    }
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return false;
                 }
-                else if(mapLevel == 2)
+                else if (enemy.GetType().Name == nameof(Melee) && mapLevel == 2)
                 {
-                    if (enemy.GetType().Name == nameof(Melee))
-                    {
-                        if (enemy.pos.x == x && enemy.pos.y == y)
-                            return false;
-                    }
+                    if (enemy.pos.x == x && enemy.pos.y == y)
+                        return false;
                 }
             }
 
@@ -106,21 +97,21 @@ namespace JourneyToTheMysticCave_Beta
                 switch (mapLevel)
                 {
                     case 0:
-                        for (int i = 0; i <= 5; i++)
+                        for (int i = 0; i < itemManager.itemsLevel0; i++)
                         {
                             if (item.pos.x == x && item.pos.y == y)
                                 return false;
                         }
                         break;
                     case 1:
-                        for (int i = 6; i <= 20; i++)
+                        for (int i = itemManager.itemsLevel0; i < itemManager.itemsLevel1; i++)
                         {
                             if (item.pos.x == x && item.pos.y == y)
                                 return false;
                         }
                         break;
                     case 2:
-                        for (int i = 21; i <= itemManager.items.Count; i++)
+                        for (int i = itemManager.itemsLevel1; i <= itemManager.items.Count; i++)
                         {
                             if (item.pos.x == x && item.pos.y == y)
                                 return false;
@@ -128,7 +119,6 @@ namespace JourneyToTheMysticCave_Beta
                         break;
                 }
             }
-
             return true;
         }
     }

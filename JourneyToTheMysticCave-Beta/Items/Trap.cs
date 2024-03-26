@@ -9,47 +9,29 @@ namespace JourneyToTheMysticCave_Beta
     internal class Trap : Item
     {
         public int trapDamage;
-        LegendColors legendColors;
-        Gamelog log;
-        Player player;
         EnemyManager enemyManager;
         LevelManager levelManager;
 
-        public Trap(int count, char character, string name, int trapDamage, LegendColors legendColors, Gamelog log, Player player, EnemyManager enemyManager, LevelManager levelManager) : base(count, character, name)
+        public Trap(int count, char character, string name, int trapDamage, LegendColors legendColors,  Player player, EnemyManager enemyManager, LevelManager levelManager) : 
+            base(count, character, name, legendColors, player)
         {
             this.trapDamage = trapDamage;
-            this.legendColors = legendColors;
-            this.log = log;
-            this.player = player;
             this.enemyManager = enemyManager;
             this.levelManager = levelManager;
         }
 
         public override void Update()
         {
-            if (enemyManager != null && player != null)
-            {
-                GameEntity entity = GetEntityAtPosition(pos.x, pos.y);
-                if (entity != null)
-                {
-                    TryCollect();
-                    entity.healthSystem.TakeDamage(trapDamage, "Trap");
-                }
-            }
+            GameEntity entity = GetEntityAtPosition(pos.x, pos.y);
 
+            if (entity != null)
+            {
+                TryCollect();
+                entity.healthSystem.TakeDamage(trapDamage, "Trap");
+            }
         }
 
-        public override void Draw()
-        {
-            if (!collected)
-            {
-                Console.SetCursorPosition(pos.x, pos.y);
-                legendColors.MapColor(character);
-                Console.Write(character.ToString());
-                Console.ResetColor();
-            }
-            Console.CursorVisible = false;
-        }
+       
 
         private GameEntity GetEntityAtPosition(int x, int y)
         {
@@ -67,7 +49,7 @@ namespace JourneyToTheMysticCave_Beta
                 }
                 else if (enemy is Boss && levelManager.mapLevel == 2)
                 {
-                    if (enemy.pos.x == x && enemy.pos.y == y) 
+                    if (enemy.pos.x == x && enemy.pos.y == y)
                         return enemy;
                 }
             }

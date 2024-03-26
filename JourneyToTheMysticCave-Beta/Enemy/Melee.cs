@@ -8,13 +8,10 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Melee : Enemy
     {
-        LegendColors legendColors;
 
-        public Melee(int count, char character, string name, int damage, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) :
-            base(count, character, name, damage, player, enemyManager, map, log, stats)
-        {
-            this.legendColors = legendColors;
-        }
+        public Melee(int count, char character, string name, int damage, string enemyAttack, LegendColors legendColors, Player player, Gamelog log, EnemyManager enemyManager, Map map, GameStats stats) :
+            base(count, character, name, damage, enemyAttack, player, enemyManager, map, log, stats, legendColors)
+        { }
 
         public override void Update(Random random)
         {
@@ -27,79 +24,64 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
-        public override void Draw()
-        {
-            if (!healthSystem.mapDead)
-            {
-                Console.SetCursorPosition(pos.x, pos.y);
-                legendColors.MapColor(character);
-                Console.Write(character.ToString());
-                Console.ResetColor();
-            }
-            Console.CursorVisible = false;
-        }
-
         private void Movement(Random random)
         {
+            int maxIterations = 100;
+            int iterations = 0;
+
             if (PlayerDistance() < 3)
             {
-                int iterations = 0;
-                int maxIterations = 100;
-                do
+                while (iterations < maxIterations)
                 {
-                    dx = Math.Sign(player.pos.x - pos.x); // Calculate direction to player
+                    dx = Math.Sign(player.pos.x - pos.x);
                     dy = Math.Sign(player.pos.y - pos.y);
 
-                    newDx = pos.x + dx; // Calculate new position
+                    newDx = pos.x + dx;
                     newDy = pos.y + dy;
-                    if (CheckBoundaries(newDx, newDy) && !CheckMeleePos(newDx, newDy))
-                    {
-                        if (player.pos.x == newDx && player.pos.y == newDy)
-                        {
-                            AttackPlayer($"by Slime sludge - {damage} damage");
-                            break;
-                        }
-                        else if(iterations == maxIterations)
-                        {
-                            iterations = 0;
-                            CheckFloor(newDx, newDy);
-                            pos = new Point2D { x = newDx, y = newDy };
-                            break;
-                        }
-                        else
-                            iterations++;
-                    }
-                } while (true);
+
+                    if (TryMove(newDx, newDy))
+                        break;
+
+                    iterations++;
+                }
             }
             else
             {
-                int iterations = 0;
-                int maxIterations = 100;
-                do
+                while (iterations < maxIterations)
                 {
                     int direction = random.Next(0, 4);
                     dx = (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
                     dy = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
 
-                    newDx = pos.x + dx; // Calculate new position
+                    newDx = pos.x + dx;
                     newDy = pos.y + dy;
 
-                    if (CheckBoundaries(newDx, newDy) && !CheckMeleePos(newDx, newDy))
-                    {
-                        CheckFloor(newDy, newDy);
-                        pos = new Point2D { x = newDx, y = newDy }; // Update position
-                        break; // Break the loop if movement is valid
-                    }
-                    else if (iterations == maxIterations) // used for if there are never valid movements due to calculation
-                    {
-                        iterations = 0;
-                        CheckFloor(newDy, newDy);
-                        pos = new Point2D { x = newDx, y = newDy };
+                    if (TryMove(newDx, newDy))
                         break;
-                    }
+
                     iterations++;
-                } while (true);
+                }
             }
+        }
+
+        private bool TryMove(int x, int y)
+        {
+            if(CheckBoundaries(x,y) && !CheckMeleePos(x,y))
+            {
+                if (player.pos.x == x && player.pos.y == y)
+                    AttackPlayer(enemyAttack);
+                else
+                {
+                    CheckFloor(x, y);
+
+                    if (inDeep)
+                        pos = new Point2D { x = pos.x , y = pos.y };
+                    else
+                        pos = new Point2D { x = x , y = y };
+                }
+                return true;
+            }
+            return false;
         }
 
         public bool CheckMeleePos(int x, int y)

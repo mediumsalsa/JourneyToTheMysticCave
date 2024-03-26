@@ -9,14 +9,11 @@ namespace JourneyToTheMysticCave_Beta
     internal class Sword : Item
     {
         public int swordMultiplier;
-        LegendColors legendColors;
-        Player player;
 
-        public Sword(int count, char character, string name, int swordMultiplier, LegendColors legendColors, Player player) : base(count, character, name)
+        public Sword(int count, char character, string name, int swordMultiplier, LegendColors legendColors, Player player) : 
+            base(count, character, name, legendColors, player)
         {
             this.swordMultiplier = swordMultiplier;
-            this.legendColors = legendColors;
-            this.player = player;
         }
 
         public override void Update()
@@ -26,18 +23,6 @@ namespace JourneyToTheMysticCave_Beta
                 TryCollect();
                 player.damage += swordMultiplier;
             }
-        }
-
-        public override void Draw()
-        {
-            if (!collected)
-            {
-                Console.SetCursorPosition(pos.x, pos.y);
-                legendColors.MapColor(character);
-                Console.Write(character.ToString());
-                Console.ResetColor();
-            }
-            Console.CursorVisible = false;
         }
     }
 }

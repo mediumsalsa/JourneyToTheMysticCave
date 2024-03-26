@@ -48,11 +48,11 @@ namespace JourneyToTheMysticCave_Beta
             health += hp;
             healed = true;
 
-            //if(health >= 100)
-            //{
-            //    health = 100;
-            //    cannotHeal = true;
-            //}
+            if (health >= 100)
+            {
+                health = 100;
+                cannotHeal = true;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace JourneyToTheMysticCave_Beta
 {
@@ -29,6 +30,7 @@ namespace JourneyToTheMysticCave_Beta
         public int RangerDamage { get; set; }
         private int rangerMaxHp;
         private int rangerMinHp;
+        public string RangerAttack { get; set; }
         #endregion
 
         #region MageStat Declarations
@@ -38,6 +40,7 @@ namespace JourneyToTheMysticCave_Beta
         public int MageDamage { get; set; }
         private int mageMaxHp;
         private int mageMinHp;
+        public string MageAttack { get; set; }
         #endregion
 
         #region MeleeStat Declarations
@@ -47,6 +50,7 @@ namespace JourneyToTheMysticCave_Beta
         public int MeleeDamage { get; set; }
         private int meleeMaxHp;
         private int meleeMinHp;
+        public string MeleeAttack { get; set; }
         #endregion
 
         #region BossStat Declarations
@@ -55,6 +59,7 @@ namespace JourneyToTheMysticCave_Beta
         public string BossName { get; set; }
         public int BossDamage { get; set; }
         public int BossHealth { get; set; }
+        public string BossAttack { get; set; }
         #endregion
 
         #region MoneyStat Declarations
@@ -111,14 +116,16 @@ namespace JourneyToTheMysticCave_Beta
             RangerDamage = 1;
             rangerMinHp = 35;
             rangerMaxHp = 60;
+            RangerAttack = $"by Ranger arrow - {RangerDamage} damage";
 
             // Mage Configs/Stats
-            MageCount = 2;
+            MageCount = 3;
             MageCharacter = 'M';
             MageName = "Mage";
             MageDamage = 3;
             mageMinHp = 40;
             mageMaxHp = 65;
+            MageAttack = $"by mage magic - {MageDamage} damage";
 
             // Melee Configs/Stats
             MeleeCount = 30;
@@ -127,6 +134,7 @@ namespace JourneyToTheMysticCave_Beta
             MeleeDamage = 1;
             meleeMinHp = 2;
             meleeMaxHp = 10;
+            MeleeAttack = $"by Slime sludge - {MeleeDamage} damage";
 
             // Boss Configs/Stats
             BossCount = 1;
@@ -134,6 +142,7 @@ namespace JourneyToTheMysticCave_Beta
             BossName = "Boss";
             BossDamage = 6;
             BossHealth = 200;
+            BossAttack = $"by a giant fist - {BossDamage} damage";
 
             // Money Configs
             MoneyCount = 6;

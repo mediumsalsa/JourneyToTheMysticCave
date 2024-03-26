@@ -10,19 +10,23 @@ namespace JourneyToTheMysticCave_Beta
     internal abstract class Enemy : GameEntity
     {
         protected int count;
+        
         public EnemyManager enemyManager;
         public Player player;
         public Map map;
         public Gamelog log;
+        GameStats stats;
+        LegendColors legendColors;
+        
         public bool processed;
         public bool inDeep;
-        GameStats stats;
-        public int moveCount;
+        public int waterMove;
+        public string enemyAttack;
 
         public bool IsAlive { get; set; } = true;
 
         // Constructor
-        public Enemy(int count, char character, string name, int damage, Player player, EnemyManager enemyManager, Map map, Gamelog log, GameStats stats)
+        public Enemy(int count, char character, string name, int damage, string enemyAttack, Player player, EnemyManager enemyManager, Map map, Gamelog log, GameStats stats, LegendColors legendColors)
         {
             this.count = count;
             this.character = character;
@@ -30,9 +34,11 @@ namespace JourneyToTheMysticCave_Beta
             this.damage = damage;
             this.player = player;
             this.enemyManager = enemyManager;
+            this.enemyAttack = enemyAttack;
             this.map = map;
             this.log = log;
             this.stats = stats;
+            this.legendColors = legendColors;
         }
 
         // Movement
@@ -44,7 +50,24 @@ namespace JourneyToTheMysticCave_Beta
 
         public abstract void Update(Random random);
 
-        public abstract void Draw();
+        public void Draw()
+        {
+            if (!healthSystem.mapDead)
+            {
+                Console.SetCursorPosition(pos.x, pos.y);
+
+                legendColors.MapColor(character);
+                if (map.GetCurrentMapContent()[pos.y, pos.x] == 'P')
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                else if (map.GetCurrentMapContent()[pos.y, pos.x] == '~')
+                    Console.BackgroundColor = ConsoleColor.Blue;
+
+                Console.Write(character.ToString());
+                Console.ResetColor();
+            }
+            Console.CursorVisible = false;
+        }
+
 
         public int PlayerDistance() //calculates distance to player
         {
@@ -72,13 +95,18 @@ namespace JourneyToTheMysticCave_Beta
             else if (map.GetCurrentMapContent()[y, x] == '~' && !inDeep)
             {
                 inDeep = true;
-                pos.x = x; pos.y = y;
-                moveCount = 0;
+                waterMove = 0;
             }
             else if (inDeep)
-                moveCount++;
-            if(moveCount == 1)
-                moveCount = 0;
+            {
+                if(waterMove == 1)
+                {
+                    inDeep = false;
+                    waterMove = 0;
+                }
+                else
+                    waterMove++;
+            }
         }
     }
 }

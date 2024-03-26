@@ -9,14 +9,11 @@ namespace JourneyToTheMysticCave_Beta
     internal class Potion : Item
     {
         public int healAmount;
-        LegendColors legendColors;
-        Player player;
 
-        public Potion(int count, char character, string name, int healAmount, LegendColors legendColors, Player player) : base(count, character, name)
+        public Potion(int count, char character, string name, int healAmount, LegendColors legendColors, Player player) : 
+            base(count, character, name, legendColors, player)
         {
             this.healAmount = healAmount;
-            this.legendColors = legendColors;
-            this.player = player;
         }
 
         public override void Update()
@@ -26,18 +23,6 @@ namespace JourneyToTheMysticCave_Beta
                 TryCollect();
                 player.healthSystem.Heal(healAmount);
             }
-        }
-
-        public override void Draw()
-        {
-            if (!collected)
-            {
-                Console.SetCursorPosition(pos.x, pos.y);
-                legendColors.MapColor(character);
-                Console.Write(character.ToString());
-                Console.ResetColor();
-            }
-            Console.CursorVisible = false;
         }
     }
 }

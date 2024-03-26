@@ -62,7 +62,12 @@ namespace JourneyToTheMysticCave_Beta
                     if (itemManager.items[i].name == "Money")
                         Console.Write($"{player.name} picked up money \n");
                     else if (itemManager.items[i].name == "Potion")
-                        Console.Write($"{player.name} picked up potion, player has healed by {gameStats.PotionHeal} \n");
+                    {
+                        if(player.healthSystem.health <= 100)
+                            Console.Write($"{player.name} picked up potion, player has healed by {gameStats.PotionHeal} \n");
+                        else if(player.healthSystem.health > 100)
+                            Console.Write($"{player.name} cannot heal anymore \n");
+                    }
                     else if (itemManager.items[i].name == "Sword")
                         Console.Write($"{player.name} picked up sword, player damage increased by {gameStats.SwordMultiplier} \n");
 
@@ -144,7 +149,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 if (!enemyManager.enemies[i].processed && enemyManager.enemies[i].healthSystem.dead)
                 {
-                    Console.Write($"{enemyManager.enemies[i].name}{i} has died \n");
+                    Console.Write($"{enemyManager.enemies[i].name} has died \n");
                     enemyManager.enemies[i].healthSystem.dead = false;
                     enemyManager.enemies[i].processed = true;
                 }
