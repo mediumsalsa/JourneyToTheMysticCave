@@ -19,6 +19,9 @@ namespace JourneyToTheMysticCave_Beta
         public bool itemPickedUp = false;
         private Enemy lastEncountered;
 
+        public int killCount = 0;
+        public int moneyCount = 0;
+
         public Enemy GetLastEnountered()
         {
             return lastEncountered;
