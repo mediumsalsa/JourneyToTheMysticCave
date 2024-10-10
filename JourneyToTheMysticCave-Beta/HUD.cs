@@ -51,24 +51,15 @@ namespace JourneyToTheMysticCave_Beta
             Console.WriteLine("+-------------------------------+");
             Console.WriteLine($"{player.name} Health: {player.healthSystem.health}");
             Console.WriteLine($"{player.name} Damage: {player.damage}");
-            Console.WriteLine($"{player.name} Kill Count: {player.killCount}");
             Console.WriteLine($"Last Enemy Attacked - {EnemyName()}");
             if (EnemyHealth() == 0)
                 health = $"{EnemyName()} is dead";
             else
                 health = $"{EnemyHealth()}";
             Console.WriteLine($"Enemy Health - {health}");
-            Console.Write("Money Picked Up: ");
-            foreach(Item item in itemManager.items)
-            {
-                if (item.GetType().Name == "Money" && item.collected)
-                {
-                    legendColors.MapColor(item.character);
-                    Console.Write(item.character);
-                    Console.ResetColor();
-                    Console.Write(' ');
-                }
-            }
+            Console.WriteLine($"Kill Count: {player.killCount}");
+            Console.Write("Money Picked Up: " + player.moneyCount);
+
             Console.WriteLine();
             Console.WriteLine("+-------------------------------+");
         }
