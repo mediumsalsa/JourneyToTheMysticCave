@@ -21,6 +21,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public int killCount = 0;
         public int moneyCount = 0;
+        public bool bossIsDead = false;
 
         public Enemy GetLastEnountered()
         {

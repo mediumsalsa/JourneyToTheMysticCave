@@ -47,6 +47,13 @@ namespace JourneyToTheMysticCave_Beta
                 pickedUp = true;
                 pos = new Point2D { x = 0, y = 0 };
             }
+
+            //Add mooney
+            if (this.GetType().Name == "Money" && this.collected)
+            {
+                player.moneyCount += 1;
+            }
+
         }
     }
 }

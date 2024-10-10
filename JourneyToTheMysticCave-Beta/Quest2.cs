@@ -15,13 +15,14 @@ namespace JourneyToTheMysticCave_Beta
             this.player = player;
         }
 
-
+        //See main quest class
         public override void Init()
         {
             completion = false;
         }
 
 
+        //See main quest class
         public override void Update()
         {
             if (player.moneyCount >= 3)
@@ -34,6 +35,7 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
+        //See main quest class
         public override void Draw()
         {
             if (completion == false)
@@ -42,7 +44,7 @@ namespace JourneyToTheMysticCave_Beta
             }
             else
             {
-                description = "Quest 1: COMPLETED :D";
+                description = "Quest 2: COMPLETED :D";
             }
         }
 

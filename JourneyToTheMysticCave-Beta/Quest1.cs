@@ -16,16 +16,20 @@ namespace JourneyToTheMysticCave_Beta
             this.player = player;
         }
 
+        public int killAmount;
 
+
+        //See main quest class
         public override void Init()
         {
             completion = false;
+            killAmount = 10;
         }
 
-
+        //See main quest class
         public override void Update()
         {
-            if (player.killCount >= 2)
+            if (player.killCount >= 10)
             {
                 completion = true;
             }
@@ -35,6 +39,7 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
+        //See main quest class
         public override void Draw()
         {
             if (completion == false)

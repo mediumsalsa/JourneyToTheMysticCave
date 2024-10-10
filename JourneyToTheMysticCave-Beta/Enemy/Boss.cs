@@ -21,6 +21,7 @@ namespace JourneyToTheMysticCave_Beta
             {
                 pos = new Point2D { x = 0, y = 0 };
                 IsAlive = false;
+                player.bossIsDead = true;
             }
         }
 

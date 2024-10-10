@@ -8,23 +8,22 @@ namespace JourneyToTheMysticCave_Beta
 {
     internal class Quest3 : Quest
     {
-
         public Quest3(Player player) :
         base(player)
         {
             this.player = player;
         }
 
-
+        //See main quest class
         public override void Init()
         {
             completion = false;
         }
 
-
+        //See main quest class
         public override void Update()
         {
-            if (player.killCount >= 10)
+            if (player.bossIsDead == true)
             {
                 completion = true;
             }
@@ -34,15 +33,16 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
 
+        //See main quest class
         public override void Draw()
         {
             if (completion == false)
             {
-                description = "Quest 1: Kill the Boss";
+                description = "Quest 3: Kill the Boss";
             }
             else
             {
-                description = "Quest 1: COMPLETED :D";
+                description = "Quest 3: COMPLETED :D";
             }
         }
 

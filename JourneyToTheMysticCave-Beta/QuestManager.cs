@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace JourneyToTheMysticCave_Beta
 {
@@ -46,7 +47,7 @@ namespace JourneyToTheMysticCave_Beta
                 quest.Update();
             }
 
-            rowCount = map.GetMapRowCount() + 15;
+            rowCount = map.GetMapRowCount() + 13;
             columnCount = 0;
 
             for (int i = 0; i < 9; i++) 
@@ -66,14 +67,13 @@ namespace JourneyToTheMysticCave_Beta
             QuestInfo();
         }
 
+        //Writes down quests and their completion status
         private void QuestInfo()
         {
             Console.WriteLine("+-------------------------------+");
-            Console.WriteLine();
             Console.WriteLine(quests[0].description);
             Console.WriteLine(quests[1].description);
             Console.WriteLine(quests[2].description);
-            Console.WriteLine();
             Console.WriteLine("+-------------------------------+");
         }
 
