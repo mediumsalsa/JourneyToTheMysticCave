@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal class Quest1 : Quest
+    internal class Quest2 : Quest
     {
-        public Quest1(Player player) :
+
+        public Quest2(Player player) :
         base(player)
         {
             this.player = player;
@@ -25,7 +24,7 @@ namespace JourneyToTheMysticCave_Beta
 
         public override void Update()
         {
-            if (player.killCount >= 2)
+            if (player.moneyCount >= 3)
             {
                 completion = true;
             }
@@ -39,15 +38,13 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (completion == false)
             {
-                description = "Quest 1: Kill 10 Enemies";
+                description = "Quest 2: Collect 3 Money";
             }
             else
             {
                 description = "Quest 1: COMPLETED :D";
             }
         }
-
-
 
     }
 }

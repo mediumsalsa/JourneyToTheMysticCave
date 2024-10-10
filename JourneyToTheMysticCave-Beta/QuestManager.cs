@@ -15,7 +15,7 @@ namespace JourneyToTheMysticCave_Beta
         int columnCount;
         int rowCount;
 
-        Quest1 quest1;
+        public List<Quest> quests;
 
         public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, Map map)
         {
@@ -23,10 +23,29 @@ namespace JourneyToTheMysticCave_Beta
             this.enemyManager = enemyManager;
             this.itemManager = itemManager;
             this.map = map;
+            quests = new List<Quest>();
         }
+
+        public void AddQuests()
+        {
+            Quest1 quest1 = new Quest1(player);
+            quests.Add(quest1);
+
+            Quest2 quest2 = new Quest2(player);
+            quests.Add(quest2);
+
+            Quest3 quest3 = new Quest3(player);
+            quests.Add(quest3);
+        }
+
 
         public void Update()
         {
+            foreach (Quest quest in quests)
+            {
+                quest.Update();
+            }
+
             rowCount = map.GetMapRowCount() + 15;
             columnCount = 0;
 
@@ -39,15 +58,21 @@ namespace JourneyToTheMysticCave_Beta
 
         public void Draw()
         {
+            foreach (Quest quest in quests)
+            {
+                quest.Draw();
+            }
             Console.SetCursorPosition(columnCount, rowCount);
             QuestInfo();
         }
 
         private void QuestInfo()
         {
-            Console.WriteLine(quest1.description);
-            Console.WriteLine("Quest 2: Collect 3 Money.");
-            Console.WriteLine("Quest 3: Kill The Boss.");
+            Console.WriteLine("+-------------------------------+");
+            Console.WriteLine();
+            Console.WriteLine(quests[0].description);
+            Console.WriteLine(quests[1].description);
+            Console.WriteLine(quests[2].description);
             Console.WriteLine();
             Console.WriteLine("+-------------------------------+");
         }

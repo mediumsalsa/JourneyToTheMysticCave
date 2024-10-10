@@ -68,6 +68,8 @@
     <Compile Include="GameStats.cs" />
     <Compile Include="Quest.cs" />
     <Compile Include="Quest1.cs" />
+    <Compile Include="Quest2.cs" />
+    <Compile Include="Quest3.cs" />
     <Compile Include="QuestManager.cs" />
     <Compile Include="_GameManager.cs" />
     <Compile Include="Program.cs" />

@@ -35,6 +35,8 @@ namespace JourneyToTheMysticCave_Beta
             TutorialText();
             map.Update();
             hUD.Update();
+
+            questManager.AddQuests();
             questManager.Update();
 
             legendColors.Update();

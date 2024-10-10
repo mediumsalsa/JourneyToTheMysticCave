@@ -59,6 +59,7 @@ namespace JourneyToTheMysticCave_Beta
         public void Update()
         {
             Movement();
+            TrackKillCount();
         }
 
         public void Draw()
@@ -137,6 +138,18 @@ namespace JourneyToTheMysticCave_Beta
                 }
             }
             return null;
+        }
+
+        //Tracks kill count
+        private void TrackKillCount()
+        {
+            for (int i = 0; i < enemyManager.enemies.Count; i++)
+            {
+                if (!enemyManager.enemies[i].processed && enemyManager.enemies[i].healthSystem.dead)
+                {
+                    killCount++;
+                }
+            }
         }
 
         private void AttackEnemy(Enemy enemy)

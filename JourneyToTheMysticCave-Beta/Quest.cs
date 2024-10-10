@@ -16,12 +16,12 @@ namespace JourneyToTheMysticCave_Beta
         public bool IsAlive { get; set; } = true;
 
         // Constructor
-        public Quest(Player player, string desc, bool completion)
+        public Quest(Player player)
         {
             this.player = player;
-            this.description = desc;
-            this.completion = completion;
         }
+
+        public abstract void Init();
 
         public abstract void Update();
 
