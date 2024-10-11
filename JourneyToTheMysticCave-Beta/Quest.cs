@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JourneyToTheMysticCave_Beta
 {
-    internal abstract class Quest
+    internal abstract class Quest // add note this is an example/framework not quest 0
     {
 
         public Player player;

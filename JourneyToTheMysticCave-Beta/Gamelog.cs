@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JourneyToTheMysticCave_Beta.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +14,20 @@ namespace JourneyToTheMysticCave_Beta
         public ItemManager itemManager;
         public GameStats gameStats;
         public Map map;
+        public Shop shop;
 
         public string enemyAttack;
         int columnCount = 0;
         int rowCount = 0;
 
-        public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, GameStats gamestats, Map map)
+        public void Init(Player player, EnemyManager enemyManager, ItemManager itemManager, GameStats gamestats, Map map, Shop shop)
         {
             this.player = player;
             this.enemyManager = enemyManager;
             this.itemManager = itemManager;
             this.gameStats = gamestats;
             this.map = map;
+            this.shop = shop;
         }
 
         public void Update()
@@ -156,5 +159,6 @@ namespace JourneyToTheMysticCave_Beta
             }
         }
         #endregion
+
     }
 }

@@ -76,6 +76,8 @@ namespace JourneyToTheMysticCave_Beta
             Console.SetCursorPosition(columnCount, rowCount++);
             DisplayChar('#', "Walls");
             Console.SetCursorPosition(columnCount, rowCount++);
+            DisplayChar('%', "Shop");
+            Console.SetCursorPosition(columnCount, rowCount++);
             Console.WriteLine("+------------------------+");
         }
 
@@ -95,6 +97,10 @@ namespace JourneyToTheMysticCave_Beta
                 case '#': // Boundaries
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.BackgroundColor = ConsoleColor.DarkGray;
+                    break;
+                case '%': // Boundaries
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = ConsoleColor.Yellow;
                     break;
                 case '^': // Mountain
                     Console.ForegroundColor = ConsoleColor.DarkRed;

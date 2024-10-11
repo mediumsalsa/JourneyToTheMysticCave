@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JourneyToTheMysticCave_Beta.Items;
 
 namespace JourneyToTheMysticCave_Beta
 {
@@ -23,6 +24,8 @@ namespace JourneyToTheMysticCave_Beta
         public int moneyCount = 0;
         public bool bossIsDead = false;
 
+        public bool poisonBoots = false;
+
         public Enemy GetLastEnountered()
         {
             return lastEncountered;
@@ -34,6 +37,7 @@ namespace JourneyToTheMysticCave_Beta
         LegendColors legendColors;
         LevelManager levelManager;
         ItemManager itemManager;
+        Shop shop;
 
 
         public Player()
@@ -41,7 +45,7 @@ namespace JourneyToTheMysticCave_Beta
             healthSystem = new HealthSystem();
         }
 
-        public void Init(Map map, GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager, ItemManager itemManager)
+        public void Init(Map map, GameStats gameStats, LegendColors legendColors, EnemyManager enemyManager, LevelManager levelManager, ItemManager itemManager, Shop shop)
         {
             this.map = map;
             this.gameStats = gameStats;
@@ -49,6 +53,7 @@ namespace JourneyToTheMysticCave_Beta
             this.enemyManager = enemyManager;
             this.levelManager = levelManager;
             this.itemManager = itemManager;
+            this.shop = shop;
 
             healthSystem.health = gameStats.PlayerHealth;
             character = gameStats.PlayerCharacter;
@@ -118,10 +123,14 @@ namespace JourneyToTheMysticCave_Beta
                 case ConsoleKey.E: dirY = -1; dirX = 1; break;
                 case ConsoleKey.Z: dirY = 1; dirX = -1; break;
                 case ConsoleKey.C: dirY = 1; dirX = 1; break;
+                case ConsoleKey.D1: shop.BuyItem(1); break;
+                case ConsoleKey.D2: shop.BuyItem(2); break;
+                case ConsoleKey.D3: shop.BuyItem(3); break;
                 case ConsoleKey.Spacebar: return; // using for testing, player doesn't move
                 case ConsoleKey.Escape: System.Environment.Exit(0); return;
             }
         }
+
 
         private Enemy GetEnemyAtPosition(int x, int y)
         {
@@ -172,7 +181,7 @@ namespace JourneyToTheMysticCave_Beta
                 pos = new Point2D { x = x, y = y };
                 moveCount = 0;
             }
-            else if (map.GetCurrentMapContent()[y, x] == 'P')
+            else if (map.GetCurrentMapContent()[y, x] == 'P' && poisonBoots == false)
                 healthSystem.TakeDamage(gameStats.PoisonDamage, "Floor");
 
             if(!inDeep)
@@ -184,6 +193,12 @@ namespace JourneyToTheMysticCave_Beta
                 inDeep = false;
             }
             moveCount++;
+
+            //Player Hits Shop
+            if (map.GetCurrentMapContent()[y, x] == 'S')
+            {
+
+            }
         }
     }
 }
