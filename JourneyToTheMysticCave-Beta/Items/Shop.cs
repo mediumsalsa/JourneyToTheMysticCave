@@ -12,9 +12,15 @@ namespace JourneyToTheMysticCave_Beta.Items
         Player player;
         Map map;
 
-        public bool isShopOpen = true;
+        public bool isShopOpen = false;
         private int col;
         private int row;
+
+        private int healthCost = 1;
+        private int swordCost = 2;
+        private int bootCost = 2;
+
+        private string lastPurchase = "";
 
         public void Init(Player player, Map map)
         {
@@ -24,22 +30,30 @@ namespace JourneyToTheMysticCave_Beta.Items
 
         public void BuyItem(int itemNum)
         {
+            col = map.GetMapColumnCount() + 2;
+            row = map.GetMapRowCount() + 1;
             if (isShopOpen == false) return;
 
-            if (itemNum == 1 && player.moneyCount >= 1)
+            if (itemNum == 1 && player.moneyCount >= healthCost)
             {
                 player.healthSystem.Heal(10);
-                player.moneyCount -= 1;
+                player.moneyCount -= healthCost;
+                lastPurchase = "Health potion(+10 health)";
             }
-            else if (itemNum == 2 && player.moneyCount >= 2)
+            else if (itemNum == 2 && player.moneyCount >= swordCost)
             {
                 player.damage += 10;
-                player.moneyCount -= 2;
+                player.moneyCount -= swordCost;
+                lastPurchase = "Sword upgrade(+10 damage)";
             }
-            else if (itemNum == 3 && player.moneyCount >= 6)
+            else if (itemNum == 3 && player.moneyCount >= bootCost)
             {
-                player.poisonBoots = true;
-                player.moneyCount -= 6;
+                if (player.poisonBoots == false)
+                {
+                    player.poisonBoots = true;
+                    player.moneyCount -= bootCost;
+                    lastPurchase = "Posion boots(poison immunity)";
+                }
             }
         }
 
@@ -79,12 +93,14 @@ namespace JourneyToTheMysticCave_Beta.Items
                 Console.SetCursorPosition(col, row+1);
                 Console.WriteLine("Welcome to the shop!");
                 Console.SetCursorPosition(col, row+2);
-                Console.WriteLine("Click '1' to buy health potion(+10 Health): 1$");
+                Console.WriteLine("Click '1' to buy health potion(+10 Health): " + healthCost + "$");
                 Console.SetCursorPosition(col, row+3);
-                Console.WriteLine("Click '2' to upgrade sword(+10 Damage): 2$");
+                Console.WriteLine("Click '2' to upgrade sword(+10 Damage): " + swordCost + "$");
                 Console.SetCursorPosition(col, row+4);
-                Console.WriteLine("Click '3' to buy Poison Boots(No poison damage): 6$");
+                Console.WriteLine("Click '3' to buy Poison Boots(No poison damage): " + bootCost + "$");
                 Console.SetCursorPosition(col, row+5);
+                Console.WriteLine("Last purchase: " + lastPurchase);
+                Console.SetCursorPosition(col, row + 6);
                 Console.WriteLine("+--------------------------------------------------------+");
             }
         }

@@ -195,9 +195,13 @@ namespace JourneyToTheMysticCave_Beta
             moveCount++;
 
             //Player Hits Shop
-            if (map.GetCurrentMapContent()[y, x] == 'S')
+            if (map.GetCurrentMapContent()[y, x] == '%')
             {
-
+                shop.PlayerEnters();
+            }
+            else
+            {
+                shop.PlayerExits();
             }
         }
     }

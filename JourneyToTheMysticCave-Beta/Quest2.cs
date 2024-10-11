@@ -40,7 +40,7 @@ namespace JourneyToTheMysticCave_Beta
         {
             if (completion == false)
             {
-                description = "Quest 2: Collect 3 Money";
+                description = "Quest 2: Have 3 dollars in the bank";
             }
             else
             {
