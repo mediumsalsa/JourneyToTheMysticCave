@@ -31,7 +31,7 @@ namespace JourneyToTheMysticCave_Beta
             }
             else
             {
-                completion = false;
+                //completion = false;
             }
         }
 
